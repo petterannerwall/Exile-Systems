@@ -10,8 +10,6 @@ namespace ExileSystemServer
     {
         static void Main(string[] args)
         {
-            
-
             var url = "http://localhost:8080/";
             using (WebApp.Start<Startup>(url))
             {

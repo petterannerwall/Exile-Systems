@@ -66,14 +66,7 @@ namespace ExileSystem
 
         private void ImageUpdate(string bitmapString)
         {
-            byte[] bitmapByteArray = Convert.FromBase64String(bitmapString);
-
-            Bitmap bitmap;
-            using (var memoryStream = new MemoryStream(bitmapByteArray))
-            {
-                bitmap = new Bitmap(memoryStream);
-                bitmap.Save(@"C:\Temp\test.jpg");
-            }
+            bitmapString.Base64StringToImage().Save(@"C:\Temp\test.jpg");            
         }
 
         private void Update(string message)
@@ -88,13 +81,8 @@ namespace ExileSystem
 
         private async void OnAreaSelectedAsync(object sender, EventArgs e)
         {
-            var test = SnippingTool.Image;
-            ImageConverter converter = new ImageConverter();
-            var byteArray = (byte[])converter.ConvertTo(test, typeof(byte[]));
-
-            var debug = Convert.ToBase64String(byteArray);
-
-            await Proxy.Invoke("BroadcastImage", debug);
+            string base64string = SnippingTool.Image.ImageToBase64String();
+            await Proxy.Invoke("BroadcastImage", base64string);
             
         }
 
