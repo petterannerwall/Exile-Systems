@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExileSystem", "ExileSystem.csproj", "{87DFA74E-1C71-4355-9BBC-E48740AFEC9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExileSystem", "ExileSystem\ExileSystem.csproj", "{87DFA74E-1C71-4355-9BBC-E48740AFEC9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExileSystemServer", "..\ExileSystemServer\ExileSystemServer.csproj", "{2FFD40F1-251E-4618-9C02-26EC29D42600}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExileSystemServer", "ExileSystemServer\ExileSystemServer.csproj", "{2FFD40F1-251E-4618-9C02-26EC29D42600}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
