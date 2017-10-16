@@ -1,0 +1,47 @@
+﻿<Window x:Class="ExileSystem.SnippingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExileSystem"
+        mc:Ignorable="d"
+        Title="SnippingWindow"
+        WindowStyle="None"
+        WindowState="Maximized"
+        AllowsTransparency="True">
+    <Window.Background>
+        <SolidColorBrush Color="#FFB0B0B0"
+                         Opacity="0.05" />
+    </Window.Background>
+    <Grid
+        x:Name="theGrid"
+        MouseDown="Grid_MouseDown"
+        MouseUp="Grid_MouseUp"
+        MouseMove="Grid_MouseMove"
+        Background="Transparent"
+        >
+        <!--<DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Options">
+                    <MenuItem Header="_Clip Screen" Click="ClipScreen_Click" />
+                    <MenuItem Header="_Settings" />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>-->
+        <Canvas>
+            <!-- This canvas contains elements that are to be selected -->
+        </Canvas>
+
+        <Canvas>
+            <!-- This canvas is overlaid over the previous canvas and is used to 
+                place the rectangle that implements the drag selection box. -->
+            <Rectangle
+                x:Name="selectionBox"
+                Visibility="Collapsed"
+                Stroke="WhiteSmoke"
+                StrokeThickness="5"
+                />
+        </Canvas>
+    </Grid>
+</Window>

@@ -1,0 +1,29 @@
+﻿<Window x:Class="ExileSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExileSystem"
+        mc:Ignorable="d"
+        Loaded="WindowLoaded"
+        Title="Exile System" Height="350" Width="525">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="27*"/>
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Options">
+                    <MenuItem Header="_Clip Screen" Click="ClipScreen_Click" />
+                    <MenuItem Header="_Settings" />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <DockPanel HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click" Margin="432,267,0,0" Grid.Row="1"/>
+    </Grid>
+
+</Window>
