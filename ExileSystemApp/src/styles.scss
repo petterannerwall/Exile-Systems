@@ -5,4 +5,62 @@ html, body {
   padding: 0;
 
   height: 100%;
+
+  color: #eceff1;
+}
+
+.center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.content-wrapper{
+  height: 100%;
+  padding-left: 300px;
+}
+
+.block-wrapper {
+  width: 30%;
+  text-align: left;
+  .block-title {
+      text-align: right;
+  }
+}
+
+.hr-text {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap; 
+}
+
+.hr-text > span {
+  position: relative;
+  display: inline-block;
+}
+
+.hr-text > span:before,
+.hr-text > span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9999px;
+  height: 1px;
+  background: #fff;
+}
+
+.hr-text > span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.hr-text > span:after {
+  left: 100%;
+  margin-left: 15px;
 }

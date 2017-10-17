@@ -1,0 +1,45 @@
+<div class="center">
+    <div class="block-wrapper">
+        <div class="row">
+            <div class="col s12">
+                <h4 class="block-title">
+                    <a class="btn-floating btn waves-effect waves-light left" (click)="back()">
+                        <i class="material-icons">navigate_before</i>
+                    </a>Enter existing room</h4>
+                <hr>
+            </div>
+        </div>
+        <form #roomForm="ngForm" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">text_format</i>
+                    <input [(ngModel)]="model.roomCode" id="roomCode" name="roomCode" type="text" class="validate">
+                    <label for="roomCode">Room code</label>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col s12">
+                <a class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action">
+                    <i class="material-icons right">send</i>
+                    Enter
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="hr-text">
+                    <span>or generate a new room</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <a class="waves-effect waves-light btn right full-width" (click)="create()" type="submit" name="action">
+                    <i class="material-icons right">send</i>
+                    Create room
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

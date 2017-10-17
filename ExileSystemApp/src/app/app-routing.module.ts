@@ -1,11 +1,30 @@
-import { HomeComponent } from './components/home/home.component';
+import { SettingsComponent } from './settings/settings.component';
+import { CurrentRoomComponent } from './current-room/current-room.component';
+import { EnterRoomComponent } from './enter-room/enter-room.component';
+import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        component: LoginComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: 'enter-room',
+        component: EnterRoomComponent
+    },
+    {
+        path: 'current-room',
+        component: CurrentRoomComponent
+    },
+    {
+        path: 'settings',
+        component: SettingsComponent
     }
 ];
 

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 // If you import a module but never use any of the imported values other than as TypeScript types,
@@ -12,20 +13,28 @@ export class ElectronService {
   childProcess: typeof childProcess;
   dialog: any;
   lineReader: any;
-
-  constructor() {
+  config: any;
+  constructor(private router: Router) {
     // Conditional imports
     if (this.isElectron()) {
       this.ipcRenderer = window.require('electron').ipcRenderer;
       this.dialog = window.require('electron').remote;
       this.childProcess = window.require('child_process');
       this.lineReader = window.require('reverse-line-reader');
+      const Config = window.require('electron-config');
+      this.config = new Config();
 
       // init menu
       const template = [
         {
           label: 'File',
           submenu: [
+            {
+              label: 'Leave room',
+              click() {
+                router.navigate(['/enter-room']);
+              }
+            },
             {
               label: 'Settings',
               click() {

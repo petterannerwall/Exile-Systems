@@ -1,28 +1,36 @@
-import 'zone.js/dist/zone-mix';
-import 'reflect-metadata';
+
 import 'polyfills';
-import { BrowserModule } from '@angular/platform-browser';
+import 'reflect-metadata';
+import 'zone.js/dist/zone-mix';
+
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
-import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-
-import { ElectronService } from './providers/electron.service';
+import { AppComponent } from './app.component';
+import { CurrentRoomComponent } from './current-room/current-room.component';
+import { EnterRoomComponent } from './enter-room/enter-room.component';
+import { SettingsComponent } from './settings/settings.component';
+import { LoginComponent } from './login/login.component';
+import { SidebarNavModule } from './shared/components/sidebar-nav/sidebar-nav.module';
+import { ElectronService } from './shared/providers/electron.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    LoginComponent,
+    EnterRoomComponent,
+    CurrentRoomComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SidebarNavModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]
