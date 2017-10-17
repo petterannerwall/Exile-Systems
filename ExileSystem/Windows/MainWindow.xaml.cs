@@ -25,20 +25,18 @@ namespace ExileSystem
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        
         private IHubProxy Proxy;
         private HubConnection Connection;
-        private string Host = "http://localhost:9393/signalchat";
+        private string Host = "http://localhost:9393/signalr";
         public Thread Thread { get; set; }
         public bool Active { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-
-
+            Settings.Load();
             SnippingTool.AreaSelected += OnAreaSelectedAsync;
-
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -101,8 +99,7 @@ namespace ExileSystem
         {
             Proxy.Invoke("Broadcast", "Debug Message");
         }
-
-
+        
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             var window = new SettingsWindow();
