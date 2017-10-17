@@ -1,0 +1,19 @@
+﻿<Window x:Class="ExileSystem.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExileSystem"
+        mc:Ignorable="d"
+        Title="Settings" Height="300" Width="300">
+    <Grid>
+        <TextBox x:Name="pathTextBox" HorizontalAlignment="Left" Height="23" Margin="76,14,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="label" Content="Log Path" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="accountTextBox" HorizontalAlignment="Left" Height="23" Margin="76,45,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="label_Copy" Content="Account" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="characterTextBox" HorizontalAlignment="Left" Height="23" Margin="76,76,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="label_Copy1" Content="Character" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="207,239,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

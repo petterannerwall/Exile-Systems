@@ -28,7 +28,7 @@ namespace ExileSystem
 
         private IHubProxy Proxy;
         private HubConnection Connection;
-        private string Host = "http://localhost:8080/signalchat";
+        private string Host = "http://localhost:9393/signalchat";
         public Thread Thread { get; set; }
         public bool Active { get; set; }
 
@@ -66,10 +66,53 @@ namespace ExileSystem
 
         private void ImageUpdate(string bitmapString)
         {
-            bitmapString.Base64StringToImage().Save(@"C:\Temp\test.jpg");            
-        }
+            byte[] bitmapByteArray = Convert.FromBase64String(bitmapString);
+            var imageSource = new BitmapImage();
+            using (var bmpStream = new MemoryStream(bitmapByteArray))
+            {
+                imageSource.BeginInit();
+                imageSource.StreamSource = bmpStream;
+                imageSource.CacheOption = BitmapCacheOption.OnLoad;
+                imageSource.EndInit();
+            }
 
-        private void Update(string message)
+            imageSource.Freeze(); // here
+
+            if (WpfImage.Dispatcher.CheckAccess())
+            {
+                WpfImage.Source = imageSource;
+            }
+            else
+            {
+                Action act = () => { WpfImage.Source = imageSource; };
+                WpfImage.Dispatcher.BeginInvoke(act);
+            }
+
+
+                //byte[] bitmapByteArray = Convert.FromBase64String(bitmapString);
+
+                //var imageSource = new BitmapImage();
+
+                //using (var memoryStream = new MemoryStream(bitmapByteArray))
+                //{
+
+                //    imageSource.BeginInit();
+                //    imageSource.StreamSource = memoryStream;
+                //    imageSource.EndInit();
+
+                //    imageSource.Freeze();
+
+                //    // Assign the Source property of your image
+                //}
+
+                //WpfImage.Dispatcher.Invoke(() =>
+                //{
+                //    WpfImage.Source = imageSource;
+                //});
+
+            }
+
+            private void Update(string message)
         {
             //Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => this.Close()));
         }
@@ -79,18 +122,18 @@ namespace ExileSystem
             SnippingTool.Snip();
         }
 
-        private async void OnAreaSelectedAsync(object sender, EventArgs e)
+        private void OnAreaSelectedAsync(object sender, EventArgs e)
         {
             string base64string = SnippingTool.Image.ImageToBase64String();
-            await Proxy.Invoke("BroadcastImage", base64string);
-            
+            Proxy.Invoke("BroadcastImage", base64string);
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Proxy.Invoke("Broadcast", "Debug Message");
         }
-        
+
 
 
 

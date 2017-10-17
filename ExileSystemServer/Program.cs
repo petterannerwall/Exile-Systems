@@ -10,7 +10,7 @@ namespace ExileSystemServer
     {
         static void Main(string[] args)
         {
-            var url = "http://localhost:8080/";
+            var url = "http://localhost:9393/";
             using (WebApp.Start<Startup>(url))
             {
                 Console.WriteLine($"Server running at {url}");
@@ -25,6 +25,7 @@ namespace ExileSystemServer
         {
             app.UseCors(CorsOptions.AllowAll);
             app.MapSignalR("/signalchat", new HubConfiguration());
+            GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
         }
     }
 }

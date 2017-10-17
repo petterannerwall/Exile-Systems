@@ -13,6 +13,45 @@ namespace ExileSystemServer
     {
         private static ConcurrentDictionary<string, Player> ChatClients = new ConcurrentDictionary<string, Player>();
 
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            var userName = ChatClients.SingleOrDefault((c) => c.Value.ID == Context.ConnectionId).Key;
+            if (userName != null)
+            {
+                Clients.Others.ParticipantDisconnection(userName);
+                Console.WriteLine($"<> {userName} disconnected");
+            }
+            return base.OnDisconnected(stopCalled);
+        }
+
+        public override Task OnReconnected()
+        {
+            var userName = ChatClients.SingleOrDefault((c) => c.Value.ID == Context.ConnectionId).Key;
+            if (userName != null)
+            {
+                Clients.Others.ParticipantReconnection(userName);
+                Console.WriteLine($"== {userName} reconnected");
+            }
+            return base.OnReconnected();
+        }
+
+        public List<Player> Login(string account)
+        {
+            if (!ChatClients.ContainsKey(account))
+            {
+                Console.WriteLine($"++ {account} logged in");
+                List<Player> users = new List<Player>(ChatClients.Values);
+                Player newPlayer = new Player { Name = account, ID = Context.ConnectionId };
+                var added = ChatClients.TryAdd(account, newPlayer);
+                if (!added) return null;
+                Clients.CallerState.UserName = account;
+                Clients.Others.ParticipantLogin(newPlayer);
+                return users;
+            }
+            return null;
+        }
+        
+
         public void Broadcast(string message)
         {
             if (!string.IsNullOrEmpty(message))
