@@ -1,22 +1,9 @@
-﻿using Microsoft.AspNet.SignalR.Client;
+﻿using ExileSystem.Classes;
+using ExileSystem.Models;
+using Microsoft.AspNet.SignalR.Client;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace ExileSystem
 {
@@ -24,43 +11,31 @@ namespace ExileSystem
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
-        
-        private IHubProxy Proxy;
-        private HubConnection Connection;
-        private string Host = "http://localhost:9393/signalr";
+    {   
         public Thread Thread { get; set; }
         public bool Active { get; set; }
+        private Settings _settings;
+        private LogReader logReader;
 
         public MainWindow()
         {
-            InitializeComponent();
-            Settings.Load();
+
+            _settings = Settings.Load();
+            logReader = new LogReader(_settings.LogPath);
+
+            LogReader.NewMessage += NewMessageDetected;
             SnippingTool.AreaSelected += OnAreaSelectedAsync;
+
+            HubProxy.Initialize();
+            LocalPlayer.Initialize();
+            InitializeComponent();
         }
 
-        private void WindowLoaded(object sender, RoutedEventArgs e)
+        private void NewMessageDetected(object sender, MessageEventArgs args)
         {
-            Active = true;
-            Thread = new Thread(() =>
-            {
-                Connection = new HubConnection(Host);
-                Proxy = Connection.CreateHubProxy("ServerHub");
-
-                Proxy.On("Update", (m) => Update(m));
-                Proxy.On("ImageUpdate", (b) => ImageUpdate(b));
-
-                Connection.Start();
-
-                while (Active)
-                {
-                    Thread.Sleep(10);
-                }
-            })
-            { IsBackground = true };
-            Thread.Start();
-
+            UpdateHandler.HandleUpdateFromMessage(args.Message);
         }
+        
 
         private void ImageUpdate(string bitmapString)
         {
@@ -91,19 +66,34 @@ namespace ExileSystem
         private void OnAreaSelectedAsync(object sender, EventArgs e)
         {
             string base64String = SnippingTool.Image.ImageToBase64String();
-            Proxy.Invoke("BroadcastImage", base64String);
-
+            HubProxy.BroadcastImage(base64String);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Proxy.Invoke("Broadcast", "Debug Message");
+            if ((string)startButton.Content == "Start")
+            {
+                logReader.Start();
+                startButton.Content = "Stop";
+            }
+            else
+            {
+                startButton.Content = "Start";
+                logReader.Stop();
+            }
         }
         
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            var window = new SettingsWindow();
-            window.Show();
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.Closing += SettingsWindow_Closing;
+            settingsWindow.Show();
+        }
+
+        private void SettingsWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _settings = Settings.Load();
+            logReader = new LogReader(_settings.LogPath);
         }
     }
 

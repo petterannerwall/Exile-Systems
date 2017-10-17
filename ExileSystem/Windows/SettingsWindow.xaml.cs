@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,11 +35,18 @@ namespace ExileSystem
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            _settings.LogPath = pathTextBox.Text;
-            _settings.AccountName = accountTextBox.Text;
-            _settings.CharacterName = characterTextBox.Text;
-            _settings.Save();
-            this.Close();
+            if (File.Exists(pathTextBox.Text))
+            {
+                _settings.LogPath = pathTextBox.Text.Replace("Client.txt", "").Replace("client.txt", "");
+                _settings.AccountName = accountTextBox.Text;
+                _settings.CharacterName = characterTextBox.Text;
+                _settings.Save();
+                this.Close();
+            }
+            else
+            {
+                ErrorLabel.Content = "Can't find client.txt in the specified path." + Environment.NewLine + "Make sure it ends with client.txt";
+            }
         }
     }
 }

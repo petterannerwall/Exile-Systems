@@ -8,7 +8,11 @@ namespace ExileSystemServer.Models
 {
     public class Player
     {
-        public string Name { get; set; }
-        public string ID { get; set; }
+        public string ConnectionID { get; set; }
+        public string Account { get; set; }
+        public string Character { get; set; }
+        public string Area { get; set; }
+        public string Guild { get; set; }
+        public List<string> InArea { get; set; }
     }
 }
