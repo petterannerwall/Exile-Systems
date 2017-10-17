@@ -25,20 +25,18 @@ namespace ExileSystem
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        
         private IHubProxy Proxy;
         private HubConnection Connection;
-        private string Host = "http://localhost:8080/signalchat";
+        private string Host = "http://localhost:9393/signalr";
         public Thread Thread { get; set; }
         public bool Active { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-
-
+            Settings.Load();
             SnippingTool.AreaSelected += OnAreaSelectedAsync;
-
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -66,7 +64,18 @@ namespace ExileSystem
 
         private void ImageUpdate(string bitmapString)
         {
-            bitmapString.Base64StringToImage().Save(@"C:\Temp\test.jpg");            
+            var imageSource = bitmapString.Base64StringToImagesouce();
+            imageSource.Freeze();
+
+            if (WpfImage.Dispatcher.CheckAccess())
+            {
+                WpfImage.Source = imageSource;
+            }
+            else
+            {
+                Action act = () => { WpfImage.Source = imageSource; };
+                WpfImage.Dispatcher.BeginInvoke(act);
+            }
         }
 
         private void Update(string message)
@@ -79,11 +88,11 @@ namespace ExileSystem
             SnippingTool.Snip();
         }
 
-        private async void OnAreaSelectedAsync(object sender, EventArgs e)
+        private void OnAreaSelectedAsync(object sender, EventArgs e)
         {
-            string base64string = SnippingTool.Image.ImageToBase64String();
-            await Proxy.Invoke("BroadcastImage", base64string);
-            
+            string base64String = SnippingTool.Image.ImageToBase64String();
+            Proxy.Invoke("BroadcastImage", base64String);
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -91,9 +100,11 @@ namespace ExileSystem
             Proxy.Invoke("Broadcast", "Debug Message");
         }
         
-
-
-
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new SettingsWindow();
+            window.Show();
+        }
     }
 
 }

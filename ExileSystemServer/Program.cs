@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
@@ -10,7 +12,7 @@ namespace ExileSystemServer
     {
         static void Main(string[] args)
         {
-            var url = "http://localhost:8080/";
+            var url = "http://localhost:9393/";
             using (WebApp.Start<Startup>(url))
             {
                 Console.WriteLine($"Server running at {url}");
@@ -24,7 +26,15 @@ namespace ExileSystemServer
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            app.MapSignalR("/signalchat", new HubConfiguration());
+            app.MapSignalR("/signalr", new HubConfiguration()
+            {
+                EnableDetailedErrors = true,
+                EnableJSONP = true,
+                EnableJavaScriptProxies = true
+            });
+            
+            GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
+            
         }
     }
 }
