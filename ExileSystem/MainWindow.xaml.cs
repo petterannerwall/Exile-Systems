@@ -66,17 +66,8 @@ namespace ExileSystem
 
         private void ImageUpdate(string bitmapString)
         {
-            byte[] bitmapByteArray = Convert.FromBase64String(bitmapString);
-            var imageSource = new BitmapImage();
-            using (var bmpStream = new MemoryStream(bitmapByteArray))
-            {
-                imageSource.BeginInit();
-                imageSource.StreamSource = bmpStream;
-                imageSource.CacheOption = BitmapCacheOption.OnLoad;
-                imageSource.EndInit();
-            }
-
-            imageSource.Freeze(); // here
+            var imageSource = bitmapString.Base64StringToImagesouce();
+            imageSource.Freeze();
 
             if (WpfImage.Dispatcher.CheckAccess())
             {
@@ -87,32 +78,9 @@ namespace ExileSystem
                 Action act = () => { WpfImage.Source = imageSource; };
                 WpfImage.Dispatcher.BeginInvoke(act);
             }
+        }
 
-
-                //byte[] bitmapByteArray = Convert.FromBase64String(bitmapString);
-
-                //var imageSource = new BitmapImage();
-
-                //using (var memoryStream = new MemoryStream(bitmapByteArray))
-                //{
-
-                //    imageSource.BeginInit();
-                //    imageSource.StreamSource = memoryStream;
-                //    imageSource.EndInit();
-
-                //    imageSource.Freeze();
-
-                //    // Assign the Source property of your image
-                //}
-
-                //WpfImage.Dispatcher.Invoke(() =>
-                //{
-                //    WpfImage.Source = imageSource;
-                //});
-
-            }
-
-            private void Update(string message)
+        private void Update(string message)
         {
             //Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => this.Close()));
         }
@@ -124,8 +92,8 @@ namespace ExileSystem
 
         private void OnAreaSelectedAsync(object sender, EventArgs e)
         {
-            string base64string = SnippingTool.Image.ImageToBase64String();
-            Proxy.Invoke("BroadcastImage", base64string);
+            string base64String = SnippingTool.Image.ImageToBase64String();
+            Proxy.Invoke("BroadcastImage", base64String);
 
         }
 
@@ -135,8 +103,11 @@ namespace ExileSystem
         }
 
 
-
-
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new SettingsWindow();
+            window.Show();
+        }
     }
 
 }

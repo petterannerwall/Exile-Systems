@@ -2,7 +2,7 @@
 using System.IO;
 using System.Web.Script.Serialization;
 
-namespace ExileSystemServer
+namespace ExileSystem
 {
     public class Settings : AppSettings<Settings>
     {
@@ -15,14 +15,14 @@ namespace ExileSystemServer
     {
         public delegate void EventHandler(object sender, EventArgs args);
         public static EventHandler SettingsSaved;
-        private const string DEFAULT_FILENAME = "settings.json";
+        private const string DefaultFilename = "settings.json";
 
-        public void Save(string fileName = DEFAULT_FILENAME)
+        public void Save(string fileName = DefaultFilename)
         {
             File.WriteAllText(fileName, (new JavaScriptSerializer()).Serialize(this));
         }
 
-        public static void Save(T pSettings, string fileName = DEFAULT_FILENAME)
+        public static void Save(T pSettings, string fileName = DefaultFilename)
         {
             File.WriteAllText(fileName, (new JavaScriptSerializer()).Serialize(pSettings));
 
@@ -32,7 +32,7 @@ namespace ExileSystemServer
             }
         }
 
-        public static T Load(string fileName = DEFAULT_FILENAME)
+        public static T Load(string fileName = DefaultFilename)
         {
             T t = new T();
             if (File.Exists(fileName))

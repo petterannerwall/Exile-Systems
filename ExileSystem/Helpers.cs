@@ -22,18 +22,15 @@ namespace ExileSystem
         public static BitmapImage Base64StringToImagesouce(this string base64string)
         {
             byte[] bitmapByteArray = Convert.FromBase64String(base64string);
-            
-            using (var memoryStream = new MemoryStream(bitmapByteArray))
+            var imageSource = new BitmapImage();
+            using (var bmpStream = new MemoryStream(bitmapByteArray))
             {
-                var imageSource = new BitmapImage();
                 imageSource.BeginInit();
-                imageSource.StreamSource = memoryStream;
+                imageSource.StreamSource = bmpStream;
+                imageSource.CacheOption = BitmapCacheOption.OnLoad;
                 imageSource.EndInit();
-
-                // Assign the Source property of your image
-                return imageSource;
             }
-
+            return imageSource;
         }
 
         public static Image Base64StringToImage(this string base64string)
