@@ -11,6 +11,28 @@ namespace ExileSystem
 {
     public static class Helpers
     {
+        public static string SubstringBefore(string text, string before)
+        {
+            return text.Substring(0, text.IndexOf(before));
+        }
+
+        public static string SubstringAfter(string text, string after)
+        {
+            return text.Substring(text.IndexOf(after) + after.Length);
+        }
+
+        public static string SubstringBetween(string text, string start, string end)
+        {
+            try
+            {
+                return text.Substring((text.IndexOf(start) + start.Length), (text.IndexOf(end) - text.IndexOf(start) - start.Length));
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+
+        }
 
         public static string ImageToBase64String(this Image image)
         {

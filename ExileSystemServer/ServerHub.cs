@@ -11,41 +11,37 @@ namespace ExileSystemServer
 {
     public class ServerHub : Hub
     {
-        private static ConcurrentDictionary<string, Player> ChatClients = new ConcurrentDictionary<string, Player>();
+        private static ConcurrentDictionary<string, Player> ConnectedPlayers = new ConcurrentDictionary<string, Player>();
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            var userName = ChatClients.SingleOrDefault((c) => c.Value.ID == Context.ConnectionId).Key;
-            if (userName != null)
+            var accountName = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId).Value.Account;
+            if (accountName != null)
             {
-                Clients.Others.ParticipantDisconnection(userName);
-                Console.WriteLine($"<> {userName} disconnected");
+                Console.WriteLine($"<> {accountName} disconnected");
             }
             return base.OnDisconnected(stopCalled);
         }
 
         public override Task OnReconnected()
         {
-            var userName = ChatClients.SingleOrDefault((c) => c.Value.ID == Context.ConnectionId).Key;
-            if (userName != null)
+            var accountName = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId).Value.Account;
+            if (accountName != null)
             {
-                Clients.Others.ParticipantReconnection(userName);
-                Console.WriteLine($"== {userName} reconnected");
+                Console.WriteLine($"== {accountName} reconnected");
             }
             return base.OnReconnected();
         }
 
-        public List<Player> Login(string account)
+        public List<Player> Login(string room, Player player)
         {
-            if (!ChatClients.ContainsKey(account))
+            if (!ConnectedPlayers.ContainsKey(player.Account))
             {
-                Console.WriteLine($"++ {account} logged in");
-                List<Player> users = new List<Player>(ChatClients.Values);
-                Player newPlayer = new Player { Name = account, ID = Context.ConnectionId };
-                var added = ChatClients.TryAdd(account, newPlayer);
+                Console.WriteLine($"++ {player.Account} connected");
+                List<Player> users = new List<Player>(ConnectedPlayers.Values);
+                player.ConnectionID = Context.ConnectionId;
+                var added = ConnectedPlayers.TryAdd(room, player);
                 if (!added) return null;
-                Clients.CallerState.UserName = account;
-                Clients.Others.ParticipantLogin(newPlayer);
                 return users;
             }
             return null;
@@ -66,17 +62,6 @@ namespace ExileSystemServer
             Console.WriteLine("Broadcasting Bitmap");
             Clients.All.ImageUpdate(bitmap);
         }
-
-        public void Unicast(string recepient, string message)
-        {
-            var sender = Clients.CallerState.UserName;
-            if (!string.IsNullOrEmpty(sender) && recepient != sender &&
-                !string.IsNullOrEmpty(message) && ChatClients.ContainsKey(recepient))
-            {
-                Player client = new Player();
-                ChatClients.TryGetValue(recepient, out client);
-                Clients.Client(client.ID).UnicastMessage(sender, message);
-            }
-        }
+        
     }
 }

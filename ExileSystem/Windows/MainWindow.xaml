@@ -22,7 +22,7 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click" Margin="432,267,0,0" Grid.Row="1"/>
+        <Button x:Name="startButton" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="69" Click="Button_Click" Margin="438,267,0,0" Grid.Row="1"/>
         <Image x:Name="WpfImage" HorizontalAlignment="Left" Height="257" VerticalAlignment="Top" Width="497" Margin="10,5,0,0" Grid.Row="1"/>
     </Grid>
 
