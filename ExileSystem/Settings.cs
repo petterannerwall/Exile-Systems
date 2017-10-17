@@ -4,7 +4,7 @@ using System.Web.Script.Serialization;
 
 namespace ExileSystem
 {
-    public class Settings : AppSettings<Settings>
+    public class Settings : AppSettings<Settings> //tsdsd
     {
         public string LogPath = "";
         public string AccountName = "";
