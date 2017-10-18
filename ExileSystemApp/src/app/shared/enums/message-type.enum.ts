@@ -1,12 +1,8 @@
-enum MessageType {
-    TradeChannel = 0,
-    PartyChannel,
-    WhisperChannel,
-    GlobalChannel,
-    IncTradeMessage,
-    OutTradeMessage,
+export enum MessageTypeEnum {
+    Message,
     SelfEnteringArea,
     OtherJoinArea,
     OtherLeaveArea,
+    GuildInformation,
     Other
 }
