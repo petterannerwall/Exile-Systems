@@ -38,6 +38,16 @@ namespace ExileSystem.Classes
             Thread.Start();
         }
 
+        public static void Stop()
+        {
+            Connection.Stop(new TimeSpan(0));
+        }
+
+        public static void Start()
+        {
+            Connection.Start();
+        }
+
         private static void ImageUpdate(object b)
         {
             throw new NotImplementedException();
@@ -53,14 +63,15 @@ namespace ExileSystem.Classes
             Proxy.Invoke("BroadcastImage", base64string);
         }
 
-        public static void Login(string channel)
+        public static async Task LoginAsync(string channel)
         {
-            Proxy.Invoke("Login", channel, LocalPlayer.player);
+            await Connection.Start();
+            await Proxy.Invoke("Login", channel, LocalPlayer.player);
         }
 
-        public static void PlayerUpdate()
+        public static void UpdatePlayer(Player player)
         {
-            Proxy.Invoke("Broadcast", "Debug Message");
+            Proxy.Invoke("UpdatePlayer", player);
         }
 
     }

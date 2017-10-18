@@ -34,6 +34,10 @@ namespace ExileSystem.Classes
                     break;
             }
 
+            if (message.Type != Message.MessageType.Other)
+            {
+                HubProxy.UpdatePlayer(LocalPlayer.player);
+            }
 
             //Send update call to webserver here
         }

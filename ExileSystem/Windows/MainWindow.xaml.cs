@@ -69,7 +69,8 @@ namespace ExileSystem
             LocalPlayer.player.Account = _settings.AccountName;
             LocalPlayer.player.Character = _settings.CharacterName;
 
-            HubProxy.Login(_settings.Channel);
+            HubProxy.Start();
+            HubProxy.LoginAsync(_settings.Channel);
 
             logReader = new LogReader(_settings.LogPath);
             logReader.Start();
@@ -78,12 +79,14 @@ namespace ExileSystem
         
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            HubProxy.Stop();
             logReader.Stop();
             Application.Current.Shutdown();
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
+            HubProxy.Stop();
             logReader.Stop();
             LoginPanel.Visibility = Visibility.Visible;
             WorkingPanel.Visibility = Visibility.Hidden;

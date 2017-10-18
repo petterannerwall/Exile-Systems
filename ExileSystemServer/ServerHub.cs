@@ -47,6 +47,12 @@ namespace ExileSystemServer
             return null;
         }
         
+        public void UpdatePlayer(Player player)
+        {
+            ConnectedPlayers.AddOrUpdate(player.Account, player);
+            Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character);
+        }
+
 
         public void Broadcast(string message)
         {
@@ -63,5 +69,13 @@ namespace ExileSystemServer
             Clients.All.ImageUpdate(bitmap);
         }
         
+    }
+    static class ExtensionMethods
+    {
+        // Either Add or overwrite
+        public static void AddOrUpdate<K, V>(this ConcurrentDictionary<K, V> dictionary, K key, V value)
+        {
+            dictionary.AddOrUpdate(key, value, (oldkey, oldvalue) => value);
+        }
     }
 }
