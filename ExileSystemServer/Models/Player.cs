@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExileSystemServer.Models
 {
+    [Serializable]
     public class Player
     {
         public string ConnectionID { get; set; }

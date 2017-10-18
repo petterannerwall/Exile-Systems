@@ -15,6 +15,7 @@ namespace ExileSystem.Classes
         private static HubConnection Connection;
         private static bool Active;
         private static Thread Thread;
+        private static Settings settings;
         
         public static void Initialize()
         {
@@ -45,6 +46,8 @@ namespace ExileSystem.Classes
 
         public static void Start()
         {
+
+            settings = Settings.Load();
             Connection.Start();
         }
 
@@ -71,7 +74,7 @@ namespace ExileSystem.Classes
 
         public static void UpdatePlayer(Player player)
         {
-            Proxy.Invoke("UpdatePlayer", player);
+            Proxy.Invoke("UpdatePlayer", settings.Channel, player);
         }
 
     }
