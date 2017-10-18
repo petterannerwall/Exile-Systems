@@ -32,7 +32,7 @@ export class ElectronService {
             {
               label: 'Leave room',
               click() {
-                router.navigate(['/enter-room']);
+                router.navigate(['/']);
               }
             },
             {

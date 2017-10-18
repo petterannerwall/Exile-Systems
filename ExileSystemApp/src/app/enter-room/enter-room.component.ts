@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./enter-room.component.scss']
 })
 export class EnterRoomComponent implements OnInit {
-  model = { roomCode: '' };
+  model = { roomCode: '', accountName: '', characterName: ''};
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -22,10 +22,5 @@ export class EnterRoomComponent implements OnInit {
   create() {
     // todo: generate new room
     this.router.navigate(['/current-room']);
-  }
-
-  back() {
-    // todo: generate new room
-    this.router.navigate(['/login']);
   }
 }
