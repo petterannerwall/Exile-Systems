@@ -23,15 +23,7 @@ namespace ExileSystem
 
         public static string SubstringBetween(string text, string start, string end)
         {
-            try
-            {
-                return text.Substring((text.IndexOf(start) + start.Length), (text.IndexOf(end) - text.IndexOf(start) - start.Length));
-            }
-            catch (Exception e)
-            {
-                return "";
-            }
-
+            return text.Substring((text.IndexOf(start) + start.Length), (text.IndexOf(end) - text.IndexOf(start) - start.Length));
         }
 
         public static string ImageToBase64String(this Image image)

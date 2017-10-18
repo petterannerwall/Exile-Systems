@@ -81,9 +81,6 @@
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageEventArgs.cs" />
     <Compile Include="Models\LocalPlayer.cs" />
-    <Compile Include="Windows\SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Classes\SnippingTool.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,10 +99,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\SettingsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="SnippingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -3,28 +3,94 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ExileSystem"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="{DynamicResource MaterialDesignPaper}"
-        Title="Exile System" Height="350" Width="525">
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="18"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"    
+        ResizeMode="CanMinimize"
+        Title="Exile System" Height="430" Width="600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="27*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        <DockPanel>
-            <Menu DockPanel.Dock="Top" Height="22">
-                <MenuItem Header="_Options" Height="23">
-                    <MenuItem Header="_Clip Screen" Click="ClipScreen_Click" />
-                    <MenuItem Header="_Settings" Click="Settings_Click"/>
-                    <MenuItem Header="_Exit" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="3">
+            <Menu Grid.Row="0" Grid.ColumnSpan="3">
+                <MenuItem Padding="5" Margin="0" Header="_Menu" Height="30">
+                    <MenuItem Header="_Exit" Click="Exit_Click"/>
                 </MenuItem>
             </Menu>
-        </DockPanel>
-        <Button x:Name="startButton" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="69" Click="Button_Click" Margin="438,255,0,0" Grid.Row="1"/>
-        <Image x:Name="WpfImage" HorizontalAlignment="Left" Height="175" VerticalAlignment="Top" Width="497" Margin="10,10,0,0" Grid.Row="1"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <StackPanel x:Name="WorkingPanel" Visibility="Hidden"  VerticalAlignment="Center">
+                <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" IsIndeterminate="True" Width="100" Height="100" Value="35"/>
+                <TextBlock Padding="20" HorizontalAlignment="Center">Working...</TextBlock>
+                <Button x:Name="stopButton" Margin="20" Width="100" Content="Stop" Click="StopButton_Click"/>
+            </StackPanel>
+            <StackPanel x:Name="LoginPanel" Visibility="Visible" VerticalAlignment="Top">
+                <Border Margin="10" BorderBrush="White" BorderThickness="0,0,0,2">
+                    <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Information" HorizontalAlignment="Right" Margin="0,0,0,10" />
+                </Border>
+                <TextBox x:Name="accountTextBox" Height="45" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock>Account name</TextBlock>
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox x:Name="characterTextBox" Height="45" Margin="10,0,10,0" Padding="0,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock>Character name</TextBlock>
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox x:Name="channelTextBox" Height="45" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock>Channel Code</TextBlock>
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox x:Name="pathTextBox" Height="45" Margin="10,0,10,0" Padding="0,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock>Client Log Path</TextBlock>
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <Button x:Name="startButton" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="Button_Click" Margin="10">
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center" Margin="0,-2,0,0">Start updating</TextBlock>
+                        <!--<materialDesign:PackIcon  Kind="Send" HorizontalAlignment="Right" />-->
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="informationPanel" Visibility="Hidden" Grid.Row="2" Grid.ColumnSpan="3">
+            <Border BorderBrush="White" BorderThickness="0,1,0,0"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontSize="12" Margin="5,0,0,0" FontWeight="Bold">Account:</TextBlock>
+                <TextBlock x:Name="accountInfoTextBlock" MinWidth="20" FontSize="12" Margin="5,0,0,0"></TextBlock>
+                <TextBlock FontSize="12" Margin="5,0,0,0" FontWeight="Bold">Character:</TextBlock>
+                <TextBlock x:Name="characterInfoTextBlock" MinWidth="20" FontSize="12" Margin="5,0,0,0"></TextBlock>
+                <TextBlock FontSize="12" Margin="5,0,0,0" FontWeight="Bold">Last Message:</TextBlock>
+                <TextBlock x:Name="messageInfoTextBlock" MinWidth="20" FontSize="12" Margin="5,0,0,0"></TextBlock>
+
+            </StackPanel>
+        </Grid>
     </Grid>
 
 </Window>

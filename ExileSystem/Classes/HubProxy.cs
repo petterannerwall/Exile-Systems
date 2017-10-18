@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR.Client;
+﻿using ExileSystem.Models;
+using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,16 @@ namespace ExileSystem.Classes
         public static void BroadcastImage(string base64string)
         {
             Proxy.Invoke("BroadcastImage", base64string);
+        }
+
+        public static void Login(string channel)
+        {
+            Proxy.Invoke("Login", channel, LocalPlayer.player);
+        }
+
+        public static void PlayerUpdate()
+        {
+            Proxy.Invoke("Broadcast", "Debug Message");
         }
 
     }

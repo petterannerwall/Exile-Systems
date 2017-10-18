@@ -19,81 +19,75 @@ namespace ExileSystem
 
         public MainWindow()
         {
-
             _settings = Settings.Load();
-            logReader = new LogReader(_settings.LogPath);
-
+            
             LogReader.NewMessage += NewMessageDetected;
-            SnippingTool.AreaSelected += OnAreaSelectedAsync;
 
             HubProxy.Initialize();
             LocalPlayer.Initialize();
+
             InitializeComponent();
+            
+            pathTextBox.Text = _settings.LogPath;
+            channelTextBox.Text = _settings.Channel;
+            accountTextBox.Text = _settings.AccountName;
+            characterTextBox.Text = _settings.CharacterName;
         }
 
         private void NewMessageDetected(object sender, MessageEventArgs args)
         {
+            
+
+            messageInfoTextBlock.Dispatcher.Invoke(() =>
+            {
+
+                if (args.Message.Type != Message.MessageType.Other)
+                {
+                    messageInfoTextBlock.Text = args.Message.Text;
+                }
+
+            });
+
             UpdateHandler.HandleUpdateFromMessage(args.Message);
-        }
-        
-
-        private void ImageUpdate(string bitmapString)
-        {
-            var imageSource = bitmapString.Base64StringToImagesouce();
-            imageSource.Freeze();
-
-            if (WpfImage.Dispatcher.CheckAccess())
-            {
-                WpfImage.Source = imageSource;
-            }
-            else
-            {
-                Action act = () => { WpfImage.Source = imageSource; };
-                WpfImage.Dispatcher.BeginInvoke(act);
-            }
-        }
-
-        private void Update(string message)
-        {
-            //Dispatcher.Invoke(DispatcherPriority.Normal, (Action)(() => this.Close()));
-        }
-
-        private void ClipScreen_Click(object sender, RoutedEventArgs e)
-        {
-            SnippingTool.Snip();
-        }
-
-        private void OnAreaSelectedAsync(object sender, EventArgs e)
-        {
-            string base64String = SnippingTool.Image.ImageToBase64String();
-            HubProxy.BroadcastImage(base64String);
-        }
-
+        }        
+                
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if ((string)startButton.Content == "Start")
-            {
-                logReader.Start();
-                startButton.Content = "Stop";
-            }
-            else
-            {
-                startButton.Content = "Start";
-                logReader.Stop();
-            }
+            _settings.LogPath = pathTextBox.Text.Replace("Client.txt", "").Replace("client.txt", "");
+            _settings.AccountName = accountTextBox.Text;
+            _settings.CharacterName = characterTextBox.Text;
+            _settings.Channel = channelTextBox.Text;
+            _settings.Save();
+
+            LoginPanel.Visibility = Visibility.Hidden;
+            WorkingPanel.Visibility = Visibility.Visible;
+            informationPanel.Visibility = Visibility.Visible;
+
+            accountInfoTextBlock.Text = _settings.AccountName;
+            characterInfoTextBlock.Text = _settings.CharacterName;
+                       
+            LocalPlayer.player.Account = _settings.AccountName;
+            LocalPlayer.player.Character = _settings.CharacterName;
+
+            HubProxy.Login(_settings.Channel);
+
+            logReader = new LogReader(_settings.LogPath);
+            logReader.Start();
+
         }
         
-        private void Settings_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            var settingsWindow = new SettingsWindow();
-            settingsWindow.Closing += SettingsWindow_Closing;
-            settingsWindow.Show();
+            logReader.Stop();
+            Application.Current.Shutdown();
         }
 
-        private void SettingsWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            _settings = Settings.Load();
-            logReader = new LogReader(_settings.LogPath);
+            logReader.Stop();
+            LoginPanel.Visibility = Visibility.Visible;
+            WorkingPanel.Visibility = Visibility.Hidden;
+            informationPanel.Visibility = Visibility.Hidden;
         }
     }
 

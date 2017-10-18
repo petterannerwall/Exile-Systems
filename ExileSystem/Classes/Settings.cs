@@ -9,6 +9,7 @@ namespace ExileSystem
         public string LogPath = "";
         public string AccountName = "";
         public string CharacterName = "";
+        public string Channel = "";
     }
 
     public class AppSettings<T> where T : new()

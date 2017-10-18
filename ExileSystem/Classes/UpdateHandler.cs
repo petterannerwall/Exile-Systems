@@ -17,22 +17,25 @@ namespace ExileSystem.Classes
                 case Message.MessageType.Message:
                     break;
                 case Message.MessageType.SelfEnteringArea:
-                    LocalPlayer.Area = message.Text;
+                    LocalPlayer.player.Area = message.Text;
                     break;
                 case Message.MessageType.OtherJoinArea:
-                    LocalPlayer.InArea.Add(message.Player);
+                    LocalPlayer.player.InArea.Add(message.Player);
                     break;
                 case Message.MessageType.OtherLeaveArea:
-                    LocalPlayer.InArea.Remove(message.Player);
+                    LocalPlayer.player.InArea.Remove(message.Player);
                     break;
                 case Message.MessageType.GuildInformation:
-                    LocalPlayer.Guild = message.Text;
+                    LocalPlayer.player.Guild = message.Text;
                     break;
                 case Message.MessageType.Other:
                     break;
                 default:
                     break;
             }
+
+
+            //Send update call to webserver here
         }
     }
 }
