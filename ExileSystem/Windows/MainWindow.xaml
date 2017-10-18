@@ -3,27 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ExileSystem"
         mc:Ignorable="d"
-        Loaded="WindowLoaded"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
         Title="Exile System" Height="350" Width="525">
     <Grid>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="27*"/>
         </Grid.RowDefinitions>
         <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_Options">
+            <Menu DockPanel.Dock="Top" Height="22">
+                <MenuItem Header="_Options" Height="23">
                     <MenuItem Header="_Clip Screen" Click="ClipScreen_Click" />
                     <MenuItem Header="_Settings" Click="Settings_Click"/>
                     <MenuItem Header="_Exit" />
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <Button x:Name="startButton" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="69" Click="Button_Click" Margin="438,267,0,0" Grid.Row="1"/>
-        <Image x:Name="WpfImage" HorizontalAlignment="Left" Height="257" VerticalAlignment="Top" Width="497" Margin="10,5,0,0" Grid.Row="1"/>
+        <Button x:Name="startButton" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="69" Click="Button_Click" Margin="438,255,0,0" Grid.Row="1"/>
+        <Image x:Name="WpfImage" HorizontalAlignment="Left" Height="175" VerticalAlignment="Top" Width="497" Margin="10,10,0,0" Grid.Row="1"/>
     </Grid>
 
 </Window>
