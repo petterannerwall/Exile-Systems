@@ -84,10 +84,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerHub.cs" />
+    <Compile Include="ServerRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

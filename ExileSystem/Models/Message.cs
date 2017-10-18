@@ -42,7 +42,7 @@ namespace ExileSystem.Models
         {
             ID = Guid.NewGuid();
 
-            const string pattern = @"(\d{4}/\d{2}/\d{2}\s\d{2}:\d{2}:\d{2})[^\]]+\]\s([$@%#]?)([^:]+)?:\s(.*)";
+            const string pattern = @"(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2})\s[\d]*\s[\d]*\s\[.*\]\s([$@%#]?)\s?(<.*>\s?)?(\w*):\s(.*)";
             var matches = Regex.Matches(message, pattern, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
             if (matches.Count != 1)
@@ -74,7 +74,7 @@ namespace ExileSystem.Models
             {
                 Type = MessageType.GuildInformation;
                 Channel = MessageChannel.Information;
-                Text = Helpers.SubstringBetween(Text, "Joined guild named ", " with");
+                Text = Helpers.SubstringBetween(Text, "Joined guild named ", " with").Trim();
             }
 
             if (type == "$")
@@ -100,15 +100,15 @@ namespace ExileSystem.Models
             
             if (Type == MessageType.SelfEnteringArea)
             {
-                   Text = Helpers.SubstringBetween(Text, "you have entered ", ".");
+                   Text = Helpers.SubstringBetween(Text, "you have entered ", ".").Trim();
             }
             else if (Type == MessageType.OtherJoinArea)
             {
-                Player = Helpers.SubstringBefore(Text, " has joined the area.");
+                Player = Helpers.SubstringBefore(Text, " has joined the area.").Trim();
             }
             else if (Type == MessageType.OtherLeaveArea)
             {
-                Player = Helpers.SubstringBefore(Text, " has left the area.");
+                Player = Helpers.SubstringBefore(Text, " has left the area.").Trim();
             }
         }
     }

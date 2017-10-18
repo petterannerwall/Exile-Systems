@@ -11,7 +11,13 @@ namespace ExileSystemServer
 {
     public class ServerHub : Hub
     {
+        private ServerRepository serverRepository;
         private static ConcurrentDictionary<string, Player> ConnectedPlayers = new ConcurrentDictionary<string, Player>();
+
+        public ServerHub()
+        {
+            serverRepository = new ServerRepository();
+        }
 
         public override Task OnDisconnected(bool stopCalled)
         {
@@ -33,23 +39,30 @@ namespace ExileSystemServer
             return base.OnReconnected();
         }
 
-        public List<Player> Login(string room, Player player)
+        public List<Player> Login(string channel, Player player)
         {
+            List<Player> users = new List<Player>();
+
             if (!ConnectedPlayers.ContainsKey(player.Account))
             {
                 Console.WriteLine($"++ {player.Account} connected");
-                List<Player> users = new List<Player>(ConnectedPlayers.Values);
+                users = new List<Player>(ConnectedPlayers.Values);
                 player.ConnectionID = Context.ConnectionId;
-                var added = ConnectedPlayers.TryAdd(room, player);
+                var added = ConnectedPlayers.TryAdd(Context.ConnectionId, player);
                 if (!added) return null;
-                return users;
             }
-            return null;
+
+            serverRepository.UppdateOrAddPlayer(channel, player);
+
+
+
+            return users;
         }
-        
-        public void UpdatePlayer(Player player)
+                
+        public void UpdatePlayer(string channel, Player player)
         {
-            ConnectedPlayers.AddOrUpdate(player.Account, player);
+            ConnectedPlayers.AddOrUpdate(Context.ConnectionId, player);
+            serverRepository.UppdateOrAddPlayer(channel, player);
             Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character);
         }
 
