@@ -13,14 +13,12 @@ import { AppComponent } from './app.component';
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
 import { SettingsComponent } from './settings/settings.component';
-import { LoginComponent } from './login/login.component';
 import { SidebarNavModule } from './shared/components/sidebar-nav/sidebar-nav.module';
 import { ElectronService } from './shared/providers/electron.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     EnterRoomComponent,
     CurrentRoomComponent,
     SettingsComponent
