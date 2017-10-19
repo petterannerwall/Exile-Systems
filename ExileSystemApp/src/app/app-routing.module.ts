@@ -1,3 +1,4 @@
+import { MapComponent } from './map/map.component';
 import { SettingsComponent } from './settings/settings.component';
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
@@ -20,6 +21,10 @@ const routes: Routes = [
     {
         path: 'settings',
         component: SettingsComponent
+    },
+    {
+        path: 'map',
+        component: MapComponent
     }
 ];
 
