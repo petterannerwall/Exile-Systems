@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
+import { MapComponent } from './map/map.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SidebarNavModule } from './shared/components/sidebar-nav/sidebar-nav.module';
 import { ElectronService } from './shared/providers/electron.service';
@@ -24,7 +25,8 @@ import { SignalRService } from './shared/providers/signalr.service';
     AppComponent,
     EnterRoomComponent,
     CurrentRoomComponent,
-    SettingsComponent
+    SettingsComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
