@@ -33,7 +33,7 @@ namespace ExileSystemServer
                 existingChannel.Players.Add(player);
 
             }
-            redis.Cache.SetObject($"game:{channel}", existingChannel, TimeSpan.FromHours(1));
+            redis.Cache.SetObject($"game:{channel}", existingChannel, TimeSpan.FromMinutes(10));
             return existingChannel;
 
         }
