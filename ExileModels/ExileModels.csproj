@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A7F061DC-7EDD-4311-B632-5CD84DB1A1D9}</ProjectGuid>
+    <ProjectGuid>{D71034CF-0053-4E67-B4E5-605E15A287F1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ExileModels</RootNamespace>
