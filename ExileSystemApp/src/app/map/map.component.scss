@@ -5,9 +5,9 @@
     .act-divider{
         display: block;
         border-bottom:1px solid #333;
-        padding:15px;
-        .nodes{
-            span{
+        padding: 15px;
+        .act-zones{
+            span.zone{
                 display: inline-block;
                 border-radius: 40px;
                 background: #257d29;
@@ -17,7 +17,7 @@
                 font-size: 18px;
                 font-weight: 700;
                 padding: 12px 0;
-                margin:5px;
+                margin: 0 5px 75px 5px;
                 text-align: center;
                 opacity: 1;
                 transition-duration: 0.3s;
@@ -27,6 +27,15 @@
                 &:hover{
                     opacity: .75;
                     cursor: pointer;
+                }
+                span.zone-players{
+                    position: absolute;
+                    top:100%;
+                    left:0;
+                    width:100%;
+                    span{
+                        display: block;
+                    }
                 }
             }
         }
