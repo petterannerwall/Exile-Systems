@@ -134,7 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExileModels\ExileModels.csproj">
-      <Project>{d71034cf-0053-4e67-b4e5-605e15a287f1}</Project>
+      <Project>{a7f061dc-7edd-4311-b632-5cd84db1a1d9}</Project>
       <Name>ExileModels</Name>
     </ProjectReference>
   </ItemGroup>

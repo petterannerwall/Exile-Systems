@@ -11,6 +11,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -87,6 +88,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resolvers\SignalRContractResolver.cs" />
     <Compile Include="ServerHub.cs" />
     <Compile Include="ServerRepository.cs" />
   </ItemGroup>
@@ -103,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExileModels\ExileModels.csproj">
-      <Project>{d71034cf-0053-4e67-b4e5-605e15a287f1}</Project>
+      <Project>{a7f061dc-7edd-4311-b632-5cd84db1a1d9}</Project>
       <Name>ExileModels</Name>
     </ProjectReference>
   </ItemGroup>
