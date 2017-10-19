@@ -19,7 +19,6 @@ export class EnterRoomComponent implements OnInit {
 
   enter() {
     this.registerPlayer();
-    this.router.navigate(['/current-room']);
   }
 
   generateChannel() {
@@ -35,7 +34,6 @@ export class EnterRoomComponent implements OnInit {
   create() {
     this.model.roomCode = this.generateChannel();
     this.registerPlayer();
-    this.router.navigate(['/current-room']);
   }
 
   registerPlayer() {
@@ -45,6 +43,7 @@ export class EnterRoomComponent implements OnInit {
       this.externalService.player.channel = this.model.roomCode;
       console.log('received player: ', this.externalService.player)
       this.signalrService.login(this.model.roomCode, this.externalService.player);
+      this.router.navigate(['/current-room']);
     });
   }
 }
