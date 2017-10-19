@@ -79,7 +79,6 @@
     <Compile Include="Classes\Settings.cs" />
     <Compile Include="Classes\LogReader.cs" />
     <Compile Include="Classes\UpdateHandler.cs" />
-    <Compile Include="Models\ExternalModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\MessageEventArgs.cs" />
     <Compile Include="Models\LocalPlayer.cs" />
@@ -133,6 +132,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ExileModels\ExileModels.csproj">
+      <Project>{d71034cf-0053-4e67-b4e5-605e15a287f1}</Project>
+      <Name>ExileModels</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

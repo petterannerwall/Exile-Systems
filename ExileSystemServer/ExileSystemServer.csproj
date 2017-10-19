@@ -85,8 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Models\Channel.cs" />
-    <Compile Include="Models\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerHub.cs" />
@@ -102,6 +100,12 @@
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExileModels\ExileModels.csproj">
+      <Project>{d71034cf-0053-4e67-b4e5-605e15a287f1}</Project>
+      <Name>ExileModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

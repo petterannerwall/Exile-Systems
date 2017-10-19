@@ -1,4 +1,5 @@
-﻿using ExileSystem.Models;
+﻿using ExileModels;
+using ExileSystem.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

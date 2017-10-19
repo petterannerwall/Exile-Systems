@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
-using ExileSystemServer.Models;
-
+using ExileModels;
 
 namespace ExileSystemServer
 {

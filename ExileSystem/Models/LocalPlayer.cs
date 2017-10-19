@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExileModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,22 +14,5 @@ namespace ExileSystem.Models
         {
             player = new Player();
         }
-    }
-
-
-
-    public class Player
-    {
-        public string Account { get; set; }
-        public string Character { get; set; }
-        public string Area { get; set; }
-        public string Guild { get; set; }
-        public List<string> InArea { get; set; }
-
-        public Player()
-        {
-            InArea = new List<string>();
-        }
-        
     }
 }

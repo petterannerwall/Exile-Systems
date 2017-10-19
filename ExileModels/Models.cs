@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ExileSystem.Models
+namespace ExileModels
 {
+    [Serializable]
     public class Requirement
     {
         public string Name { get; set; }
@@ -13,6 +11,7 @@ namespace ExileSystem.Models
         public int DisplayMode { get; set; }
     }
 
+    [Serializable]
     public class Property
     {
         public string Name { get; set; }
@@ -21,6 +20,7 @@ namespace ExileSystem.Models
         public int Type { get; set; }
     }
 
+    [Serializable]
     public class Item
     {
         public bool Verified { get; set; }
@@ -52,6 +52,7 @@ namespace ExileSystem.Models
         public string DescrText { get; set; }
     }
 
+    [Serializable]
     public class Character
     {
         public string Name { get; set; }
@@ -62,9 +63,39 @@ namespace ExileSystem.Models
         public int Level { get; set; }
     }
 
+    [Serializable]
     public class GetItemsResponse
     {
         public List<Item> Items { get; set; }
         public Character Character { get; set; }
+    }
+    
+
+    [Serializable]
+    public class Player
+    {
+        public string ConnectionID { get; set; }
+        public string Account { get; set; }
+        public string Character { get; set; }
+        public string Area { get; set; }
+        public string Guild { get; set; }
+        public List<string> InArea { get; set; }
+
+        public Player()
+        {
+            InArea = new List<string>();
+        }
+    }
+
+    [Serializable]
+    public class Channel
+    {
+        public string ID { get; set; }
+        public List<Player> Players { get; set; }
+        public Channel(string id)
+        {
+            ID = id;
+            Players = new List<Player>();
+        }
     }
 }
