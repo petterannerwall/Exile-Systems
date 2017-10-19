@@ -72,12 +72,12 @@ export class LogParserService {
             msg.type = MessageTypeEnum.Message;
         }
 
-        if (type === MessageTypeEnum.SelfEnteringArea) {
-            msg.text = message.text.split('you have entered ')[1].split('.')[0];
-        } else if (type === MessageTypeEnum.OtherJoinArea) {
-            msg.player = message.text.split(' has joined the area.')[1];
-        } else if (type === MessageTypeEnum.OtherLeaveArea) {
-            msg.player = message.text.split(' has left the area.')[1];
+        if (msg.type === MessageTypeEnum.SelfEnteringArea) {
+            msg.text = message.split('You have entered ')[1].split('.')[0];
+        } else if (msg.type === MessageTypeEnum.OtherJoinArea) {
+            msg.player = message.split(' has joined the area.')[1];
+        } else if (msg.type === MessageTypeEnum.OtherLeaveArea) {
+            msg.player = message.split(' has left the area.')[1];
         }
 
         console.log(msg);
