@@ -1,6 +1,7 @@
 ﻿using ExileModels;
 using ExileSystem.Models;
 using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace ExileSystem.Classes
 
                 Proxy.On("Update", (m) => Update(m));
                 Proxy.On("ImageUpdate", (b) => ImageUpdate(b));
+                Proxy.On("PlayerUpdate", (p) => PlayerUpdate(p));
 
                 Connection.Start();
 
@@ -38,6 +40,11 @@ namespace ExileSystem.Classes
             })
             { IsBackground = true };
             Thread.Start();
+        }
+
+        private static void PlayerUpdate(object playerJson)
+        {
+            Player player = JsonConvert.DeserializeObject<Player>(playerJson.ToString());
         }
 
         public static void Stop()

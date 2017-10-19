@@ -1,3 +1,4 @@
+import { MessageChannelEnum } from '../enums/message-channel.enum';
 import { MessageTypeEnum } from '../enums/message-type.enum';
 export interface Message {
     id: string;
@@ -5,4 +6,5 @@ export interface Message {
     time: Date;
     type: MessageTypeEnum
     text: string;
+    channel: MessageChannelEnum
 }
