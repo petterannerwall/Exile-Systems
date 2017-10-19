@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { Message } from '../interfaces/message.interface';
 import { getGuid } from '../helpers/object.helper';
 import { ElectronService } from './electron.service';
@@ -9,20 +10,28 @@ export class LogParserService {
     recentLines: Array<string> = [];
     constructor(private electron: ElectronService) {
         setInterval(() => {
-            let rowCount = 10;
-            this.electron.lineReader.eachLine(this.electron.config.get('logpath'), (line, last) => {
-                if (this.recentLines.length > 10) {
-                    this.recentLines = [];
-                }
-                this.parseMessage(line);
-                rowCount--;
-                if (rowCount === 0) {
-                    return false;
-                }
-            });
-        }, 500);
+            this.parseLines();
+        }, 3000);
     }
-
+    parseLines() {
+        const currentLines = [];
+        let rowCount = 10;
+        this.electron.lineReader.eachLine(this.electron.config.get('logpath'), (line) => {
+            currentLines.push(line);
+            rowCount--;
+            if (rowCount === 0) {
+                return false;
+            }
+        }).then(() => {
+            const newItems = currentLines.filter(item => this.recentLines.indexOf(item) < 0);
+            console.log('---------------------------');
+            console.log('new items: ', newItems); // todo: parse new items and send to clients
+            if (newItems.length > 0 || this.recentLines.length === 0) {
+                this.recentLines = currentLines;
+            }
+            console.log('saved items: ', this.recentLines);
+        });
+    }
     parseMessage(message) {
         const msg = { id: '', player: '', time: undefined, type: undefined, text: '' } as Message;
         const groups = message.match(/(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2})\s[\d]*\s[\d]*\s\[.*\]\s([$@%#]?)\s?(<.*>\s?)?(\w*):\s(.*)/);
@@ -34,10 +43,6 @@ export class LogParserService {
         if (groups[3] !== undefined) {
             const playerArr = groups[3].split(',');
             msg.player = playerArr[playerArr.length - 1];
-        }
-        if (this.recentLines.find(x => x === message) === undefined) {
-            this.recentLines.push(message);
-            console.log(this.recentLines);
         }
     }
 }
