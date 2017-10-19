@@ -16,9 +16,14 @@ namespace ExileSystem
         public bool Active { get; set; }
         private Settings _settings;
         private LogReader logReader;
+        private ExternalResources external;
 
         public MainWindow()
         {
+            external = new ExternalResources();
+            external.GetCharactersFromPoE("Umaycry");
+            
+
             _settings = Settings.Load();
             
             LogReader.NewMessage += NewMessageDetected;

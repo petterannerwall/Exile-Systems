@@ -37,43 +37,43 @@
             <StackPanel x:Name="WorkingPanel" Visibility="Hidden"  VerticalAlignment="Center">
                 <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" IsIndeterminate="True" Width="100" Height="100" Value="35"/>
                 <TextBlock Padding="20" HorizontalAlignment="Center">Working...</TextBlock>
-                <Button x:Name="stopButton" Margin="20" Width="100" Content="Stop" Click="StopButton_Click"/>
+                <Button x:Name="stopButton" Margin="20" Width="100" Content="Disconnect" Click="StopButton_Click"/>
             </StackPanel>
             <StackPanel x:Name="LoginPanel" Visibility="Visible" VerticalAlignment="Top">
                 <Border Margin="10" BorderBrush="White" BorderThickness="0,0,0,2">
-                    <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Information" HorizontalAlignment="Right" Margin="0,0,0,10" />
+                    <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Game Information" HorizontalAlignment="Right" Margin="0,0,0,10" />
                 </Border>
                 <TextBox x:Name="accountTextBox" Height="45" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
                     <materialDesign:HintAssist.Hint>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock>Account name</TextBlock>
+                            <TextBlock>Account</TextBlock>
                         </StackPanel>
                     </materialDesign:HintAssist.Hint>
                 </TextBox>
                 <TextBox x:Name="characterTextBox" Height="45" Margin="10,0,10,0" Padding="0,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
                     <materialDesign:HintAssist.Hint>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock>Character name</TextBlock>
+                            <TextBlock>Character</TextBlock>
                         </StackPanel>
                     </materialDesign:HintAssist.Hint>
                 </TextBox>
                 <TextBox x:Name="channelTextBox" Height="45" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
                     <materialDesign:HintAssist.Hint>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock>Channel Code</TextBlock>
+                            <TextBlock>Channel</TextBlock>
                         </StackPanel>
                     </materialDesign:HintAssist.Hint>
                 </TextBox>
                 <TextBox x:Name="pathTextBox" Height="45" Margin="10,0,10,0" Padding="0,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
                     <materialDesign:HintAssist.Hint>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBlock>Client Log Path</TextBlock>
+                            <TextBlock>Log Path</TextBlock>
                         </StackPanel>
                     </materialDesign:HintAssist.Hint>
                 </TextBox>
                 <Button x:Name="startButton" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="Button_Click" Margin="10">
                     <Grid>
-                        <TextBlock HorizontalAlignment="Center" Margin="0,-2,0,0">Start updating</TextBlock>
+                        <TextBlock HorizontalAlignment="Center" Margin="0,-2,0,0">Connect</TextBlock>
                         <!--<materialDesign:PackIcon  Kind="Send" HorizontalAlignment="Right" />-->
                     </Grid>
                 </Button>

@@ -84,6 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Program.cs" />
