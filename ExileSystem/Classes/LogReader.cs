@@ -23,16 +23,16 @@ namespace ExileSystem
         {
             clientLogPath = path;
             fileWatcher = new FileSystemWatcher();
-            fileWatcher.NotifyFilter =  NotifyFilters.LastWrite | NotifyFilters.LastAccess | NotifyFilters.Size;
+            fileWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.LastAccess | NotifyFilters.Size;
             fileWatcher.Path = path;
             fileWatcher.Filter = "Client.txt";
-            fileWatcher.Changed += _fileWatcher_Changed;
+            //fileWatcher.Changed += _fileWatcher_Changed;
             fileWatcher.EnableRaisingEvents = true;
 
             fileTimer = new Timer(250);
             fileTimer.Elapsed += _fileTimer_Elapsed;
         }
-        
+
         public void Start()
         {
             fileTimer.Start();
@@ -60,32 +60,29 @@ namespace ExileSystem
 
         private void checkForUpdates(string debug = null)
         {
-            if (debug == null)
+            fileTimer.Stop();
+
+            var reverseReader = new ReverseLineReader(clientLogPath + "\\client.txt");
+            var lines = reverseReader.Take(10).ToList();
+
+            if (lastLines == null)
             {
-                var reverseReader = new ReverseLineReader(clientLogPath + "\\client.txt");
-                var lines = reverseReader.Take(10).ToList();
-
-                if (lastLines == null)
-                {
-                    lastLines = lines;
-                }
-                else
-                {
-                    var newLines = lines.Except(lastLines).ToList();
-                    lastLines = lines;
-
-                    foreach (var line in newLines)
-                    {
-                        Message message = new Message(line);
-                        NewMessage(null, new MessageEventArgs(message));
-                    }
-                }
+                lastLines = lines;
             }
             else
             {
-                Message message = new Message(debug);
-                NewMessage(null, new MessageEventArgs(message));
+                var newLines = lines.Except(lastLines).ToList();
+                lastLines = lines;
+
+                foreach (var line in newLines)
+                {
+                    Message message = new Message(line);
+                    NewMessage(null, new MessageEventArgs(message));
+                }
             }
+
+            fileTimer.Start();
+
         }
     }
 }

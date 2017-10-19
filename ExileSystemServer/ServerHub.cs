@@ -60,7 +60,7 @@ namespace ExileSystemServer
         {
             ConnectedPlayers.AddOrUpdate(Context.ConnectionId, player);
             serverRepository.UppdateOrAddPlayer(channel, player);
-            Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character);
+            Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character.Name);
         }
 
 

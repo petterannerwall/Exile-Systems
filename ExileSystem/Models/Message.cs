@@ -53,8 +53,8 @@ namespace ExileSystem.Models
             else
             {
                 Time = DateTime.ParseExact(matches[0].Groups[1].Value, "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture);
-                Player = matches[0].Groups[3].Value.Split(' ').Last();
-                Text = matches[0].Groups[4].Value;
+                Player = matches[0].Groups[4].Value.Split(' ').Last();
+                Text = matches[0].Groups[5].Value;
             }
 
             var type = matches[0].Groups[2].Value;
