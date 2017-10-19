@@ -14,7 +14,7 @@ namespace ExileSystemServer
             redis = new Context("localhost:6379", new JsonSerializer());
         }
 
-        public void UppdateOrAddPlayer(string channel, Player player)
+        public Channel UppdateOrAddPlayer(string channel, Player player)
         {
 
             Channel existingChannel = redis.Cache.GetObject<Channel>($"game:{channel}");
@@ -34,6 +34,7 @@ namespace ExileSystemServer
 
             }
             redis.Cache.SetObject($"game:{channel}", existingChannel, TimeSpan.FromHours(1));
+            return existingChannel;
 
         }
     }

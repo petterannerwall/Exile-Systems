@@ -71,9 +71,9 @@ namespace ExileSystemServer
         public void UpdatePlayer(string channel, Player player)
         {
             ConnectedPlayers.AddOrUpdate(Context.ConnectionId, player);
-            serverRepository.UppdateOrAddPlayer(channel, player);
+            var channelObject = serverRepository.UppdateOrAddPlayer(channel, player);
             Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character.Name);
-            Clients.All.PlayerUpdate(player);
+            Clients.All.ChannelUpdate(channelObject);
         }
 
 
