@@ -14,17 +14,18 @@ namespace ExileSystem
     {   
         public Thread Thread { get; set; }
         public bool Active { get; set; }
-        private Settings _settings;
+        private Settings settings;
         private LogReader logReader;
         private ExternalResources external;
+        private bool verifyPending;
 
         public MainWindow()
         {
             external = new ExternalResources();
             external.GetItemsFromPoE("Umaycry","Big_P");
             
-
-            _settings = Settings.Load();
+            verifyPending = true;
+            settings = Settings.Load();
             
             LogReader.NewMessage += NewMessageDetected;
 
@@ -33,24 +34,39 @@ namespace ExileSystem
 
             InitializeComponent();
             
-            pathTextBox.Text = _settings.LogPath;
-            channelTextBox.Text = _settings.Channel;
-            accountTextBox.Text = _settings.AccountName;
-            characterTextBox.Text = _settings.CharacterName;
+            pathTextBox.Text = settings.LogPath;
+            channelTextBox.Text = settings.Channel;
+            accountTextBox.Text = settings.AccountName;
+            characterTextBox.Text = settings.CharacterName;
         }
 
         private void NewMessageDetected(object sender, MessageEventArgs args)
         {
             messageInfoTextBlock.Dispatcher.Invoke(() =>
             {
-                if (args.Message.Type != Message.MessageType.Other)
+                if (args.Message.Type != Message.MessageType.Other && !verifyPending)
                 {
                     messageInfoTextBlock.Text = args.Message.Text;
+                    UpdateHandler.HandleUpdateFromMessage(args.Message);
                 }
 
+                if (verifyPending)
+                {
+                    if (args.Message.Text == verifyTextBox.Text && args.Message.Player == settings.CharacterName && args.Message.Type == Message.MessageType.Message)
+                    {
+                        WorkingPanel.Visibility = Visibility.Visible;
+                        informationPanel.Visibility = Visibility.Visible;
+                        verifyPanel.Visibility = Visibility.Hidden;
+
+                        accountInfoTextBlock.Text = settings.AccountName;
+                        characterInfoTextBlock.Text = settings.CharacterName;
+
+                        HubProxy.Start();
+                        HubProxy.LoginAsync(settings.Channel);
+                    }
+                }
             });
 
-            UpdateHandler.HandleUpdateFromMessage(args.Message);
         }        
                 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -58,15 +74,15 @@ namespace ExileSystem
             verifyProgress.Visibility = Visibility.Visible;
             errorTextbox.Visibility = Visibility.Hidden;
 
-            _settings.LogPath = pathTextBox.Text.Replace("Client.txt", "").Replace("client.txt", "");
-            _settings.AccountName = accountTextBox.Text;
-            _settings.CharacterName = characterTextBox.Text;
-            _settings.Channel = channelTextBox.Text;
-            _settings.Save();
+            settings.LogPath = pathTextBox.Text.Replace("Client.txt", "").Replace("client.txt", "");
+            settings.AccountName = accountTextBox.Text;
+            settings.CharacterName = characterTextBox.Text;
+            settings.Channel = channelTextBox.Text;
+            settings.Save();
             
-            LocalPlayer.player.Account = _settings.AccountName;
-            LocalPlayer.player.Channel = _settings.Channel;
-            LocalPlayer.player.Character = external.GetItemsFromPoE(_settings.AccountName, _settings.CharacterName);
+            LocalPlayer.player.Account = settings.AccountName;
+            LocalPlayer.player.Channel = settings.Channel;
+            LocalPlayer.player.Character = external.GetItemsFromPoE(settings.AccountName, settings.CharacterName);
             
             verifyProgress.Visibility = Visibility.Hidden;
             
@@ -76,19 +92,14 @@ namespace ExileSystem
                 return;
             }
 
-            LoginPanel.Visibility = Visibility.Hidden;
-            WorkingPanel.Visibility = Visibility.Visible;
-            informationPanel.Visibility = Visibility.Visible;
-
-            accountInfoTextBlock.Text = _settings.AccountName;
-            characterInfoTextBlock.Text = _settings.CharacterName;
-                       
-
-            HubProxy.Start();
-            HubProxy.LoginAsync(_settings.Channel);
-
-            logReader = new LogReader(_settings.LogPath);
+            logReader = new LogReader(settings.LogPath);
             logReader.Start();
+
+            var gameCode = Helpers.GetChannel();
+            verifyTextBox.Text = ".verify " + gameCode;
+
+            LoginPanel.Visibility = Visibility.Hidden;
+            verifyPanel.Visibility = Visibility.Visible;
 
         }
         
@@ -106,6 +117,15 @@ namespace ExileSystem
             LoginPanel.Visibility = Visibility.Visible;
             WorkingPanel.Visibility = Visibility.Hidden;
             informationPanel.Visibility = Visibility.Hidden;
+        }
+
+        private void backFromVerifyButton_Click(object sender, RoutedEventArgs e)
+        {
+            logReader.Stop();
+            LoginPanel.Visibility = Visibility.Visible;
+            WorkingPanel.Visibility = Visibility.Hidden;
+            informationPanel.Visibility = Visibility.Hidden;
+            verifyPanel.Visibility = Visibility.Hidden;
         }
     }
 

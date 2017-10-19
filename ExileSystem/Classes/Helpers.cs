@@ -57,5 +57,13 @@ namespace ExileSystem
             }
         }
 
+        public static string GetChannel()
+        {
+            var random = new Random();
+            const string chars = "ABC123";
+            string code = new string(Enumerable.Repeat(chars, 5).Select(s => s[random.Next(s.Length)]).ToArray());
+            return code;
+        }
+
     }
 }

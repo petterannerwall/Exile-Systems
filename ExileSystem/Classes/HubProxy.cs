@@ -1,13 +1,10 @@
-﻿using ExileModels;
-using ExileSystem.Models;
+﻿using ExileSystem.Models;
 using Microsoft.AspNet.SignalR.Client;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ExileModels;
 
 namespace ExileSystem.Classes
 {
@@ -24,7 +21,7 @@ namespace ExileSystem.Classes
             Active = true;
             Thread = new Thread(() =>
             {
-                Connection = new HubConnection("http://localhost:9393/signalr");
+                Connection = new HubConnection("http://www.petterannerwall.se:9393/signalr");
                 Proxy = Connection.CreateHubProxy("ServerHub");
 
                 Proxy.On("Update", (m) => Update(m));

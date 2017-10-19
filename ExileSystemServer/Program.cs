@@ -12,7 +12,7 @@ namespace ExileSystemServer
     {
         static void Main(string[] args)
         {
-            var url = "http://localhost:9393/";
+            var url = "http://www.petterannerwall.se:9393";
             using (WebApp.Start<Startup>(url))
             {
                 Console.WriteLine($"Server running at {url}");

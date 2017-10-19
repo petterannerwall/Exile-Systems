@@ -34,16 +34,11 @@
             </Menu>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
-            <StackPanel x:Name="WorkingPanel" Visibility="Hidden"  VerticalAlignment="Center">
-                <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" IsIndeterminate="True" Width="100" Height="100" Value="35"/>
-                <TextBlock Padding="20" HorizontalAlignment="Center">Working...</TextBlock>
-                <Button x:Name="stopButton" Margin="20" Width="100" Content="Disconnect" Click="StopButton_Click"/>
-            </StackPanel>
             <StackPanel x:Name="LoginPanel" Visibility="Visible" VerticalAlignment="Stretch">
                 <Border Margin="10" BorderBrush="White" BorderThickness="0,0,0,2">
                     <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Game Information" HorizontalAlignment="Right" Margin="0,0,0,10" />
                 </Border>
-                <TextBox x:Name="accountTextBox" Height="45" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
+                <TextBox x:Name="accountTextBox" Height="45" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" >
                     <materialDesign:HintAssist.Hint>
                         <StackPanel Orientation="Horizontal" >
                             <TextBlock>Account</TextBlock>
@@ -79,8 +74,31 @@
                     </Grid>
                 </Button>
                 <TextBlock x:Name="errorTextbox" Visibility="Hidden" Height="30" Margin="10,0,10,0" TextWrapping="Wrap" Text="Can't find character or account." FontSize="14" Foreground="#DDFF0000"/>
-
             </StackPanel>
+            <StackPanel x:Name="WorkingPanel" Visibility="Hidden">
+                <Border Margin="10" BorderBrush="White" BorderThickness="0,0,0,2">
+                    <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Working" HorizontalAlignment="Right" Margin="0,0,0,10" />
+                </Border>
+                <TextBlock FontSize="12" Margin="10,10,10,20" Text="We are continuously monitor your actions ingame and update Exile Systems accordingly, you can disconnect anytime you want and we'll stop."  VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontStyle="Italic" />
+                <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" IsIndeterminate="True" Width="75" Height="75" Value="35"/>
+                <Button x:Name="stopButton" Margin="20,51,20,20" Width="100" Content="Disconnect" Click="StopButton_Click"/>
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1" x:Name="verifyPanel" Visibility="Hidden" >
+            <StackPanel HorizontalAlignment="Center">
+                <Border Margin="10" BorderBrush="White" BorderThickness="0,0,0,2">
+                    <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Verify character" HorizontalAlignment="Right" Margin="0,0,0,10" />
+                </Border>
+                <TextBlock FontSize="12" Margin="10,0,10,0" Text="Verify by typing the command below in game chat. We will automatically check each message until the right ones comes. You can copy from the box below."  VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontStyle="Italic" />
+                <TextBox x:Name="verifyTextBox" Height="45" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" Text=".verify XFK392" HorizontalContentAlignment="Center" />
+            </StackPanel>
+            <Button x:Name="backFromButton"  Margin="0,198,0,0" Click="backFromVerifyButton_Click" >
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" Margin="0,-2,0,0">Back / Change character</TextBlock>
+                    <!--<materialDesign:PackIcon  Kind="Send" HorizontalAlignment="Right" />-->
+                </Grid>
+            </Button>
         </Grid>
         <Grid x:Name="informationPanel" Visibility="Hidden" Grid.Row="2" Grid.ColumnSpan="3">
             <Border BorderBrush="White" BorderThickness="0,1,0,0"/>
