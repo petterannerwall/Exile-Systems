@@ -1,6 +1,6 @@
 ﻿using CachingFramework.Redis;
 using CachingFramework.Redis.Serializers;
-using ExileSystemServer.Models;
+using ExileModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

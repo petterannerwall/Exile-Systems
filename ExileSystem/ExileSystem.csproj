@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ExternalResources.cs" />
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\HubProxy.cs" />
     <Compile Include="Classes\ReverseLineReader.cs" />
@@ -131,6 +132,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ExileModels\ExileModels.csproj">
+      <Project>{d71034cf-0053-4e67-b4e5-605e15a287f1}</Project>
+      <Name>ExileModels</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

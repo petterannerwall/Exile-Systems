@@ -16,9 +16,14 @@ namespace ExileSystem
         public bool Active { get; set; }
         private Settings _settings;
         private LogReader logReader;
+        private ExternalResources external;
 
         public MainWindow()
         {
+            external = new ExternalResources();
+            external.GetItemsFromPoE("Umaycry","Big_P");
+            
+
             _settings = Settings.Load();
             
             LogReader.NewMessage += NewMessageDetected;
@@ -53,11 +58,25 @@ namespace ExileSystem
                 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            verifyProgress.Visibility = Visibility.Visible;
+            errorTextbox.Visibility = Visibility.Hidden;
+
             _settings.LogPath = pathTextBox.Text.Replace("Client.txt", "").Replace("client.txt", "");
             _settings.AccountName = accountTextBox.Text;
             _settings.CharacterName = characterTextBox.Text;
             _settings.Channel = channelTextBox.Text;
             _settings.Save();
+            
+            LocalPlayer.player.Account = _settings.AccountName;
+            LocalPlayer.player.Character = external.GetItemsFromPoE(_settings.AccountName, _settings.CharacterName);
+            
+            verifyProgress.Visibility = Visibility.Hidden;
+            
+            if (LocalPlayer.player.Character == null)
+            {
+                errorTextbox.Visibility = Visibility.Visible;
+                return;
+            }
 
             LoginPanel.Visibility = Visibility.Hidden;
             WorkingPanel.Visibility = Visibility.Visible;
@@ -66,8 +85,6 @@ namespace ExileSystem
             accountInfoTextBlock.Text = _settings.AccountName;
             characterInfoTextBlock.Text = _settings.CharacterName;
                        
-            LocalPlayer.player.Account = _settings.AccountName;
-            LocalPlayer.player.Character = _settings.CharacterName;
 
             HubProxy.Start();
             HubProxy.LoginAsync(_settings.Channel);

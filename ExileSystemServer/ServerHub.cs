@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
-using ExileSystemServer.Models;
-using System.Drawing;
+using ExileModels;
 
 namespace ExileSystemServer
 {
@@ -45,7 +44,7 @@ namespace ExileSystemServer
 
             if (!ConnectedPlayers.ContainsKey(player.Account))
             {
-                Console.WriteLine($"++ {player.Account} connected");
+                Console.WriteLine($"++ {player.Account} connected with character: {player.Character.Name} in {player.Character.League} League");
                 users = new List<Player>(ConnectedPlayers.Values);
                 player.ConnectionID = Context.ConnectionId;
                 var added = ConnectedPlayers.TryAdd(Context.ConnectionId, player);
@@ -53,8 +52,6 @@ namespace ExileSystemServer
             }
 
             serverRepository.UppdateOrAddPlayer(channel, player);
-
-
 
             return users;
         }
@@ -83,12 +80,5 @@ namespace ExileSystemServer
         }
         
     }
-    static class ExtensionMethods
-    {
-        // Either Add or overwrite
-        public static void AddOrUpdate<K, V>(this ConcurrentDictionary<K, V> dictionary, K key, V value)
-        {
-            dictionary.AddOrUpdate(key, value, (oldkey, oldvalue) => value);
-        }
-    }
+
 }
