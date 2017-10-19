@@ -70,7 +70,6 @@ namespace ExileModels
         public List<Item> Items { get; set; }
         public Character Character { get; set; }
     }
-    
 
     [Serializable]
     public class Player

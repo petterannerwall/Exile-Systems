@@ -23,6 +23,10 @@ namespace ExileSystem.Classes
             string url = "https://www.pathofexile.com/character-window/get-items";
             string parameters = $"accountName={account}&character={character}";
             string response = MakeRequest(url, parameters);
+
+            if (response == null)
+                return null;
+
             GetItemsResponse ItemsResponse = JsonConvert.DeserializeObject<GetItemsResponse>(response);
 
             var newChar = ItemsResponse.Character;
@@ -43,18 +47,26 @@ namespace ExileSystem.Classes
         //http://www.hanselman.com/blog/HTTPPOSTsAndHTTPGETsWithWebClientAndCAndFakingAPostBack.aspx
         private string MakeRequest(string url, string parameters)
         {
-            WebRequest req = WebRequest.Create(url);
-            req.ContentType = "application/x-www-form-urlencoded";
-            req.Method = "POST";
-            byte[] bytes = Encoding.ASCII.GetBytes(parameters);
-            req.ContentLength = bytes.Length;
-            Stream os = req.GetRequestStream();
-            os.Write(bytes, 0, bytes.Length);
-            os.Close();
-            WebResponse resp = req.GetResponse();
-            if (resp == null) return null;
-            StreamReader sr = new StreamReader(resp.GetResponseStream());
-            return sr.ReadToEnd().Trim();
+            try
+            {
+                WebRequest req = WebRequest.Create(url);
+                req.ContentType = "application/x-www-form-urlencoded";
+                req.Method = "POST";
+                byte[] bytes = Encoding.ASCII.GetBytes(parameters);
+                req.ContentLength = bytes.Length;
+                Stream os = req.GetRequestStream();
+                os.Write(bytes, 0, bytes.Length);
+                os.Close();
+                WebResponse resp = req.GetResponse();
+                if (resp == null) return null;
+                StreamReader sr = new StreamReader(resp.GetResponseStream());
+                return sr.ReadToEnd().Trim();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+ 
         }
     }
 }

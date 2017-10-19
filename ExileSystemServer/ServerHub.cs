@@ -44,7 +44,7 @@ namespace ExileSystemServer
 
             if (!ConnectedPlayers.ContainsKey(player.Account))
             {
-                Console.WriteLine($"++ {player.Account} connected");
+                Console.WriteLine($"++ {player.Account} connected with character: {player.Character.Name} in {player.Character.League} League");
                 users = new List<Player>(ConnectedPlayers.Values);
                 player.ConnectionID = Context.ConnectionId;
                 var added = ConnectedPlayers.TryAdd(Context.ConnectionId, player);

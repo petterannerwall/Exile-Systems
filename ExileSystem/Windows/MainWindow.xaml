@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"    
         ResizeMode="CanMinimize"
-        Title="Exile System" Height="430" Width="600">
+        Title="Exile System" Height="450" Width="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -39,7 +39,7 @@
                 <TextBlock Padding="20" HorizontalAlignment="Center">Working...</TextBlock>
                 <Button x:Name="stopButton" Margin="20" Width="100" Content="Disconnect" Click="StopButton_Click"/>
             </StackPanel>
-            <StackPanel x:Name="LoginPanel" Visibility="Visible" VerticalAlignment="Top">
+            <StackPanel x:Name="LoginPanel" Visibility="Visible" VerticalAlignment="Stretch">
                 <Border Margin="10" BorderBrush="White" BorderThickness="0,0,0,2">
                     <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Game Information" HorizontalAlignment="Right" Margin="0,0,0,10" />
                 </Border>
@@ -71,12 +71,15 @@
                         </StackPanel>
                     </materialDesign:HintAssist.Hint>
                 </TextBox>
+                <ProgressBar Visibility="Hidden" x:Name="verifyProgress" IsIndeterminate="True" Orientation="Horizontal"  BorderThickness="0" Margin="10,10,10,0" />
                 <Button x:Name="startButton" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="Button_Click" Margin="10">
                     <Grid>
                         <TextBlock HorizontalAlignment="Center" Margin="0,-2,0,0">Connect</TextBlock>
                         <!--<materialDesign:PackIcon  Kind="Send" HorizontalAlignment="Right" />-->
                     </Grid>
                 </Button>
+                <TextBlock x:Name="errorTextbox" Visibility="Hidden" Height="30" Margin="10,0,10,0" TextWrapping="Wrap" Text="Can't find character or account." FontSize="14" Foreground="#DDFF0000"/>
+
             </StackPanel>
         </Grid>
         <Grid x:Name="informationPanel" Visibility="Hidden" Grid.Row="2" Grid.ColumnSpan="3">
