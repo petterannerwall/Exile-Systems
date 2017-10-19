@@ -2,9 +2,9 @@ import 'polyfills';
 import 'reflect-metadata';
 import 'zone.js/dist/zone-mix';
 
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ConnectionTransport, SignalRConfiguration, SignalRModule } from 'ng2-signalr';
 
@@ -16,6 +16,7 @@ import { MapComponent } from './map/map.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SidebarNavModule } from './shared/components/sidebar-nav/sidebar-nav.module';
 import { ElectronService } from './shared/providers/electron.service';
+import { ExternalService } from './shared/providers/external.service';
 import { LogParserService } from './shared/providers/log-parser.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
@@ -31,12 +32,12 @@ import { SignalRService } from './shared/providers/signalr.service';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     SignalRModule.forRoot(createConfig),
     AppRoutingModule,
     SidebarNavModule
   ],
-  providers: [ElectronService, SettingService, SignalRService, LogParserService],
+  providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

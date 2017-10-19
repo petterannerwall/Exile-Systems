@@ -1,3 +1,4 @@
+import { ExternalService } from './shared/providers/external.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -10,7 +11,8 @@ import { ElectronService } from './shared/providers/electron.service';
 })
 
 export class AppComponent implements OnInit {
-  constructor(public electronService: ElectronService, public settingService: SettingService, public signalRService: SignalRService) {
+  constructor(public electronService: ElectronService, public settingService: SettingService, public signalRService: SignalRService,
+  private externalService: ExternalService) {
     if (electronService.isElectron()) {
       console.log('Mode electron');
       // Check if electron is correctly injected (see externals in webpack.config.js)
@@ -22,5 +24,6 @@ export class AppComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.externalService.getCharacter('CojL', 'CojL');
   }
 }
