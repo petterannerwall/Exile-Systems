@@ -15,7 +15,10 @@ namespace ExileSystem.Classes
         private static bool Active;
         private static Thread Thread;
         private static Settings settings;
-        
+
+        public delegate void ChannelUpdateEventHandler(object sender, ChannelUpdateEventArgs args);
+        public static ChannelUpdateEventHandler ChannelUpdated;
+
         public static void Initialize()
         {
             Active = true;
@@ -26,7 +29,7 @@ namespace ExileSystem.Classes
 
                 Proxy.On("Update", (m) => Update(m));
                 Proxy.On("ImageUpdate", (b) => ImageUpdate(b));
-                Proxy.On("PlayerUpdate", (p) => PlayerUpdate(p));
+                Proxy.On("ChannelUpdate", (p) => ChannelUpdate(p));
 
                 Connection.Start();
 
@@ -39,9 +42,10 @@ namespace ExileSystem.Classes
             Thread.Start();
         }
 
-        private static void PlayerUpdate(object playerJson)
+        private static void ChannelUpdate(object channelJson)
         {
-            Player player = JsonConvert.DeserializeObject<Player>(playerJson.ToString());
+            Channel channel = JsonConvert.DeserializeObject<Channel>(channelJson.ToString());
+            ChannelUpdated(null, new ChannelUpdateEventArgs(channel));
         }
 
         public static void Stop()

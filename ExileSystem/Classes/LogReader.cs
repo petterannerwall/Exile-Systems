@@ -63,7 +63,7 @@ namespace ExileSystem
             fileTimer.Stop();
 
             var reverseReader = new ReverseLineReader(clientLogPath + "\\client.txt");
-            var lines = reverseReader.Take(10).ToList();
+            var lines = reverseReader.Take(50).ToList();
 
             if (lastLines == null)
             {
