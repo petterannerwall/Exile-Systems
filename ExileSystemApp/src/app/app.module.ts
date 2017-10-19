@@ -1,3 +1,4 @@
+import { ChannelService } from './shared/providers/channel.service';
 import 'polyfills';
 import 'reflect-metadata';
 import 'zone.js/dist/zone-mix';
@@ -37,7 +38,7 @@ import { SignalRService } from './shared/providers/signalr.service';
     AppRoutingModule,
     SidebarNavModule
   ],
-  providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService],
+  providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

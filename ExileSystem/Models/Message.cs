@@ -70,6 +70,11 @@ namespace ExileSystem.Models
                 Type = MessageType.OtherLeaveArea;
                 Channel = MessageChannel.Information;
             }
+            else if ((message.Contains("has joined the area")))
+            {
+                Type = MessageType.OtherJoinArea;
+                Channel = MessageChannel.Information;
+            }
             else if (message.Contains("Joined guild named"))
             {
                 Type = MessageType.GuildInformation;
