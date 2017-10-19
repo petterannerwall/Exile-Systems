@@ -20,6 +20,10 @@ namespace ExileSystemServer
 
         public override Task OnDisconnected(bool stopCalled)
         {
+            var channel = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId).Value.Channel;
+
+            Groups.Remove(Context.ConnectionId, channel);
+
             var accountName = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId).Value.Account;
             if (accountName != null)
             {
@@ -30,6 +34,10 @@ namespace ExileSystemServer
 
         public override Task OnReconnected()
         {
+            var channel = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId).Value.Channel;
+
+            Groups.Add(Context.ConnectionId, channel);
+
             var accountName = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId).Value.Account;
             if (accountName != null)
             {
@@ -40,6 +48,8 @@ namespace ExileSystemServer
 
         public List<Player> Login(string channel, Player player)
         {
+            Groups.Add(Context.ConnectionId, channel);
+
             List<Player> users = new List<Player>();
 
             if (!ConnectedPlayers.ContainsKey(player.Account))
@@ -53,6 +63,8 @@ namespace ExileSystemServer
 
             serverRepository.UppdateOrAddPlayer(channel, player);
 
+            Clients.All.PlayerUpdate(player);
+
             return users;
         }
                 
@@ -61,6 +73,7 @@ namespace ExileSystemServer
             ConnectedPlayers.AddOrUpdate(Context.ConnectionId, player);
             serverRepository.UppdateOrAddPlayer(channel, player);
             Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character.Name);
+            Clients.All.PlayerUpdate(player);
         }
 
 

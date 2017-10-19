@@ -41,11 +41,8 @@ namespace ExileSystem
 
         private void NewMessageDetected(object sender, MessageEventArgs args)
         {
-            
-
             messageInfoTextBlock.Dispatcher.Invoke(() =>
             {
-
                 if (args.Message.Type != Message.MessageType.Other)
                 {
                     messageInfoTextBlock.Text = args.Message.Text;
@@ -68,6 +65,7 @@ namespace ExileSystem
             _settings.Save();
             
             LocalPlayer.player.Account = _settings.AccountName;
+            LocalPlayer.player.Channel = _settings.Channel;
             LocalPlayer.player.Character = external.GetItemsFromPoE(_settings.AccountName, _settings.CharacterName);
             
             verifyProgress.Visibility = Visibility.Hidden;

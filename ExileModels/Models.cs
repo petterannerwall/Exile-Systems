@@ -75,6 +75,7 @@ namespace ExileModels
     public class Player
     {
         public string ConnectionID { get; set; }
+        public string Channel { get; set; }
         public string Account { get; set; }
         public Character Character { get; set; }
         public string Area { get; set; }
