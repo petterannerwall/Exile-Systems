@@ -1,34 +1,11 @@
-<h2>Map</h2>
+<div class="map-container">
+    <h2>Map</h2>
 
-
-
-<div class="row">
-    <div class="col s3">
-        <h4>Act 1</h4>
-        <p>Twilight Strand</p>
-        <p>The Coast</p>
-        <p>The Tidal Island</p>
-        <p>The Mud Flats</p>
-        <p>The Fetid Pool</p>
-        <p>The Submerged Passage <i class="material-icons">check</i></p>
-        <p>The Flooded Depths</p>
-        <p>The Ledge</p>
-        <p>The Climb</p>
-        <p>The Lower Prison</p>
-        <p>The Upper Prison</p>
-        <p>Prisoner's Gate</p>
-        <p>The Ship Graveyard</p>
-        <p>The Ship Graveyard Cave</p>
-        <p>The Cavern of Wrath</p>
-        <p>The Cavern of Anger</p>
-    </div>
-
-    <div class="col s3">
-        <h4>Act 2</h4>
-        <p>The Southern Forest</p>
-        <p>The Old Fields</p>
-        <p>The Den</p>
-        <p>The Riverways</p>
-        <p>The Crossroads</p>
+    <div class="act-divider" *ngFor="let act of model.acts">
+        <h4>{{act.Name}}</h4>
+        <hr>
+        <div class="nodes">
+            <span *ngFor="let zone of act.zones" [ngClass]="{'active': false}" [attr.title]="zone.Name">{{zone.Short}}</span>
+        </div>
     </div>
 </div>

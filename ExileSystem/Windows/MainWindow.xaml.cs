@@ -1,5 +1,6 @@
 ﻿using ExileSystem.Classes;
 using ExileSystem.Models;
+using ExileSystem.Windows;
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Threading;
@@ -65,6 +66,10 @@ namespace ExileSystem
 
                         HubProxy.Start();
                         HubProxy.LoginAsync(settings.Channel);
+
+                        var charWindow = new CharactersWindow();
+                        charWindow.Show();
+
                     }
                 }
             });

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExileModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,17 @@ namespace ExileSystem.Models
         }
 
         public Message Message { get; }
+
+    }
+
+    public class ChannelUpdateEventArgs
+    {
+        public ChannelUpdateEventArgs(Channel channel)
+        {
+            Channel = channel;
+        }
+
+        public Channel Channel { get; }
 
     }
 }

@@ -79,7 +79,7 @@
                 <Border Margin="10" BorderBrush="White" BorderThickness="0,0,0,2">
                     <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Working" HorizontalAlignment="Right" Margin="0,0,0,10" />
                 </Border>
-                <TextBlock FontSize="12" Margin="10,10,10,20" Text="We are continuously monitor your actions ingame and update Exile Systems accordingly, you can disconnect anytime you want and we'll stop."  VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontStyle="Italic" />
+                <TextBlock FontSize="12" Margin="10,10,10,20" Text="We continuously monitor your actions ingame using the game log files and update Exile Systems accordingly, you can disconnect anytime you want and we'll stop."  VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontStyle="Italic" />
                 <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" IsIndeterminate="True" Width="75" Height="75" Value="35"/>
                 <Button x:Name="stopButton" Margin="20,51,20,20" Width="100" Content="Disconnect" Click="StopButton_Click"/>
             </StackPanel>
@@ -90,7 +90,7 @@
                 <Border Margin="10" BorderBrush="White" BorderThickness="0,0,0,2">
                     <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Verify character" HorizontalAlignment="Right" Margin="0,0,0,10" />
                 </Border>
-                <TextBlock FontSize="12" Margin="10,0,10,0" Text="Verify by typing the command below in game chat. We will automatically check each message until the right ones comes. You can copy from the box below."  VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontStyle="Italic" />
+                <TextBlock FontSize="12" Margin="10,0,10,0" Text="Verify by typing the command below in game chat. We will automatically check each message until the right ones comes. You can copy from the box below!"  VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" FontStyle="Italic" />
                 <TextBox x:Name="verifyTextBox" Height="45" Margin="10,0,10,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" Text=".verify XFK392" HorizontalContentAlignment="Center" />
             </StackPanel>
             <Button x:Name="backFromButton"  Margin="0,198,0,0" Click="backFromVerifyButton_Click" >

@@ -49,7 +49,6 @@ namespace ExileSystemServer
         public List<Player> Login(string channel, Player player)
         {
             Groups.Add(Context.ConnectionId, channel);
-
             List<Player> users = new List<Player>();
 
             if (!ConnectedPlayers.ContainsKey(player.Account))
@@ -62,12 +61,16 @@ namespace ExileSystemServer
             }
 
             serverRepository.UppdateOrAddPlayer(channel, player);
-
             Clients.All.PlayerUpdate(player);
-
             return users;
         }
-                
+         
+        public void RegisterSpectator(string channel)
+        {
+            Groups.Add(Context.ConnectionId, channel);
+            ConnectedPlayers.TryAdd(Context.ConnectionId, new Player() { Channel = channel });            
+        }
+
         public void UpdatePlayer(string channel, Player player)
         {
             ConnectedPlayers.AddOrUpdate(Context.ConnectionId, player);
@@ -75,7 +78,6 @@ namespace ExileSystemServer
             Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character.Name);
             Clients.All.ChannelUpdate(channelObject);
         }
-
 
         public void Broadcast(string message)
         {
