@@ -61,6 +61,7 @@ namespace ExileModels
         public int AscendancyClass { get; set; }
         public string Class { get; set; }
         public int Level { get; set; }
+        public List<Item> Items { get; set; }
     }
 
     [Serializable]
@@ -76,7 +77,7 @@ namespace ExileModels
     {
         public string ConnectionID { get; set; }
         public string Account { get; set; }
-        public string Character { get; set; }
+        public Character Character { get; set; }
         public string Area { get; set; }
         public string Guild { get; set; }
         public List<string> InArea { get; set; }

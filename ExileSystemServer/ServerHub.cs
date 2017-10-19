@@ -53,8 +53,6 @@ namespace ExileSystemServer
 
             serverRepository.UppdateOrAddPlayer(channel, player);
 
-
-
             return users;
         }
                 

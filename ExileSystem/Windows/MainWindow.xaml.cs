@@ -21,7 +21,7 @@ namespace ExileSystem
         public MainWindow()
         {
             external = new ExternalResources();
-            external.GetCharactersFromPoE("Umaycry");
+            external.GetItemsFromPoE("Umaycry","Big_P");
             
 
             _settings = Settings.Load();
@@ -72,7 +72,7 @@ namespace ExileSystem
             characterInfoTextBlock.Text = _settings.CharacterName;
                        
             LocalPlayer.player.Account = _settings.AccountName;
-            LocalPlayer.player.Character = _settings.CharacterName;
+            LocalPlayer.player.Character.Name = _settings.CharacterName;
 
             HubProxy.Start();
             HubProxy.LoginAsync(_settings.Channel);

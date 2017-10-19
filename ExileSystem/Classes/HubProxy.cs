@@ -1,4 +1,5 @@
-﻿using ExileSystem.Models;
+﻿using ExileModels;
+using ExileSystem.Models;
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;

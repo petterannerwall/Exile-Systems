@@ -18,13 +18,17 @@ namespace ExileSystem.Classes
 
         }
 
-        public GetItemsResponse GetItemsFromPoE(string account, string character)
+        public Character GetItemsFromPoE(string account, string character)
         {
             string url = "https://www.pathofexile.com/character-window/get-items";
             string parameters = $"accountName={account}&character={character}";
             string response = MakeRequest(url, parameters);
             GetItemsResponse ItemsResponse = JsonConvert.DeserializeObject<GetItemsResponse>(response);
-            return ItemsResponse;
+
+            var newChar = ItemsResponse.Character;
+            newChar.Items = ItemsResponse.Items;
+
+            return newChar;
         }
         
         public List<Character> GetCharactersFromPoE(string account)
