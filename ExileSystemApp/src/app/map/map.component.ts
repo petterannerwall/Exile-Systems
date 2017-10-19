@@ -1,3 +1,4 @@
+import { ChannelService } from '../shared/providers/channel.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -57,10 +58,7 @@ export class MapComponent implements OnInit {
         Name: 'Act 3',
         zones: [
           {
-            Name: 'The City of Sarn', Short: 'CS', Level: 23, Players: [
-              { Name: 'Puttz' },
-              { Name: 'Cojl' }
-            ]
+            Name: 'The City of Sarn', Short: 'CS', Level: 23
           },
           { Name: 'The Slums', Short: 'TS', Level: 24 },
           { Name: 'The Crematorium', Short: 'TC', Level: 25 },
@@ -85,7 +83,7 @@ export class MapComponent implements OnInit {
     ]
   };
 
-  constructor() { }
+  constructor(private channelService: ChannelService) { }
 
   ngOnInit() {
   }

@@ -7,7 +7,7 @@
         <div class="act-zones">
             <span class="zone" *ngFor="let zone of act.zones" [ngClass]="{'active': false}" [attr.title]="zone.Name">{{zone.Short}}
                 <span class="zone-players">
-                    <span *ngFor="let player of zone.Players">{{player.Name}}</span>
+                    <span *ngFor="let player of channelService.channel.players" [ngClass]="{'player-hidden': player.area != zone.Name}">{{player.character.name}}</span>
                 </span>
             </span>
         </div>

@@ -35,6 +35,10 @@
                     width:100%;
                     span{
                         display: block;
+                        
+                    }
+                    span.player-hidden {
+                        display: none !important;
                     }
                 }
             }
