@@ -18,6 +18,7 @@ export class SignalRService {
 
       onChannelUpdated$.subscribe((channel: Channel) => {
         // update channel when event is triggered
+        console.log(channel);
         this.channelService.channel = channel;
       });
     });
