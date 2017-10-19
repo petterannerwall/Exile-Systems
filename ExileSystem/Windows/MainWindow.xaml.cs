@@ -61,6 +61,8 @@ namespace ExileSystem
                         accountInfoTextBlock.Text = settings.AccountName;
                         characterInfoTextBlock.Text = settings.CharacterName;
 
+                        verifyPending = false;
+
                         HubProxy.Start();
                         HubProxy.LoginAsync(settings.Channel);
                     }
