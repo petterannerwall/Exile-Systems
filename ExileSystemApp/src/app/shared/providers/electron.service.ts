@@ -14,6 +14,7 @@ export class ElectronService {
   dialog: any;
   lineReader: any;
   config: any;
+  robot: any;
   constructor(private router: Router) {
     console.log('electronService');
     // Conditional imports
@@ -24,6 +25,7 @@ export class ElectronService {
       this.lineReader = window.require('reverse-line-reader');
       const Config = window.require('electron-config');
       this.config = new Config();
+      this.robot = window.require('robot-js');
 
       // init menu
       const template = [

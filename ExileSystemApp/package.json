@@ -66,7 +66,7 @@
     "cross-env": "5.0.5",
     "css-loader": "0.28.7",
     "cssnano": "3.10.0",
-    "electron": "~1.7.8",
+    "electron": "~1.7.6",
     "robot-js": "git://github.com/p120ph37/robot-js.git#prebuilt",
     "electron-packager": "9.1.0",
     "electron-reload": "1.2.1",

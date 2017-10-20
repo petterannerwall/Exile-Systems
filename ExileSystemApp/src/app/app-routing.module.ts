@@ -1,9 +1,11 @@
-import { MapComponent } from './map/map.component';
-import { SettingsComponent } from './settings/settings.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { CommandsComponent } from './commands/commands.component';
+import { MapComponent } from './map/map.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
     {
@@ -21,6 +23,10 @@ const routes: Routes = [
     {
         path: 'settings',
         component: SettingsComponent
+    },
+    {
+        path: 'commands',
+        component: CommandsComponent
     },
     {
         path: 'map',
