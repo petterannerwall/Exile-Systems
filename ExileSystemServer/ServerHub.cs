@@ -60,7 +60,7 @@ namespace ExileSystemServer
                 if (!added) return null;
             }
 
-            serverRepository.UppdateOrAddPlayer(channel, player);
+            serverRepository.UpdateOrAddPlayer(channel, player);
             Clients.All.PlayerUpdate(player);
             return users;
         }
@@ -74,7 +74,7 @@ namespace ExileSystemServer
         public void UpdatePlayer(string channel, Player player)
         {
             ConnectedPlayers.AddOrUpdate(Context.ConnectionId, player);
-            var channelObject = serverRepository.UppdateOrAddPlayer(channel, player);
+            var channelObject = serverRepository.UpdateOrAddPlayer(channel, player);
             Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character.Name);
             Clients.All.ChannelUpdate(channelObject);
         }
