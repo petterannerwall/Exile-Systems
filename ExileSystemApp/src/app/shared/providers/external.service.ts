@@ -30,4 +30,5 @@ export class ExternalService {
 
     return this.http.get('https://www.pathofexile.com/character-window/get-items' + parameters);
   }
+
 }
