@@ -20,9 +20,10 @@ import { ChannelService } from './shared/providers/channel.service';
 import { ElectronService } from './shared/providers/electron.service';
 import { ExternalService } from './shared/providers/external.service';
 import { LogParserService } from './shared/providers/log-parser.service';
+import { RobotService } from './shared/providers/robot.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
-import { RobotService } from './shared/providers/robot.service';
+import { MaterializeModule } from 'angular2-materialize';
 
 @NgModule({
   declarations: [
@@ -39,9 +40,11 @@ import { RobotService } from './shared/providers/robot.service';
     HttpClientModule,
     SignalRModule.forRoot(createConfig),
     AppRoutingModule,
-    SidebarNavModule
+    SidebarNavModule,
+    MaterializeModule
   ],
-  providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService, RobotService],
+  providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService,
+    RobotService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

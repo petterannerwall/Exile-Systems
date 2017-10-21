@@ -10,14 +10,24 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">account_circle</i>
-          <input [(ngModel)]="model.accountName" id="accountName" name="accountName" type="text" class="validate">
+          <input [(ngModel)]="model.accountName" id="accountName" name="accountName" type="text" class="validate" (focusout)="loadCharacters()">
           <label for="accountName">Account name</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
+          <i class="material-icons prefix">fingerprint</i>
+          <input [(ngModel)]="model.sessionId" id="sessionId" name="sessionId" type="text" class="validate">
+          <label for="sessionId">Session Id</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
           <i class="material-icons prefix">face</i>
-          <input [(ngModel)]="model.characterName" id="characterName" name="characterName" type="text" class="validate">
+          <select materialize="material_select" [materializeSelectOptions]="characters" [(ngModel)]="model.characterName" id="characterName" name="characterName">
+            <option value="" disabled selected>Select a character</option>
+            <option *ngFor="let char of characters" value="{{char.name}}">({{char.level}}) {{char.name}}, {{char.class}}, {{char.league}}</option>
+          </select>
           <label for="characterName">Character name</label>
         </div>
       </div>
