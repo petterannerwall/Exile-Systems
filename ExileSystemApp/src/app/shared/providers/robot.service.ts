@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { ElectronService } from './electron.service';
+import { KeycodeEnum } from './../enums/keycode.enum';
+
 
 
 @Injectable()
@@ -42,6 +44,20 @@ export class RobotService {
 
     //Check pressed keys
 
+
+    const keyState = robot.Keyboard.getState();
+
+    const pressedKeys = [];
+
+    for (const key in keyState) {
+      const pressedKey = KeycodeEnum[key];
+      if (keyState[key] == true && pressedKey != undefined) {
+        pressedKeys.push(pressedKey);
+      }
+    }
+
+    if (pressedKeys.length > 0)
+      this.KeyboardEvent.emit(pressedKeys);
 
     // if (robot.Window.getActive().getTitle().indexOf('Exile') > 0) {
 

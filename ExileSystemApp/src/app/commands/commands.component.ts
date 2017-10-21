@@ -17,7 +17,8 @@ export class CommandsComponent implements OnInit {
   debug = true;
 
   model = {
-    activeWindow: "Not found"
+    activeWindow: "Not found",
+    activeKeys: []
   }
 
   constructor(private electronService: ElectronService, private robotService: RobotService) {
@@ -25,14 +26,11 @@ export class CommandsComponent implements OnInit {
     this.keyboard.autoDelay.min = 1;
     this.keyboard.autoDelay.max = 5;
 
-    robotService.KeyboardEvent.subscribe(function (data) {
-      console.log('Keyboard event data: ', data);
+    robotService.KeyboardEvent.subscribe((data) => {
+      this.model.activeKeys = data;
     })
-
-
     robotService.WindowEvent.subscribe((data) => {
       this.model.activeWindow = data;
-      console.log('Window change event: ', data);
     })
 
   }

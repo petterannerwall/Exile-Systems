@@ -6,6 +6,13 @@
                 <div class="card-content white-text">
                     <span class="card-title">Debug information</span>
                     <p>Active Window: {{model?.activeWindow}}</p>
+                    <ul>
+                        <li *ngFor="let key of model?.activeKeys">
+                            {{key}}
+                        </li>
+
+                    </ul>
+
                 </div>
             </div>
         </div>
