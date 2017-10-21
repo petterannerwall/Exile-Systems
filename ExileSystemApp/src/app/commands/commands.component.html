@@ -38,7 +38,7 @@
                         <div class="row">
                             <div class="col s6">
                                 <div class="input-field">
-                                    <select [(ngModel)]="model.tempKeys.key" (ngModelChange)="keyChange($event)" id="key" name="key">
+                                    <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="model.tempKeys.key" (ngModelChange)="keyChange($event)" id="key" name="key">
                                         <option value="" disabled selected>Choose key</option>
                                         <option *ngFor="let Keycode of model.Keys" value="{{Keycode}}">{{Keycode}}</option>
                                     </select>
