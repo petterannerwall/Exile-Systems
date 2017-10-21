@@ -22,6 +22,7 @@ import { ExternalService } from './shared/providers/external.service';
 import { LogParserService } from './shared/providers/log-parser.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
+import { RobotService } from './shared/providers/robot.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { SignalRService } from './shared/providers/signalr.service';
     AppRoutingModule,
     SidebarNavModule
   ],
-  providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService],
+  providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService, RobotService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

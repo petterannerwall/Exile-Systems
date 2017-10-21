@@ -1,4 +1,5 @@
 import { ElectronService } from '../shared/providers/electron.service';
+import { RobotService } from '../shared/providers/robot.service';
 
 import { Component, OnInit } from '@angular/core';
 
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './commands.component.html',
   styleUrls: ['./commands.component.scss']
 })
+
 export class CommandsComponent implements OnInit {
 
   robot = this.electronService.robot;
@@ -14,16 +16,32 @@ export class CommandsComponent implements OnInit {
   mouse = this.robot.Mouse();
   debug = true;
 
-  constructor(private electronService: ElectronService) {
+  model = {
+    activeWindow: "Not found"
+  }
+
+  constructor(private electronService: ElectronService, private robotService: RobotService) {
     // Before render
     this.keyboard.autoDelay.min = 1;
     this.keyboard.autoDelay.max = 5;
+
+    robotService.KeyboardEvent.subscribe(function (data) {
+      console.log('Keyboard event data: ', data);
+    })
+
+
+    robotService.WindowEvent.subscribe((data) => {
+      this.model.activeWindow = data;
+      console.log('Window change event: ', data);
+    })
+
   }
 
   ngOnInit() {
-    // After render
-    const timeHandle = setInterval(() => this.listenForKeyEvents(this.robot), 100)
 
+
+
+    // After render
     let windowTitle = 'path of exile';
 
     if (this.debug)
@@ -38,25 +56,6 @@ export class CommandsComponent implements OnInit {
     // robot.Window.setActive(window);
     // SEND KEYPRESSES LIKE THIS
     // keyboard.click('{ENTER}+{7}hideout{ENTER}')
-
-  }
-
-  listenForKeyEvents(robot) {
-
-    if (robot.Window.getActive().getTitle().indexOf('Exile') > 0) {
-
-      const keyState = robot.Keyboard.getState();
-
-      if (keyState[robot.KEY_CONTROL] && keyState[robot.KEY_D]) {
-        console.log('Ctrl + D pressed');
-      }
-
-      if (keyState[robot.KEY_F1]) {
-        console.log('F1 pressed');
-      }
-
-    }
-
 
   }
 
