@@ -1,5 +1,6 @@
 import { ElectronService } from '../shared/providers/electron.service';
 import { RobotService } from '../shared/providers/robot.service';
+import { KeycodeArray } from '../shared/enums/keycode.enum';
 
 import { Component, OnInit } from '@angular/core';
 
@@ -17,23 +18,44 @@ export class CommandsComponent implements OnInit {
   debug = true;
 
   model = {
-    activeWindow: "Not found"
+    activeWindow: "Not found",
+    activeKeys: [],
+    Keys: [],
+    activeKeybinds: {
+
+    },
+    tempKeys: {
+      key: '',
+      command: 'Type Commandssss'
+    }
   }
 
   constructor(private electronService: ElectronService, private robotService: RobotService) {
     // Before render
+
+    const keyList = Object.keys(KeycodeArray).map((keyCode => {
+      return KeycodeArray[keyCode];
+    }));
+
+    console.log(keyList);
+
+    this.model.Keys = keyList;
+
     this.keyboard.autoDelay.min = 1;
     this.keyboard.autoDelay.max = 5;
 
-    robotService.KeyboardEvent.subscribe(function (data) {
-      console.log('Keyboard event data: ', data);
+    robotService.KeyboardEvent.subscribe((data) => {
+      //this.model.activeKeys = data;
     })
-
-
     robotService.WindowEvent.subscribe((data) => {
       this.model.activeWindow = data;
-      console.log('Window change event: ', data);
     })
+    robotService.ClipboardEvent.subscribe((data) => {
+      console.log('Clipboard data:', data);
+    })
+
+
+
 
   }
 
@@ -57,6 +79,14 @@ export class CommandsComponent implements OnInit {
     // SEND KEYPRESSES LIKE THIS
     // keyboard.click('{ENTER}+{7}hideout{ENTER}')
 
+  }
+
+  createKeybind() {
+    console.log(this.model.tempKeys);
+  }
+
+  keyChange(event) {
+    console.log(event);
   }
 
 }

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { ElectronService } from './electron.service';
+import { KeycodeArray } from './../enums/keycode.enum';
+
 
 
 @Injectable()
@@ -15,14 +17,16 @@ export class RobotService {
   KeyboardEvent: EventEmitter<any> = new EventEmitter();
   WindowEvent: EventEmitter<any> = new EventEmitter();
   MouseEvent: EventEmitter<any> = new EventEmitter();
+  ClipboardEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(private electronSerivce: ElectronService) {
-
     const timeHandle = setInterval(() => this.robotHeartbeat(this.robot), 100)
 
   }
 
   private activetWindowPID;
+  private lastPressedKeys;
+  private lastClipboard;
 
   private robotHeartbeat(robot) {
 
@@ -40,27 +44,36 @@ export class RobotService {
       }
     }
 
-    //Check pressed keys
+    //Check Keyboard data
+    const keyState = robot.Keyboard.getState();
+    const pressedKeys = [];
 
+    for (const key in keyState) {
+      const pressedKey = KeycodeArray[key];
+      if (keyState[key] == true && pressedKey != undefined) {
+        pressedKeys.push(pressedKey);
+      }
+    }
 
-    // if (robot.Window.getActive().getTitle().indexOf('Exile') > 0) {
+    if (this.lastPressedKeys == null || pressedKeys != this.lastPressedKeys) {
+      this.lastPressedKeys = pressedKeys;
+      this.KeyboardEvent.emit(pressedKeys);
+    }
 
-    //   const keyState = robot.Keyboard.getState();
+    //Check Mousedata
 
-    //   for (const key in keyState) {
-    //     if (keyState[key] == true) {
-    //       console.log(key);
-    //     }
-    //   }
+    //Check Clipboard data
+    if (robot.Clipboard.hasText()) {
+      const clipboard = robot.Clipboard.getText();
+      if (this.lastClipboard == null || this.lastClipboard != clipboard) {
+        this.ClipboardEvent.emit(clipboard);
+        this.lastClipboard = clipboard;
+      }
+    }
+    else if (robot.Clipboard.HasImage()) {
+      //We do not handle this atm
+    }
 
-
-    //   if (keyState[robot.KEY_CONTROL] && keyState[robot.KEY_D]) {
-    //     this.KeyboardEvent.emit('Ctrl + D')
-    //   }
-    //   if (keyState[robot.KEY_F1]) {
-    //     this.KeyboardEvent.emit('F1')
-    //   }
-    // }
 
 
 
