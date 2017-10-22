@@ -1,0 +1,61 @@
+.character-preview-wrapper {
+
+    margin: 10px;
+}
+
+.preview-row {
+    margin-bottom: 0;
+}
+
+.item-sm-wrapper {
+    float:right;
+}
+
+.item-lg-wrapper {
+    float:left;
+}
+
+.amulet-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -14px;
+    z-index: 1000;
+}
+.armour {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -25px;
+}
+
+.jewellry {
+    margin-top: -25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weapon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-weapon {
+    margin-bottom: -120px;
+    margin-right: -5px;
+}
+
+.offhand {
+    margin-bottom: -120px;
+    margin-left: -5px;
+}
+
+.placeholder-item {
+    width: 50px;
+}
+
+.card-footer-row {
+    margin-bottom: 0;
+}
