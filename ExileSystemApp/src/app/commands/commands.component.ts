@@ -30,7 +30,7 @@ export class CommandsComponent implements OnInit {
     active: [],
     binds: [],
     key: '',
-    command: ''
+    command: 'Type command...'
   }
 
   model = {
@@ -62,10 +62,8 @@ export class CommandsComponent implements OnInit {
       this.keyModel.binds.forEach((bind) => {
         keys.forEach(key => {
           if (bind.key == key) {
-            console.log('Executing command: ', bind.command);
+            console.log('Executing keybind: ', bind.command);
             this.keyboard.click(bind.command);
-
-            // this.keyboard.click('{ENTER}+{7}clear{ENTER}');
           }
         });
       })
@@ -80,23 +78,7 @@ export class CommandsComponent implements OnInit {
   }
 
   ngOnInit() {
-
     // After render
-    let windowTitle = 'path of exile';
-
-    if (this.debug)
-      windowTitle = 'notepad';
-
-    const windowList = this.robot.Window.getList('.*' + windowTitle + '.*');
-    const gameWindow = windowList[0];
-
-    console.log('Found window: ', gameWindow.getTitle());
-
-    // SET ACTIVE WINDOW LIKE THIS
-    // robot.Window.setActive(window);
-    // SEND KEYPRESSES LIKE THIS
-    // keyboard.click('{ENTER}+{7}hideout{ENTER}')
-
   }
 
 
@@ -150,7 +132,6 @@ export class CommandsComponent implements OnInit {
     this.keyModel.key = '';
     this.keyModel.command = 'Type command...'
 
-    console.log('Updated keyModel: ', this.keyModel);
     // const electron = require('electron');
     // const BrowserWindow = electron.remote.BrowserWindow;
 
@@ -162,8 +143,11 @@ export class CommandsComponent implements OnInit {
     // });
 
     // childWindow.setIgnoreMouseEvents(false);
+  }
 
-
+  removeKeybind(bind) {
+    const index = this.keyModel.binds.indexOf(bind);
+    this.keyModel.binds.splice(index, 1);
   }
 
   keyChange(event) {

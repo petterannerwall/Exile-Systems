@@ -7,7 +7,6 @@ import { Injectable } from '@angular/core';
 export class SignalRService {
   connection: any;
   constructor(private signalR: SignalR, private channelService: ChannelService) {
-    console.log('signalrservice');
     const conx = this.signalR.createConnection();
     conx.start().then((c) => {
       this.connection = c;

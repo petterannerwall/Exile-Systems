@@ -49,11 +49,11 @@
             <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
                     <div class="row">
-                        <span class="card-title col s10">Register Keybind </span>
-                        <i class="material-icons col s2 right-align tooltipped" data-position="left" data-delay="350" data-tooltip="You may use {ENTER} and {ESCAPE} along with other keys.">help</i>
+                        <span class="card-title">Register keybind </span>
+                        <i class="byline">Keybinds can only be sent once every 1 second to avoid infinite loops since we are also reading keys.</i>
                     </div>
                     <div class="row">
-                        <div class="col s6">
+                        <div class="col s3">
                             <div class="input-field">
                                 <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.key" (ngModelChange)="keyChange($event)"
                                     id="key" name="key">
@@ -62,7 +62,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col s6">
+                        <div class="col s9">
                             <div class="input-field ">
                                 <div class="input-field">
                                     <input [(ngModel)]="keyModel.command" id="commands" type="text" class="validate">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="card-action">
-                    <a class="waves-effect waves-light btn" (click)="createKeybind()">regiser</a>
+                    <a class="waves-effect waves-light btn" (click)="createKeybind()">register</a>
                 </div>
             </div>
             <div class="card blue-grey darken-1">
@@ -93,21 +93,21 @@
                             <div class="col s3">
                                 {{bind.key}}
                             </div>
-                            <div class="col s9">
+                            <div class="col s8">
                                 {{bind.command}}
+                            </div>
+                            <div class="col s1">
+                                <i class="material-icons waves-effect waves-light hoverable" (click)="removeKeybind(bind)">delete</i>
                             </div>
                         </div>
                     </div>
                     <div *ngIf="keyModel.binds.length === 0">
                         <div class="row">
                             <div class="col s12">
-                                <i>No registered binds.</i>
+                                <i class="byline">No registered keybinds.</i>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-action">
-                    <a class="waves-effect waves-light btn" (click)="createKeybind()">Create</a>
                 </div>
             </div>
         </div>

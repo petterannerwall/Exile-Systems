@@ -37,8 +37,6 @@ export class RobotService {
 
   private robotHeartbeat(robot) {
 
-    console.log(this.sendingInput);
-
     if (!this.keyTimer.hasStarted() && this.keyTimer.hasExpired(500)) {
       this.keyTimer.reset();
       this.lastPressedKeys = [];
@@ -62,8 +60,6 @@ export class RobotService {
     else if (this.lastPressedKeys.length > 0 && this.pressedKeys.length === 0) {
       this.KeyboardEvent.emit(this.pressedKeys);
     }
-
-
 
 
     //Check active Window
