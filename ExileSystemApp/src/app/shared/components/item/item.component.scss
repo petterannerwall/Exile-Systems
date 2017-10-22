@@ -1,6 +1,25 @@
-.item {
-    align-items: stretch;
-    text-align: center;
-    position: relative;
-    padding: 10px 0 10px 0 !important;
+
+.item-wrapper {
+    min-width: 50px;
+
+    .item {
+        align-items: stretch;
+        text-align: center;
+        position: relative;
+        padding: 10px 0 10px 0 !important;
+    }
+}
+
+.item-wide {
+    min-width: 100px !important;
+}
+
+.item-popover {
+    position: absolute;
+    z-index: 1000;
+    min-width: 300px;
+    min-height: 300px;
+    background: rgba(29,38,43,0.9);
+    padding: 10px;
+    border-radius: 1px;
 }

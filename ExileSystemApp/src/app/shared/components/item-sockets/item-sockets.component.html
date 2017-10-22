@@ -1,9 +1,9 @@
 <div class="socket-wrapper">
-    <div class="inner-wrapper">
-        columns: {{columns}}
+    <div [ngClass]="'inner-wrapper-'+columns">
         <ng-container *ngFor="let socket of sockets, index as i">
-            <div [ngClass]="'link-'+i" *ngIf="sockets[i+1] && socket.group == sockets[i+1].group"></div>
-            <div class="socket-{{socket.attr}}" [ngClass]="'socket-'+i"></div>
+            <!-- classes are formatted as "type-slot-columnwidth" -->
+            <div class="{{columns}}-col" [ngClass]="'link-'+i+'-'+columns" *ngIf="sockets[i+1] && socket.group == sockets[i+1].group"></div>
+            <div class="socket-{{socket.attr}} {{columns}}-col" [ngClass]="'socket-'+i+'-'+columns"></div>
         </ng-container>
     </div>
 </div>

@@ -10,6 +10,5 @@ export class ItemSocketsComponent implements OnInit {
   @Input() columns: number;
   constructor() { }
   ngOnInit() {
-    console.log(this.sockets);
   }
 }

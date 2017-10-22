@@ -1,4 +1,16 @@
-<div class="item" [ngStyle]="{'max-width.px': item.w*50}">
-    <img [attr.src]="item.icon"/>
-    <app-item-sockets [columns]="item.w" [sockets]="item.sockets"></app-item-sockets>
+<div class="item-wrapper" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false">
+    <div class="item" *ngIf="item" [ngClass]="{'item-wide': item.inventoryId == 'Weapon' || item.inventoryId == 'Offhand'}" [ngStyle]="{'min-width.px': 50*item.w}">
+        <img [attr.src]="item.icon" />
+        <app-item-sockets [columns]="item.w" [sockets]="item.sockets"></app-item-sockets>
+    </div>
+</div>
+<div class="item-popover" *ngIf="showTooltip">
+    <h4>{{item.typeLine}}</h4>
+    <span *ngFor="let mod of item.implicitMods">{{mod}}
+        <br/>
+    </span>
+    <hr>
+    <span *ngFor="let mod of item.explicitMods">{{mod}}
+        <br/>
+    </span>
 </div>
