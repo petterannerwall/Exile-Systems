@@ -81,7 +81,6 @@ export class CommandsComponent implements OnInit {
     // After render
   }
 
-
   initializeAlwaysOnTop() {
     const tempWindowList = this.robot.Window.getList();
     tempWindowList.forEach(window => {

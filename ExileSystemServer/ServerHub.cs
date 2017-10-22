@@ -20,14 +20,20 @@ namespace ExileSystemServer
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            var channel = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId).Value.Channel;
+            var player = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId);
 
-            Groups.Remove(Context.ConnectionId, channel);
-
-            var accountName = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId).Value.Account;
-            if (accountName != null)
+            if (player.Value != null)
             {
-                Console.WriteLine($"<> {accountName} disconnected");
+                var channel = player.Value.Channel;
+
+
+                Groups.Remove(Context.ConnectionId, channel);
+
+                var accountName = ConnectedPlayers.SingleOrDefault((c) => c.Value.ConnectionID == Context.ConnectionId).Value.Account;
+                if (accountName != null)
+                {
+                    Console.WriteLine($"<> {accountName} disconnected");
+                }
             }
             return base.OnDisconnected(stopCalled);
         }
@@ -64,19 +70,22 @@ namespace ExileSystemServer
             Clients.All.PlayerUpdate(player);
             return users;
         }
-         
+
         public void RegisterSpectator(string channel)
         {
             Groups.Add(Context.ConnectionId, channel);
-            ConnectedPlayers.TryAdd(Context.ConnectionId, new Player() { Channel = channel });            
+            ConnectedPlayers.TryAdd(Context.ConnectionId, new Player() { Channel = channel });
         }
 
         public void UpdatePlayer(string channel, Player player)
         {
-            ConnectedPlayers.AddOrUpdate(Context.ConnectionId, player);
-            var channelObject = serverRepository.UpdateOrAddPlayer(channel, player);
-            Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character.Name);
-            Clients.All.ChannelUpdate(channelObject);
+            if (player.Character != null)
+            {
+                ConnectedPlayers.AddOrUpdate(Context.ConnectionId, player);
+                var channelObject = serverRepository.UpdateOrAddPlayer(channel, player);
+                Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character.Name);
+                Clients.All.ChannelUpdate(channelObject);
+            }
         }
 
         public void Broadcast(string message)
@@ -93,7 +102,7 @@ namespace ExileSystemServer
             Console.WriteLine("Broadcasting Bitmap");
             Clients.All.ImageUpdate(bitmap);
         }
-        
+
     }
 
 }
