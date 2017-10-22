@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col s3 player-list">
         <div class="player" *ngFor="let player of channelService.channel.players">
-            {{player.character.name}}
+            <app-character-preview *ngIf="player.character" [character]="player.character"></app-character-preview>
         </div>
     </div>
     <div class="col s9"></div>

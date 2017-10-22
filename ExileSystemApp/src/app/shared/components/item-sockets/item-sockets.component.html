@@ -1,0 +1,9 @@
+<div class="socket-wrapper">
+    <div class="inner-wrapper">
+        columns: {{columns}}
+        <ng-container *ngFor="let socket of sockets, index as i">
+            <div [ngClass]="'link-'+i" *ngIf="sockets[i+1] && socket.group == sockets[i+1].group"></div>
+            <div class="socket-{{socket.attr}}" [ngClass]="'socket-'+i"></div>
+        </ng-container>
+    </div>
+</div>
