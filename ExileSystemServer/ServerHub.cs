@@ -65,9 +65,7 @@ namespace ExileSystemServer
                 var added = ConnectedPlayers.TryAdd(Context.ConnectionId, player);
                 if (!added) return null;
             }
-
-            serverRepository.UpdateOrAddPlayer(channel, player);
-            Clients.All.PlayerUpdate(player);
+            UpdatePlayer(channel, player);
             return users;
         }
 

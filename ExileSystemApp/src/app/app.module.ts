@@ -58,7 +58,7 @@ export function createConfig(): SignalRConfiguration {
   c.hubName = 'ServerHub';
   c.withCredentials = false;
   c.jsonp = true;
-  c.url = 'http://localhost:9393/signalr';
+  c.url = 'http://www.petterannerwall.se:9393/signalr';
   c.logging = true;
   c.transport = [new ConnectionTransport('webSockets'), new ConnectionTransport('longPolling')];
   return c;
