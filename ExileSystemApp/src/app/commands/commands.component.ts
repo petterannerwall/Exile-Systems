@@ -22,7 +22,8 @@ export class CommandsComponent implements OnInit {
   windowModel = {
     list: [],
     topMostHandle: 0,
-    topMostTitle: ''
+    topMostTitle: '',
+    killProcess: ''
   }
 
   keyModel = {
@@ -47,7 +48,7 @@ export class CommandsComponent implements OnInit {
   constructor(private electronService: ElectronService, private robotService: RobotService) {
     // Before render
 
-    this.initializeAlwaysOnTop();
+    this.initializeWindowlist();
 
     this.keyModel.list = Object.keys(KeycodeArray).map((keyCode => {
       return KeycodeArray[keyCode];
@@ -81,7 +82,7 @@ export class CommandsComponent implements OnInit {
     // After render
   }
 
-  initializeAlwaysOnTop() {
+  initializeWindowlist() {
     const tempWindowList = this.robot.Window.getList();
     tempWindowList.forEach(window => {
       const windowObj = {
@@ -114,11 +115,19 @@ export class CommandsComponent implements OnInit {
     window.setTopMost(false);
     if (!window.isTopMost()) {
       this.windowModel.topMostTitle = '';
-      this.windowModel.topMostHandle = 0;
+      this.windowModel.topMostHandle = 0; 
     }
     else {
       console.log('Something went wrong when we tried to remove topMost from a window');
     }
+  }
+
+  killProcess() {
+    const window = this.robot.Window(+this.windowModel.killProcess);
+    const windowPID = window.getPID();
+    const windowProcess = this.robot.Process(windowPID);
+    windowProcess.kill();
+    console.log(windowPID);
   }
 
   createKeybind() {
