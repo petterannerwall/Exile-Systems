@@ -1,8 +1,21 @@
 <div class="row">
-    <div class="player-list">
-        <div class="player" *ngFor="let player of channelService.channel.players">
-            <app-character-preview *ngIf="player.character" [character]="player.character"></app-character-preview>
+  <div class="player-list">
+    <div class="player" *ngFor="let player of channelService.channel.players, let i = index">
+
+      <!-- Modal Trigger -->
+      <button [attr.data-target]="player.character.name+'-'+i" class="waves-effect waves-light btn modal-trigger">{{player.character.name}}</button>
+      <!-- Modal Structure -->
+      <div id="{{player.character.name}}-{{i}}" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions" class="modal blue-grey darken-2">
+        <div class="modal-content">
+          <h4>({{player.character.level}} {{player.character.class}}) {{player.character.name}}</h4>
+          <app-character-preview *ngIf="player.character" [character]="player.character"></app-character-preview>
         </div>
+        <div class="modal-footer blue-grey darken-3 white-text">
+          <a class="waves-effect waves-light btn" (click)="closeModal()">Close</a>
+          <!-- <a class="modal-action modal-close waves-effect waves-light btn">Agree</a> -->
+        </div>
+      </div>
     </div>
-    <div class="col s9"></div>
+  </div>
+  <div class="col s9"></div>
 </div>
