@@ -9,8 +9,18 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            CommandHandler.KillTCPConnectionForProcess(18784);
+            var command = args[0];
+            var processId = args[1];
+
+            if (command == "/process" && processId != null)
+            {
+                var result = uint.TryParse(processId, out uint uintProcessId);
+                if (result)
+                {
+                    CommandHandler.KillTCPConnectionForProcess(uintProcessId);
+                }
+            }
+
         }
     }
 

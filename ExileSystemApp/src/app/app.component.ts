@@ -22,6 +22,22 @@ export class AppComponent implements OnInit {
     } else {
       console.log('Mode web');
     }
+
+    const fs = electronService.fs;
+
+    if (!fs.existsSync('./logout.exe')) {
+      const file = electronService.fs.createWriteStream('./logout.exe');
+      const request = this.electronService.http.get('http://www.petterannerwall.se/logout.exe', function(response) {
+        response.pipe(file);
+        file.on('finish', function() {
+          file.close();  // close() is async, call cb after close completes.
+        });
+      }).on('error', function(err) { // Handle errors
+        fs.unlink('./logout.exe'); // Delete the file async. (But we don't check the result)
+      });
+  }
+
+
   }
   ngOnInit() {
     this.externalService.getCharacter('CojL', 'CojL');
