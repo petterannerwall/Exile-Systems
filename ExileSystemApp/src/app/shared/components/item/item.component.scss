@@ -42,10 +42,17 @@
     padding: 0;
     border-bottom: 2px solid #827f7f;
     background-color: rgba(30, 31, 37, 0.95);
+    background: -webkit-linear-gradient(left, rgb(30, 31, 37), rgb(60, 60, 72)); 
+    background: -o-linear-gradient(right, rgb(30, 31, 37), rgb(60, 60, 72)); 
+    background: -moz-linear-gradient(right, rgb(30, 31, 37), rgb(60, 60, 72));
+    background: linear-gradient(to right, rgb(30, 31, 37), rgb(60, 60, 72)); 
     h4{
       font-size: 1.28rem;
       margin-bottom: 0;
       padding: 10px;
+      .item-name {
+        padding-bottom: 5px;
+      }
     }
     .rarity-0 {
       //normal
@@ -60,7 +67,7 @@
     }
     .rarity-3 {
       // unique
-      color: #C9712E !important;
+      color: rgb(218, 122, 54) !important;
     }
   }
   .currency {

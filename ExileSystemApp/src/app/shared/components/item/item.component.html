@@ -8,8 +8,8 @@
   <div class="item-popover" *ngIf="item">
     <div class="item-popover-header">
       <h4 class="rarity-{{item.frameType}}">
-        <ng-container *ngIf="item.name">{{item.name.substring(28)}}, </ng-container>
-        {{item.typeLine}}
+        <div class="item-name" *ngIf="item.name">{{item.name.substring(28)}}<br/></div>
+        <span>{{item.typeLine}}</span>
       </h4>
     </div>
     <div class="item-popover-body">
@@ -19,7 +19,7 @@
             <br/>
           </span>
         </ng-container>
-        <hr *ngIf="item.implicitMods">
+        <hr *ngIf="item.implicitMods != undefined && item.explicitMods != undefined">
         <ng-container *ngFor="let mod of item.explicitMods">
           <span class="{{getExplicitModClass(mod)}}">{{mod}}
             <br/>
