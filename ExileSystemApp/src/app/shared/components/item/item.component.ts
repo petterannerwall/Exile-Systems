@@ -8,6 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ItemComponent implements OnInit {
   @Input() item: Item;
+  @Input() columnsWide: number;
+  @Input() columnsHigh: number;
   showTooltip = false;
   constructor() { }
   ngOnInit() {

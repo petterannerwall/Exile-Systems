@@ -1,7 +1,18 @@
-<div class="item-wrapper" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false">
-    <div class="item" *ngIf="item" [ngClass]="{'item-wide': item.inventoryId == 'Weapon' || item.inventoryId == 'Offhand'}" [ngStyle]="{'min-width.px': 50*item.w}">
-        <img [attr.src]="item.icon" />
+<div class="item-wrapper" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false" [ngStyle]="{'min-width.px': 50*columnsWide, 'min-height.px': 50*columnsHigh}">
+    <div class="item" *ngIf="item && item.inventoryId == 'Offhand'" [ngStyle]="{'margin-top.px': 120-(item.h*40)}">
+        <div class="icon-wrapper">
+            <img [attr.src]="item.icon" />
+        </div>
         <app-item-sockets [columns]="item.w" [sockets]="item.sockets"></app-item-sockets>
+    </div>
+    <div class="item" *ngIf="item && item.inventoryId != 'Offhand'">
+        <div class="icon-wrapper">
+            <img [attr.src]="item.icon" />
+        </div>
+        <app-item-sockets [columns]="item.w" [sockets]="item.sockets"></app-item-sockets>
+    </div>
+    <div class="item" *ngIf="item == undefined">
+        <i class="medium material-icons">help_outline</i>
     </div>
 </div>
 <div class="item-popover" *ngIf="showTooltip">

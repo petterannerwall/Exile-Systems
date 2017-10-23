@@ -1,12 +1,24 @@
 
 .item-wrapper {
     min-width: 50px;
+    // align-items: stretch;
+    text-align: center;
+    position: relative;
+    padding: 10px 0 10px 0 !important;
 
+    display: flex;
+    justify-content: center;
+    align-items: center; 
     .item {
-        align-items: stretch;
-        text-align: center;
         position: relative;
-        padding: 10px 0 10px 0 !important;
+        /* width: 100%; */
+        /* height: 100%; */
+        /* top: 0; */
+        text-align: center;
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        .icon-wrapper {}
     }
 }
 
