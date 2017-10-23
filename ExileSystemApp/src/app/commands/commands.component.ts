@@ -35,7 +35,7 @@ export class CommandsComponent implements OnInit {
   }
 
   model = {
-    activeWindow: "Not found",
+    activeWindow: 'Not found',
     activeKeys: [],
     Keys: [],
     activeKeybinds: {},
@@ -62,7 +62,7 @@ export class CommandsComponent implements OnInit {
 
       this.keyModel.binds.forEach((bind) => {
         keys.forEach(key => {
-          if (bind.key == key) {
+          if (bind.key === key) {
             console.log('Executing keybind: ', bind.command);
             this.keyboard.click(bind.command);
           }
@@ -89,7 +89,7 @@ export class CommandsComponent implements OnInit {
         Handle: window.getHandle(),
         Title: window.getTitle()
       }
-      if (windowObj.Title != '') {
+      if (windowObj.Title !== '') {
         this.windowModel.list.push(windowObj);
       }
 
@@ -104,8 +104,7 @@ export class CommandsComponent implements OnInit {
     if (window.isTopMost()) {
       this.windowModel.topMostHandle = windowHandle;
       this.windowModel.topMostTitle = window.getTitle();
-    }
-    else {
+    } else {
       console.log('Something went wrong when we tried to set a window to topMost');
     }
   }
@@ -115,9 +114,8 @@ export class CommandsComponent implements OnInit {
     window.setTopMost(false);
     if (!window.isTopMost()) {
       this.windowModel.topMostTitle = '';
-      this.windowModel.topMostHandle = 0; 
-    }
-    else {
+      this.windowModel.topMostHandle = 0;
+    } else {
       console.log('Something went wrong when we tried to remove topMost from a window');
     }
   }
@@ -126,8 +124,11 @@ export class CommandsComponent implements OnInit {
     const window = this.robot.Window(+this.windowModel.killProcess);
     const windowPID = window.getPID();
     const windowProcess = this.robot.Process(windowPID);
-    windowProcess.kill();
-    console.log(windowPID);
+    const processPID = windowProcess.getPID();
+    console.log(processPID);
+    const cmd = this.electronService.cmd;
+    cmd.elevate('logout.exe /process ' + processPID);
+
   }
 
   createKeybind() {

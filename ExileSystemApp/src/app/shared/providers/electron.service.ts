@@ -1,3 +1,4 @@
+import { windowWhen } from 'rxjs/operator/windowWhen';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 
@@ -15,6 +16,9 @@ export class ElectronService {
   lineReader: any;
   config: any;
   robot: any;
+  cmd: any;
+  fs: any;
+  http: any;
   constructor(private router: Router) {
     console.log('electronService');
     // Conditional imports
@@ -26,6 +30,9 @@ export class ElectronService {
       const Config = window.require('electron-config');
       this.config = new Config();
       this.robot = window.require('robot-js');
+      this.cmd = window.require('node-windows');
+      this.fs = window.require('fs');
+      this.http = window.require('http');
 
       // init menu
       const template = [
