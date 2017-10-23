@@ -6,17 +6,36 @@
     <app-item-sockets [columns]="item.w" [sockets]="item.sockets"></app-item-sockets>
   </div>
   <div class="item-popover" *ngIf="item">
-    <h4 class="rarity-{{item.frameType}}">
-      <ng-container *ngIf="item.name">{{item.name.substring(28)}}, </ng-container>
-      {{item.typeLine}}</h4>
-    <div class="mods">
-      <span *ngFor="let mod of item.implicitMods">{{mod}}
-        <br/>
-      </span>
-      <hr>
-      <span *ngFor="let mod of item.explicitMods" class="{{getExplicitModClass(mod)}}">{{mod}}
-        <br/>
-      </span>
+    <div class="item-popover-header">
+      <h4 class="rarity-{{item.frameType}}">
+        <ng-container *ngIf="item.name">{{item.name.substring(28)}}, </ng-container>
+        {{item.typeLine}}
+      </h4>
+    </div>
+    <div class="item-popover-body">
+      <div class="mods">
+        <ng-container *ngFor="let mod of item.implicitMods">
+          <span>{{mod}}
+            <br/>
+          </span>
+        </ng-container>
+        <hr *ngIf="item.implicitMods">
+        <ng-container *ngFor="let mod of item.explicitMods">
+          <span class="{{getExplicitModClass(mod)}}">{{mod}}
+            <br/>
+          </span>
+        </ng-container>
+        <ng-container *ngFor="let mod of item.craftedMods">
+          <span class="crafted-mod">
+            <span class="crafted-mod-tag">
+              crafted
+            </span>
+            &nbsp;{{mod}}
+          </span>
+          <br/>
+        </ng-container>
+      </div>
+      <span *ngIf="item.corrupted" class="corrupted">Corrupted</span>
     </div>
   </div>
 </div>
