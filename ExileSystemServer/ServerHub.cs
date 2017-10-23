@@ -10,11 +10,10 @@ namespace ExileSystemServer
 {
     public class ServerHub : Hub
     {
-        private ServerRepository serverRepository;
 
         public ServerHub()
         {
-            serverRepository = new ServerRepository();
+
         }
 
         public override Task OnDisconnected(bool stopCalled)
@@ -43,8 +42,8 @@ namespace ExileSystemServer
         {
             if (player.Character != null)
             {
-                var channelObject = serverRepository.UpdateOrAddPlayer(channel, player);
-                Console.WriteLine("Updated Account: " + player.Account + " and Character: " + player.Character.Name);
+                var channelObject = Database.UpdateOrAddPlayer(channel, player);
+                Console.WriteLine(DateTime.Now + " Updated Account: " + player.Account + " and Character: " + player.Character.Name);
                 Clients.All.ChannelUpdate(channelObject);
             }
         }

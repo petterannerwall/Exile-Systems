@@ -59,7 +59,7 @@ export function createConfig(): SignalRConfiguration {
   c.withCredentials = false;
   c.jsonp = true;
   c.url = 'http://www.petterannerwall.se:9393/signalr';
-  c.logging = true;
+  c.logging = false;
   c.transport = [new ConnectionTransport('webSockets'), new ConnectionTransport('longPolling')];
   return c;
 }
