@@ -24,7 +24,9 @@
         <div class="col s4">
             <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
-                    <span class="card-title">Always on top</span>
+                    <span class="card-title">Always on top
+                        <i class="material-icons right waves-effect waves-light hoverable" (click()="initializeWindowlist()">refresh</i>
+                    </span>
                     <i class="byline">Forces the selected window to always be on top</i>
                     <div *ngIf="windowModel.topMostTitle === ''">
                         <select materialize="material_select" [materializeSelectOptions]="windowModel.list" [(ngModel)]="windowModel.topMostHandle"
@@ -107,6 +109,28 @@
                                 <i class="byline">No registered keybinds.</i>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s4">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Kill Process
+                        <i class="material-icons right waves-effect waves-light hoverable" (click()="initializeWindowlist()">refresh</i>
+                    </span>
+                    <i class="byline">Kills the selected process</i>
+                    <div>
+                        <select materialize="material_select" [materializeSelectOptions]="windowModel.list" [(ngModel)]="windowModel.killProcess"
+                            id="window" name="window">
+                            <option value="" disabled selected>Choose Window</option>
+                            <option *ngFor="let window of windowModel.list" value="{{window.Handle}}">{{window.Title}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <div class="row">
+                        <a class="waves-effect waves-light btn red col s12" (click)="killProcess()">Kill process</a>
                     </div>
                 </div>
             </div>
