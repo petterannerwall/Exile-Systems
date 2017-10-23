@@ -1,64 +1,77 @@
-
 .item-wrapper {
-    min-width: 50px;
-    // align-items: stretch;
-    text-align: center;
+  min-width: 50px; // align-items: stretch;
+  text-align: center;
+  position: relative;
+  padding: 10px 0 10px 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .item {
     position: relative;
-    padding: 10px 0 10px 0 !important;
-    display: flex;
+    text-align: center;
+    align-items: center;
     justify-content: center;
-    align-items: center; 
-    .item {
-        position: relative;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        .mods {
-            .life {
-                color: lightcoral;
-            }
-    
-            .coldRes {
-                color: #B4BEDB;
-            }
-    
-            .fireRes {
-                color: #E8C489;
-            }
-    
-            .lightningRes {
-                color: #E0E889;
-            }
-    
-            .mana {
-                color: #7EB2E6;
-            }
-    
-            .chaosRes {
-                color: #D19CF0;
-            }
-        }
-    }
+  }
 }
 
 .item-wide {
-    min-width: 100px !important;
+  min-width: 100px !important;
 }
 
 .item-popover {
-    position: absolute;
-    min-width: 300px;
-    min-height: 300px;
-    background: rgba(29,38,43,0.9);
-    padding: 10px;
-    border-radius: 1px;
-    bottom: 10px;
-    display: none;
-    pointer-events: none;
-    z-index: 9999;
+  position: absolute;
+  min-width: 300px;
+  min-height: 300px;
+  background: rgba(29, 38, 43, 0.9);
+  padding: 10px;
+  border-radius: 1px;
+  bottom: 10px;
+  display: none;
+  pointer-events: none;
+  z-index: 9999;
+  .rarity-0 {
+    //normal
+  }
+  .rarity-1 {
+    // magic
+    color: #8888FF !important;
+  }
+  .rarity-2 {
+    // rare
+    color: #EBEB57 !important;
+  }
+  .rarity-3 {
+    // unique
+    color: #C9712E !important;
+  }
+  .currency {
+    color: #AD904B !important;
+  }
+  .gem {
+    color: #1ba29b !important;
+  }
+  .mods {
+    .life {
+      color: lightcoral;
+    }
+    .coldRes {
+      color: #B4BEDB;
+    }
+    .fireRes {
+      color: #E8C489;
+    }
+    .lightningRes {
+      color: #E0E889;
+    }
+    .mana {
+      color: #7EB2E6;
+    }
+    .chaosRes {
+      color: #D19CF0;
+    }
+  }
 }
 
 .item-wrapper:hover .item-popover {
-    display:block;
+  display: block;
 }
-

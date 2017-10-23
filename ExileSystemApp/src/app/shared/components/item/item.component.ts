@@ -17,7 +17,6 @@ export class ItemComponent implements OnInit {
   }
   getExplicitModClass(explicit) {
     let modClass = '';
-
     if (explicit.indexOf('to maximum Life') >= 0) {
       modClass = 'life';
     }

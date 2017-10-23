@@ -15,7 +15,9 @@
     <i class="medium material-icons">help_outline</i>
   </div>
   <div class="item-popover" *ngIf="item">
-    <h4>{{item.typeLine}}</h4>
+    <h4 class="rarity-{{item.frameType}}">
+      <ng-container *ngIf="item.name">{{item.name.substring(28)}}, </ng-container>
+      {{item.typeLine}}</h4>
     <div class="mods">
       <span *ngFor="let mod of item.implicitMods">{{mod}}
         <br/>
