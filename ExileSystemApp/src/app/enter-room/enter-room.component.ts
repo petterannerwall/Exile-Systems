@@ -13,7 +13,7 @@ import * as $ from 'jquery';
   styleUrls: ['./enter-room.component.scss']
 })
 export class EnterRoomComponent implements OnInit {
-  model = { roomCode: '', accountName: '', characterName: '', sessionId: '' };
+  model = { roomCode: 'abc123', accountName: 'Umaycry', characterName: '', sessionId: '' };
   characters: any = [];
   constructor(private router: Router, private externalService: ExternalService, private signalrService: SignalRService) { }
 

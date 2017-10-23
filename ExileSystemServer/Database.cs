@@ -21,50 +21,15 @@ namespace ExileSystemServer
         }        
     }
 
-    public class ServerRepository
+    public static class Database
     {
-        private Context redis;
-        public ServerRepository()
+        private static Context redis;
+        public static void Initialize()
         {
             redis = new Context("localhost:6379", new JsonSerializer());
         }
-
-        public List<PlayerConnection> AddPlayerConnection(PlayerConnection connection)
-        {
-            List<PlayerConnection> connections = redis.Cache.GetObject<List<PlayerConnection>>("ExileSystemsConnections");
-            if (connections == null)
-            {
-                connections = new List<PlayerConnection>();
-                connections.Add(connection);
-            }
-            else
-            {
-                var existingConnection = connections.FirstOrDefault(t => t.ConnectionId == connection.ConnectionId);
-                connections.Remove(existingConnection);
-                connections.Add(connection);
-            }
-            redis.Cache.SetObject("ExileSystemsConnections", connections, TimeSpan.FromMinutes(60));
-
-            return connections;
-        }
-
-        public List<PlayerConnection> RemovePlayerConnection(PlayerConnection connection)
-        {
-            List<PlayerConnection> connections = redis.Cache.GetObject<List<PlayerConnection>>("ExileSystemsConnections");
-
-            if (connections != null)
-            {
-                var existingConnection = connections.FirstOrDefault(t => t.ConnectionId == connection.ConnectionId);
-                connections.Remove(existingConnection);
-                redis.Cache.SetObject("ExileSystemsConnections", connections, TimeSpan.FromMinutes(60));
-                return connections;
-            }
-
-            return new List<PlayerConnection>();
-        }
-
-
-        public Channel UpdateOrAddPlayer(string channel, Player player)
+        
+        public static Channel UpdateOrAddPlayer(string channel, Player player)
         {
 
             Channel existingChannel = redis.Cache.GetObject<Channel>($"game:{channel}");
@@ -87,5 +52,40 @@ namespace ExileSystemServer
             return existingChannel;
 
         }
+
+        public static List<PlayerConnection> AddPlayerConnection(PlayerConnection connection)
+        {
+            List<PlayerConnection> connections = redis.Cache.GetObject<List<PlayerConnection>>("ExileSystemsConnections");
+            if (connections == null)
+            {
+                connections = new List<PlayerConnection>();
+                connections.Add(connection);
+            }
+            else
+            {
+                var existingConnection = connections.FirstOrDefault(t => t.ConnectionId == connection.ConnectionId);
+                connections.Remove(existingConnection);
+                connections.Add(connection);
+            }
+            redis.Cache.SetObject("ExileSystemsConnections", connections, TimeSpan.FromMinutes(60));
+
+            return connections;
+        }
+
+        public static List<PlayerConnection> RemovePlayerConnection(PlayerConnection connection)
+        {
+            List<PlayerConnection> connections = redis.Cache.GetObject<List<PlayerConnection>>("ExileSystemsConnections");
+
+            if (connections != null)
+            {
+                var existingConnection = connections.FirstOrDefault(t => t.ConnectionId == connection.ConnectionId);
+                connections.Remove(existingConnection);
+                redis.Cache.SetObject("ExileSystemsConnections", connections, TimeSpan.FromMinutes(60));
+                return connections;
+            }
+
+            return new List<PlayerConnection>();
+        }
+
     }
 }

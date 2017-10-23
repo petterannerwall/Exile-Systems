@@ -12,12 +12,21 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class LogParserService {
     recentLines: Array<string> = [];
+
+    timer;
+
     constructor(private electron: ElectronService, private signalRService: SignalRService, private externalService: ExternalService) {
+
+        this.timer = electron.robot.Timer();
+
         setInterval(() => {
             this.parseLines();
-        }, 3000);
+        }, 1000);
     }
     parseLines() {
+
+        this.timer.start();
+
         const currentLines = [];
         let rowCount = 20;
         this.electron.lineReader.eachLine(this.electron.config.get('logpath'), (line) => {
@@ -36,6 +45,15 @@ export class LogParserService {
                         this.parseMessage(element);
                     });
                     this.recentLines = currentLines;
+                    const elapsed = this.timer.restart();
+                    if (elapsed > 25) {
+                        console.log('DEBUG: Finished parsing lines after ' + elapsed + ' ms');
+                    }
+                } else {
+                    const elapsed = this.timer.restart();
+                    if (elapsed > 25) {
+                        console.log('DEBUG: Finished parsing lines after ' + elapsed + ' ms');
+                    }
                 }
             }
         });
@@ -57,7 +75,6 @@ export class LogParserService {
 
         const type = groups[2];
 
-        // Set channel and default to Message
         if (type === '$') {
             msg.channel = MessageChannelEnum.TradeChannel;
             msg.type = MessageTypeEnum.Message;
@@ -80,12 +97,11 @@ export class LogParserService {
             msg.channel = MessageChannelEnum.Information;
         } else if (message.indexOf('has joined the area.') >= 0) {
             msg.type = MessageTypeEnum.OtherJoinArea;
-        }else if (message.indexOf('would like to buy your') >= 0) {
+        } else if (message.indexOf('would like to buy your') >= 0) {
             msg.type = MessageTypeEnum.TradeMessage;
         } else {
             msg.type = MessageTypeEnum.Other;
         }
-
 
         if (msg.type === MessageTypeEnum.SelfEnteringArea) {
             msg.text = message.split('You have entered ')[1].split('.')[0];
