@@ -1,10 +1,19 @@
 .row {
-    margin: 0;
+  margin: 0;
+  height: 100%;
+  .col {
     height: 100%;
-    .col {
-        height: 100%;
-    }
+  }
 }
+
 .player-list {
-    width:325px !important;
+  width: 325px !important;
+}
+
+.modal {
+  overflow: visible;
+  .modal-footer {
+    padding: 16px 24px;
+    height: auto;
+  }
 }
