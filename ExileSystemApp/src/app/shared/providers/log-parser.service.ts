@@ -27,12 +27,16 @@ export class LogParserService {
                 return false;
             }
         }).then(() => {
-            const newItems = currentLines.filter(item => this.recentLines.indexOf(item) < 0);
-            if (newItems.length > 0 || this.recentLines.length === 0) {
-                newItems.forEach(element => {
-                    this.parseMessage(element);
-                });
+            if (this.recentLines.length === 0) {
                 this.recentLines = currentLines;
+            } else {
+                const newItems = currentLines.filter(item => this.recentLines.indexOf(item) < 0);
+                if (newItems.length > 0 || this.recentLines.length === 0) {
+                    newItems.forEach(element => {
+                        this.parseMessage(element);
+                    });
+                    this.recentLines = currentLines;
+                }
             }
         });
     }
@@ -40,8 +44,10 @@ export class LogParserService {
         const msg = { id: '', player: '', time: undefined, type: undefined, text: '', channel: undefined } as Message;
         const groups = message.match(/(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2})\s[\d]*\s[\d]*\s\[.*\]\s([$@%#]?)\s?(<.*>\s?)?(\w*):\s(.*)/);
         if (groups === null) {
+            msg.type = MessageTypeEnum.Other;
             return;
         }
+
         msg.text = groups[5];
         msg.time = new Date(groups[1]);
         if (groups[4] !== undefined) {
@@ -51,14 +57,7 @@ export class LogParserService {
 
         const type = groups[2];
 
-        if (message.indexOf('You have entered') >= 0) {
-            msg.type = MessageTypeEnum.SelfEnteringArea;
-            msg.channel = MessageChannelEnum.Information;
-        } else if (message.indexOf('has left the area') >= 0) {
-            msg.type = MessageTypeEnum.OtherLeaveArea;
-            msg.channel = MessageChannelEnum.Information;
-        }
-
+        // Set channel and default to Message
         if (type === '$') {
             msg.channel = MessageChannelEnum.TradeChannel;
             msg.type = MessageTypeEnum.Message;
@@ -73,15 +72,32 @@ export class LogParserService {
             msg.type = MessageTypeEnum.Message;
         }
 
+        if (message.indexOf('You have entered') >= 0) {
+            msg.type = MessageTypeEnum.SelfEnteringArea;
+            msg.channel = MessageChannelEnum.Information;
+        } else if (message.indexOf('has left the area') >= 0) {
+            msg.type = MessageTypeEnum.OtherLeaveArea;
+            msg.channel = MessageChannelEnum.Information;
+        } else if (message.indexOf('has joined the area.') >= 0) {
+            msg.type = MessageTypeEnum.OtherJoinArea;
+        }else if (message.indexOf('would like to buy your') >= 0) {
+            msg.type = MessageTypeEnum.TradeMessage;
+        } else {
+            msg.type = MessageTypeEnum.Other;
+        }
+
+
         if (msg.type === MessageTypeEnum.SelfEnteringArea) {
             msg.text = message.split('You have entered ')[1].split('.')[0];
             this.externalService.player.area = msg.text;
-        } else if (msg.type === MessageTypeEnum.OtherJoinArea) {
+        } else if (MessageTypeEnum.OtherJoinArea === msg.type) {
             msg.player = message.split(' has joined the area.')[1];
         } else if (msg.type === MessageTypeEnum.OtherLeaveArea) {
             msg.player = message.split(' has left the area.')[1];
         }
 
-        this.signalRService.updatePlayer(this.externalService.player.channel, this.externalService.player);
+        if (msg.type !== MessageTypeEnum.Other) {
+            this.signalRService.updatePlayer(this.externalService.player.channel, this.externalService.player);
+        }
     }
 }
