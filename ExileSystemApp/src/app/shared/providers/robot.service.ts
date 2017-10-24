@@ -18,14 +18,22 @@ export class RobotService {
   WindowEvent: EventEmitter<any> = new EventEmitter();
   MouseEvent: EventEmitter<any> = new EventEmitter();
   ClipboardEvent: EventEmitter<any> = new EventEmitter();
-  sendingInput = false;
+
+  isIdle = false;
+
 
 
   constructor(private electronSerivce: ElectronService) {
-    const timeHandle = setInterval(() => this.robotHeartbeat(this.robot), 250)
+    const timeHandle = setInterval(() => {
+      this.robotHeartbeat(this.robot)
+    }, 100);
+
 
     this.lastPressedKeys = [];
     this.keyTimer = this.robot.Timer();
+
+    this.idleTimer = this.robot.Timer();
+    this.idleTimer.start();
 
   }
 
@@ -34,6 +42,11 @@ export class RobotService {
   private lastPressedKeys;
   private lastClipboard;
   private keyTimer;
+  private idleTimer;
+  private mousePosition = {
+    x: 0,
+    y: 0
+  }
 
   private robotHeartbeat(robot) {
 
@@ -49,6 +62,7 @@ export class RobotService {
       const pressedKey = KeycodeArray[key];
       if (keyState[key] == true && pressedKey != undefined) {
         this.pressedKeys.push(pressedKey);
+        this.idleTimer.restart();
       }
     }
 
@@ -77,6 +91,13 @@ export class RobotService {
     }
 
     //Check Mousedata
+    const position = robot.Mouse.getPos();
+    if (this.mousePosition.x != position.x && this.mousePosition.y != position.y) {
+      this.idleTimer.restart();
+    }
+    this.mousePosition.x = position.x;
+    this.mousePosition.y = position.y;
+
 
     //Check Clipboard data
     if (robot.Clipboard.hasText()) {
@@ -88,6 +109,15 @@ export class RobotService {
     }
     else if (robot.Clipboard.hasImage()) {
       //We do not handle this atm
+    }
+
+    //Idletimer
+    if (this.idleTimer.hasStarted && this.idleTimer.hasExpired(10000)) {
+      if (this.isIdle === false)
+        console.log('We are now considered idle as we haven\'t detected any movement in 10 secounds.');
+      this.isIdle = true;
+    } else {
+      this.isIdle = false;
     }
 
   }

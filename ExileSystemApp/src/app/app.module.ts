@@ -26,6 +26,7 @@ import { LogParserService } from './shared/providers/log-parser.service';
 import { RobotService } from './shared/providers/robot.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
+import { CurrencyService } from './shared/providers/currency.service'
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { SignalRService } from './shared/providers/signalr.service';
     ItemModule
   ],
   providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService,
-    RobotService],
+    RobotService, CurrencyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

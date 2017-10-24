@@ -13,6 +13,7 @@ export class MapComponent implements OnInit {
         Name: 'Act 1',
         zones: [
           { Name: 'The Twilight Strand', Short: 'TS', Level: 1 },
+          { Name: 'Lioneye\'s Watch', Short: 'Town', Level: 1 },
           { Name: 'The Coast', Short: 'TC', Level: 2 },
           { Name: 'The Tidal Island', Short: 'TI', Level: 3 },
           { Name: 'The Mud Flats', Short: 'MF', Level: 4 },
@@ -34,6 +35,7 @@ export class MapComponent implements OnInit {
         Name: 'Act 2',
         zones: [
           { Name: 'The Southern Forest', Short: 'SF', Level: 13 },
+          { Name: 'The Forest Encampment', Short: 'Town', Level: 1 },
           { Name: 'The Old Fields', Short: 'OF', Level: 14 },
           { Name: 'The Den', Short: 'TD', Level: 15 },
           { Name: 'The Riverways', Short: 'TR', Level: 15 },
@@ -57,9 +59,8 @@ export class MapComponent implements OnInit {
       {
         Name: 'Act 3',
         zones: [
-          {
-            Name: 'The City of Sarn', Short: 'CS', Level: 23
-          },
+          { Name: 'The City of Sarn', Short: 'CS', Level: 23 },
+          { Name: 'The Sarn Encampment', Short: 'Town', Level: 1 },
           { Name: 'The Slums', Short: 'TS', Level: 24 },
           { Name: 'The Crematorium', Short: 'TC', Level: 25 },
           { Name: 'The Sewers', Short: 'TS', Level: 26 },
@@ -78,6 +79,12 @@ export class MapComponent implements OnInit {
           { Name: 'The Hedge Maze', Short: 'HM', Level: 31 },
           { Name: 'The Sceptre of God', Short: 'SG', Level: 32 },
           { Name: 'The Upper Sceptre of God', Short: 'US', Level: 33 }
+        ]
+      },
+      {
+        Name: 'Other',
+        zones: [
+          { Name: 'Battle-scarred Hideout', Short: 'H', Level: 40 },
         ]
       }
     ]
