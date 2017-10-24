@@ -1,13 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace ExileModels
 {
     [Serializable]
+    public class League
+    {
+        [JsonProperty("id")]
+        public string Name { get; set; }
+        [JsonProperty("endAt")]
+        public string EndAt { get; set; }
+        [JsonProperty("startAt")]
+        public string StartAt { get; set; }
+        [JsonProperty("url")]
+        public string Url { get; set; }
+        [JsonProperty("currencyRates")]
+        public List<CurrencyObject> CurrencyRates { get; set;}
+        [JsonProperty("lastUpdate")]
+        public DateTime LastUpdate { get; set; }
+
+        public League()
+        {
+            LastUpdate = DateTime.Now;
+        }
+
+    }
+
+    [Serializable]
     public class CurrencyObject
     {
         public string Name { get; set; }
-        public int Value { get; set; }
+        public double Value { get; set; }
+        public string Icon { get; set; }
     }
 
     [Serializable]
@@ -106,4 +131,32 @@ namespace ExileModels
             Players = new List<Player>();
         }
     }
+
+    public partial class CurrencyResponse
+    {
+        [JsonProperty("currencyDetails")]
+        public CurrencyDetail[] CurrencyDetails { get; set; }
+
+        [JsonProperty("lines")]
+        public CurrencyData[] Lines { get; set; }
+    }
+
+    public class CurrencyDetail
+    {
+        [JsonProperty("icon")]
+        public string Icon { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }        
+    }
+
+    public class CurrencyData
+    {
+        [JsonProperty("currencyTypeName")]
+        public string CurrencyTypeName { get; set; }        
+
+        [JsonProperty("chaosEquivalent")]
+        public double ChaosEquivalent { get; set; }
+    }
+    
 }

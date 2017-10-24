@@ -27,6 +27,11 @@ namespace ExileSystemServer
             return base.OnReconnected();
         }
 
+        public League GetLeague(string name)
+        {
+            return Database.GetSpecificLeague(name);
+        }
+
         public void Login(string channel, Player player)
         {
             Groups.Add(Context.ConnectionId, channel);
@@ -46,23 +51,6 @@ namespace ExileSystemServer
                 Console.WriteLine(DateTime.Now + " Updated Account: " + player.Account + " and Character: " + player.Character.Name);
                 Clients.All.ChannelUpdate(channelObject);
             }
-        }
-
-        public void Broadcast(string message)
-        {
-            if (!string.IsNullOrEmpty(message))
-            {
-                Console.WriteLine("Broadcasting Message: " + message);
-                Clients.All.Update(message);
-            }
-        }
-
-        public void BroadcastImage(byte[] bitmap)
-        {
-            Console.WriteLine("Broadcasting Bitmap");
-            Clients.All.ImageUpdate(bitmap);
-        }
-
+        }        
     }
-
 }

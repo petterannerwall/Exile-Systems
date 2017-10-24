@@ -15,18 +15,26 @@ export class SignalRService {
       this.connection = c;
 
       c.listen(this.onChannelUpdated$);
-
       this.onChannelUpdated$.subscribe((channel: Channel) => {
         // update channel when event is triggered
         this.channelService.channel = channel;
       });
     });
+
+
   }
 
   public login(channel, player) {
     return this.connection.invoke('Login', channel, player).then((data) => {
-      console.log(data);
+      console.log('LeagueData', data);
       this.playerService.currentPlayer.next(player);
+      return data;
+    }).catch(error => console.log(error));
+  }
+
+
+  public getLeagueData(league) {
+    return this.connection.invoke('GetLeague', league).then((data) => {
       return data;
     }).catch(error => console.log(error));
   }

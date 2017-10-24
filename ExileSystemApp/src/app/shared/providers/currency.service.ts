@@ -1,3 +1,4 @@
+import { SignalRService } from './signalr.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { PlayerService } from './player.service';
 import { setTimeout } from 'timers';
@@ -16,39 +17,13 @@ import { Player } from '../interfaces/player.interface';
 export class CurrencyService {
 
   constructor(private http: HttpClient, private electronService: ElectronService, private channelService: ChannelService,
-    private playerService: PlayerService) {
+    private playerService: PlayerService, private signalRService: SignalRService) {
 
     this.playerService.currentPlayer.subscribe(res => {
       const league = res.character.league;
-      this.getCurrencyRates(league);
-    });
-  }
-
-  getCurrencyRates(league: string) {
-    const parameters = `?league=${league}`;
-    this.http.get('http://poe.ninja/api/Data/GetCurrencyOverview' + parameters).subscribe((response: any) => {
-      console.log('Currency rates', response);
-
-      const currencyList = [];
-      response.lines.forEach(line => {
-        const currencyObj = {
-          name: line.currencyTypeName,
-          value: +line.chaosEquivalent
-        }
-      });
-
-
-      currencyList.sort((n1, n2) => {
-        if (n1.value > n2.value) {
-            return 1;
-        }
-        if (n1.value < n2.value) {
-            return -1;
-        }
-        return 0;
-    });
-
-      console.log(currencyList);
+      this.signalRService.getLeagueData(league).subscribe((data) => {
+        playerService.leagueData = data;
+      })
     });
   }
 
