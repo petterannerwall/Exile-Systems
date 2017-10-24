@@ -1,3 +1,4 @@
+import { setTimeout } from 'timers';
 import { ElectronService } from './electron.service';
 import { ChannelService } from './channel.service';
 import 'rxjs/add/operator/map';
@@ -14,12 +15,15 @@ export class CurrencyService {
 
   constructor(private http: HttpClient, private electronService: ElectronService, private channelService: ChannelService) {
 
-    if (channelService.channel.players.length < 1) {
-      return;
-    }
+      console.log('Getting currency');
+      if (channelService.channel.players.length < 1) {
+        return;
+      }
 
-    const league = channelService.channel.players[0].character.league;
-    this.getCurrencyRates(league);
+      const league = channelService.channel.players[0].character.league;
+      this.getCurrencyRates(league);
+
+
 
   }
 
