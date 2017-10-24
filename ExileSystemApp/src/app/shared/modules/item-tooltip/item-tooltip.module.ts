@@ -1,10 +1,11 @@
-import { ItemTooltipComponent } from './item-tooltip.component';
+import { SharedModule } from '../shared/shared.module';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import { ItemTooltipComponent } from '../../components/item-tooltip/item-tooltip.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    SharedModule
   ],
   exports: [ItemTooltipComponent],
   declarations: [ItemTooltipComponent]

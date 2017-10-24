@@ -1,4 +1,3 @@
-import { PlayerService } from './shared/providers/player.service';
 import 'polyfills';
 import 'reflect-metadata';
 import 'zone.js/dist/zone-mix';
@@ -17,17 +16,18 @@ import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
 import { MapComponent } from './map/map.component';
 import { SettingsComponent } from './settings/settings.component';
-import { CharacterPreviewComponent } from './shared/components/character-preview/character-preview.component';
-import { ItemModule } from './shared/components/item/item.module';
-import { SidebarNavModule } from './shared/components/sidebar-nav/sidebar-nav.module';
+import { ItemModule } from './shared/modules/item/item.module';
+import { PlayerListModule } from './shared/modules/player-list/player-list.module';
+import { SidebarNavModule } from './shared/modules/sidebar-nav/sidebar-nav.module';
 import { ChannelService } from './shared/providers/channel.service';
+import { CurrencyService } from './shared/providers/currency.service';
 import { ElectronService } from './shared/providers/electron.service';
 import { ExternalService } from './shared/providers/external.service';
 import { LogParserService } from './shared/providers/log-parser.service';
+import { PlayerService } from './shared/providers/player.service';
 import { RobotService } from './shared/providers/robot.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
-import { CurrencyService } from './shared/providers/currency.service'
 
 @NgModule({
   declarations: [
@@ -36,8 +36,7 @@ import { CurrencyService } from './shared/providers/currency.service'
     CurrentRoomComponent,
     SettingsComponent,
     MapComponent,
-    CommandsComponent,
-    CharacterPreviewComponent
+    CommandsComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +46,7 @@ import { CurrencyService } from './shared/providers/currency.service'
     AppRoutingModule,
     SidebarNavModule,
     MaterializeModule,
+    PlayerListModule,
     ItemModule
   ],
   providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService,

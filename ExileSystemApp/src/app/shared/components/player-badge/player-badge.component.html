@@ -1,0 +1,12 @@
+<button [attr.data-target]="player.character.name+'-'+guid" class="waves-effect waves-light btn modal-trigger">{{player.character.name}}</button>
+<div id="{{player.character.name}}-{{guid}}" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions"
+  class="modal blue-grey darken-2">
+  <div class="modal-content">
+    <app-character-preview *ngIf="player.character" [character]="player.character"></app-character-preview>
+  </div>
+  <div class="modal-footer blue-grey darken-3 white-text">
+    <span class="character-info">
+    </span>
+    <a class="waves-effect waves-light btn" (click)="closeModal()">Close</a>
+  </div>
+</div>
