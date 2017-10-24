@@ -46,12 +46,12 @@ export class LogParserService {
                     });
                     this.recentLines = currentLines;
                     const elapsed = this.timer.restart();
-                    if (elapsed > 25) {
+                    if (elapsed > 100) {
                         console.log('DEBUG: Finished parsing lines after ' + elapsed + ' ms');
                     }
                 } else {
                     const elapsed = this.timer.restart();
-                    if (elapsed > 25) {
+                    if (elapsed > 100) {
                         console.log('DEBUG: Finished parsing lines after ' + elapsed + ' ms');
                     }
                 }
