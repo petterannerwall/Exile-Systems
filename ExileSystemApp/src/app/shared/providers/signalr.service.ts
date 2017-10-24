@@ -6,18 +6,17 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SignalRService {
   connection: any;
+  public onChannelUpdated$ = new BroadcastEventListener<Channel>('ChannelUpdate');
+
   constructor(private signalR: SignalR, private channelService: ChannelService) {
     const conx = this.signalR.createConnection();
     conx.start().then((c) => {
       this.connection = c;
 
-      const onChannelUpdated$ = new BroadcastEventListener<Channel>('ChannelUpdate');
+      c.listen(this.onChannelUpdated$);
 
-      c.listen(onChannelUpdated$);
-
-      onChannelUpdated$.subscribe((channel: Channel) => {
+      this.onChannelUpdated$.subscribe((channel: Channel) => {
         // update channel when event is triggered
-        console.log(channel);
         this.channelService.channel = channel;
       });
     });
