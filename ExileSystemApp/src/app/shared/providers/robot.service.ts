@@ -21,22 +21,6 @@ export class RobotService {
 
   isIdle = false;
 
-
-
-  constructor(private electronSerivce: ElectronService) {
-    const timeHandle = setInterval(() => {
-      this.robotHeartbeat(this.robot)
-    }, 100);
-
-
-    this.lastPressedKeys = [];
-    this.keyTimer = this.robot.Timer();
-
-    this.idleTimer = this.robot.Timer();
-    this.idleTimer.start();
-
-  }
-
   private activetWindowPID;
   private pressedKeys;
   private lastPressedKeys;
@@ -47,6 +31,20 @@ export class RobotService {
     x: 0,
     y: 0
   }
+
+  constructor(private electronSerivce: ElectronService) {
+    const timeHandle = setInterval(() => {
+      this.robotHeartbeat(this.robot)
+    }, 100);
+
+    this.lastPressedKeys = [];
+    this.keyTimer = this.robot.Timer();
+
+    this.idleTimer = this.robot.Timer();
+    this.idleTimer.start();
+  }
+
+
 
   private robotHeartbeat(robot) {
 
@@ -60,7 +58,7 @@ export class RobotService {
 
     for (const key in keyState) {
       const pressedKey = KeycodeArray[key];
-      if (keyState[key] == true && pressedKey != undefined) {
+      if (keyState[key] === true && pressedKey !== undefined) {
         this.pressedKeys.push(pressedKey);
         this.idleTimer.restart();
       }
@@ -70,19 +68,17 @@ export class RobotService {
       this.lastPressedKeys = this.pressedKeys;
       this.KeyboardEvent.emit(this.pressedKeys);
       this.keyTimer.start();
-    }
-    else if (this.lastPressedKeys.length > 0 && this.pressedKeys.length === 0) {
+    } else if (this.lastPressedKeys.length > 0 && this.pressedKeys.length === 0) {
       this.KeyboardEvent.emit(this.pressedKeys);
     }
 
 
-    //Check active Window
+    // Check active Window
     if (this.activetWindowPID == null) {
       const activetWindow = robot.Window.getActive();
       this.activetWindowPID = activetWindow.getPID();
       this.WindowEvent.emit(activetWindow.getTitle());
-    }
-    else {
+    } else {
       const currentWindow = robot.Window.getActive();
       if (currentWindow.getPID() !== this.activetWindowPID) {
         this.activetWindowPID = currentWindow.getPID();
@@ -90,31 +86,31 @@ export class RobotService {
       }
     }
 
-    //Check Mousedata
+    // Check Mousedata
     const position = robot.Mouse.getPos();
-    if (this.mousePosition.x != position.x && this.mousePosition.y != position.y) {
+    if (this.mousePosition.x !== position.x && this.mousePosition.y !== position.y) {
       this.idleTimer.restart();
     }
     this.mousePosition.x = position.x;
     this.mousePosition.y = position.y;
 
 
-    //Check Clipboard data
+    // Check Clipboard data
     if (robot.Clipboard.hasText()) {
       const clipboard = robot.Clipboard.getText();
-      if (this.lastClipboard == null || this.lastClipboard != clipboard) {
+      if (this.lastClipboard == null || this.lastClipboard !== clipboard) {
         this.ClipboardEvent.emit(clipboard);
         this.lastClipboard = clipboard;
       }
-    }
-    else if (robot.Clipboard.hasImage()) {
-      //We do not handle this atm
+    } else if (robot.Clipboard.hasImage()) {
+      // We do not handle this atm
     }
 
-    //Idletimer
+    // Idletimer
     if (this.idleTimer.hasStarted && this.idleTimer.hasExpired(10000)) {
-      if (this.isIdle === false)
+      if (this.isIdle === false) {
         console.log('We are now considered idle as we haven\'t detected any movement in 10 secounds.');
+      }
       this.isIdle = true;
     } else {
       this.isIdle = false;
