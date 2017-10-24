@@ -1,35 +1,56 @@
-
-  <div class="item-popover-header">
-    <h4 class="rarity-{{item.frameType}}">
-      <div class="item-name" *ngIf="item.name">{{item.name.substring(28)}}
-        <br/>
-      </div>
-      <span>{{item.typeLine}}</span>
-    </h4>
-  </div>
-  <div class="item-popover-body">
-    <div class="mods">
-      <ng-container *ngFor="let mod of item.implicitMods">
-        <span>{{mod}}
-          <br/>
-        </span>
-      </ng-container>
-      <hr *ngIf="item.implicitMods != undefined && item.explicitMods != undefined">
-      <ng-container *ngFor="let mod of item.explicitMods">
-        <span class="{{getExplicitModClass(mod)}}">{{mod}}
-          <br/>
-        </span>
-      </ng-container>
-      <ng-container *ngFor="let mod of item.craftedMods">
-        <span class="crafted-mod">
-          <span class="crafted-mod-tag">
-            crafted
-          </span>
-          &nbsp;{{mod}}
-        </span>
-        <br/>
-      </ng-container>
+<div class="item-popover-header">
+  <h4 class="rarity-{{item.frameType}}">
+    <div class="item-name" *ngIf="item.name">{{item.name.substring(28)}}
+      <br/>
     </div>
-    <span *ngIf="item.corrupted" class="corrupted">Corrupted</span>
+    <span>{{item.typeLine}}</span>
+  </h4>
+</div>
+<div class="item-popover-body">
+  <div class="properties">
+    <!-- properties -->
+    <ng-container *ngFor="let prop of item.properties">
+      <span class="property">
+        <span class="property-tag">
+          {{prop.name}}
+        </span>
+        <ng-container *ngIf="prop.values[0] != undefined">
+        :&nbsp;{{prop.values[0][0]}}</ng-container>
+      </span>
+      <br/>
+    </ng-container>
+    <hr *ngIf="item.properties != undefined">
   </div>
-
+  <div class="mods">
+    <ng-container *ngFor="let mod of item.implicitMods">
+      <span>{{mod}}
+        <br/>
+      </span>
+    </ng-container>
+    <ng-container *ngFor="let mod of item.enchantMods">
+      <span class="enchant-mod">
+        <span class="enchant-mod-tag">
+          enchanted
+        </span>
+        &nbsp;{{mod}}
+      </span>
+      <br/>
+    </ng-container>
+    <hr *ngIf="(item.implicitMods != undefined || item.enchantMods != undefined) && item.explicitMods != undefined">
+    <ng-container *ngFor="let mod of item.explicitMods">
+      <span class="{{getExplicitModClass(mod)}}">{{mod}}
+        <br/>
+      </span>
+    </ng-container>
+    <ng-container *ngFor="let mod of item.craftedMods">
+      <span class="crafted-mod">
+        <span class="crafted-mod-tag">
+          crafted
+        </span>
+        &nbsp;{{mod}}
+      </span>
+      <br/>
+    </ng-container>
+  </div>
+  <span *ngIf="item.corrupted" class="corrupted">Corrupted</span>
+</div>

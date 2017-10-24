@@ -1,80 +1,92 @@
+hr {
+  border-color: #827f7f;
+}
 
-    hr {
-      border-color: #827f7f;
+.item-popover-header {
+  padding: 0;
+  border-bottom: 2px solid #827f7f;
+  background-color: rgba(30, 31, 37, 0.95);
+  background: -webkit-linear-gradient(left, rgb(30, 31, 37), rgb(60, 60, 72));
+  background: -o-linear-gradient(right, rgb(30, 31, 37), rgb(60, 60, 72));
+  background: -moz-linear-gradient(right, rgb(30, 31, 37), rgb(60, 60, 72));
+  background: linear-gradient(to right, rgb(30, 31, 37), rgb(60, 60, 72));
+  h4 {
+    font-size: 1.28rem;
+    margin-bottom: 0;
+    padding: 10px;
+    .item-name {
+      padding-bottom: 5px;
     }
-    .item-popover-header{
-      padding: 0;
-      border-bottom: 2px solid #827f7f;
-      background-color: rgba(30, 31, 37, 0.95);
-      background: -webkit-linear-gradient(left, rgb(30, 31, 37), rgb(60, 60, 72)); 
-      background: -o-linear-gradient(right, rgb(30, 31, 37), rgb(60, 60, 72)); 
-      background: -moz-linear-gradient(right, rgb(30, 31, 37), rgb(60, 60, 72));
-      background: linear-gradient(to right, rgb(30, 31, 37), rgb(60, 60, 72)); 
-      h4{
-        font-size: 1.28rem;
-        margin-bottom: 0;
-        padding: 10px;
-        .item-name {
-          padding-bottom: 5px;
-        }
-      }
-      .rarity-0 {
-        //normal
-        color: rgb(192, 192, 192);
-      }
-      .rarity-1 {
-        // magic
-        color: #8888FF !important;
-      }
-      .rarity-2 {
-        // rare
-        color: #EBEB57 !important;
-      }
-      .rarity-3 {
-        // unique
-        color: rgb(218, 122, 54) !important;
-      }
+  }
+  .rarity-0 {
+    //normal
+    color: rgb(192, 192, 192);
+  }
+  .rarity-1 {
+    // magic
+    color: #8888FF !important;
+  }
+  .rarity-2 {
+    // rare
+    color: #EBEB57 !important;
+  }
+  .rarity-3 {
+    // unique
+    color: rgb(218, 122, 54) !important;
+  }
+}
+
+.currency {
+  color: #AD904B !important;
+}
+
+.gem {
+  color: #1ba29b !important;
+}
+
+.corrupted {
+  color: #e80000;
+  font-weight: bold;
+}
+
+.item-popover-body {
+  padding: 10px;
+  .properties {
+    .property {}
+    .property-tag {
+      color: rgb(192, 192, 192);
     }
-    .currency {
-      color: #AD904B !important;
+  }
+  .mods {
+    .crafted-mod {
+      color: rgb(207, 218, 247);
     }
-    .gem {
-      color: #1ba29b !important;
+    .enchant-mod {
+      color: rgb(212, 224, 255);
     }
-    .corrupted {
-      color: #e80000;
-      font-weight: bold;
+    .crafted-mod-tag, .enchant-mod-tag{
+      background: #e5e5f5;
+      color: black;
+      border-radius: 3px;
+      padding: 0 4px 0 4px;
     }
-    .item-popover-body {
-      padding: 10px;
-      .mods {
-        .crafted-mod{
-          color: rgb(207, 218, 247);
-        }
-        .crafted-mod-tag {
-          background: #e5e5f5;
-          color: black;
-          border-radius: 3px;
-          padding: 0 4px 0 4px;
-        }
-        .life {
-          color: lightcoral;
-        }
-        .coldRes {
-          color: #B4BEDB;
-        }
-        .fireRes {
-          color: #E8C489;
-        }
-        .lightningRes {
-          color: #E0E889;
-        }
-        .mana {
-          color: #7EB2E6;
-        }
-        .chaosRes {
-          color: #D19CF0;
-        }
-      }
+    .life {
+      color: lightcoral;
     }
-  
+    .coldRes {
+      color: #B4BEDB;
+    }
+    .fireRes {
+      color: #E8C489;
+    }
+    .lightningRes {
+      color: #E0E889;
+    }
+    .mana {
+      color: #7EB2E6;
+    }
+    .chaosRes {
+      color: #D19CF0;
+    }
+  }
+}

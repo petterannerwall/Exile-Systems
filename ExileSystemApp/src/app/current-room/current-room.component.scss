@@ -10,17 +10,6 @@ app-player-list {
   width: 325px !important;
 }
 
-.modal {
-  overflow: visible;
-  .modal-header {
-    margin-bottom: 20px;
-  }
-  .modal-footer {
-    padding: 16px 24px;
-    height: auto;
-  }
-}
-
 app-character-preview {
   max-width: 356px;
   display: block;
