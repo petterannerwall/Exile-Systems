@@ -35,6 +35,10 @@ namespace ExileSystemServer
             leagueData = External.GetLeagues(); ;
         }
         
+        public static League GetSpecificLeague(string name)
+        {
+            return GetLeagueData().FirstOrDefault(t => t.Name == name);
+        }
 
         public static List<League> GetLeagueData()
         {
@@ -47,6 +51,7 @@ namespace ExileSystemServer
             redis.Cache.SetObject<List<League>>("leagueData", leagueData, new TimeSpan(12,0,0));
         }
 
+        
 
 
         public static Channel UpdateOrAddPlayer(string channel, Player player)

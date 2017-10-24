@@ -8,6 +8,7 @@ import { Player } from '../interfaces/player.interface';
 @Injectable()
 export class PlayerService {
   public currentPlayer: Subject<Player> = new Subject<Player>();
+  public leagueData: any;
 
   constructor() {
   }
