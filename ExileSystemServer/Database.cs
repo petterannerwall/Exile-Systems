@@ -26,15 +26,29 @@ namespace ExileSystemServer
     public static class Database
     {
         private static Context redis;
-        private static List<CurrencyObject> currencyRates;
+        private static List<League> leagueData;
 
 
         public static void Initialize()
         {
             redis = new Context("localhost:6379", new JsonSerializer());
-            currencyRates = External.GetCurrencyRates("Harbringer");
+            leagueData = External.GetLeagues(); ;
         }
         
+
+        public static List<League> GetLeagueData()
+        {
+            List<League> leagueData = redis.Cache.GetObject<List<League>>("leagueData");
+            return leagueData;
+        }
+
+        public static void SetLeagueData(List<League> leagueData)
+        {
+            redis.Cache.SetObject<List<League>>("leagueData", leagueData, new TimeSpan(12,0,0));
+        }
+
+
+
         public static Channel UpdateOrAddPlayer(string channel, Player player)
         {
 
