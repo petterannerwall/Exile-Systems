@@ -13,11 +13,11 @@ import { Injectable } from '@angular/core';
 export class LogParserService {
     recentLines: Array<string> = [];
 
-    timer;
+    logPerformanceTimer;
 
     constructor(private electron: ElectronService, private signalRService: SignalRService, private externalService: ExternalService) {
 
-        this.timer = electron.robot.Timer();
+        this.logPerformanceTimer = electron.robot.Timer();
 
         setInterval(() => {
             this.parseLines();
@@ -25,7 +25,7 @@ export class LogParserService {
     }
     parseLines() {
 
-        this.timer.start();
+        this.logPerformanceTimer.start();
 
         const currentLines = [];
         let rowCount = 20;
@@ -45,12 +45,12 @@ export class LogParserService {
                         this.parseMessage(element);
                     });
                     this.recentLines = currentLines;
-                    const elapsed = this.timer.restart();
+                    const elapsed = this.logPerformanceTimer.restart();
                     if (elapsed > 100) {
                         console.log('DEBUG: Finished parsing lines after ' + elapsed + ' ms');
                     }
                 } else {
-                    const elapsed = this.timer.restart();
+                    const elapsed = this.logPerformanceTimer.restart();
                     if (elapsed > 100) {
                         console.log('DEBUG: Finished parsing lines after ' + elapsed + ' ms');
                     }

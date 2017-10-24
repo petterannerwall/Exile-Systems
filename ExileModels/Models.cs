@@ -4,6 +4,13 @@ using System.Collections.Generic;
 namespace ExileModels
 {
     [Serializable]
+    public class CurrencyObject
+    {
+        public string Name { get; set; }
+        public int Value { get; set; }
+    }
+
+    [Serializable]
     public class Requirement
     {
         public string Name { get; set; }

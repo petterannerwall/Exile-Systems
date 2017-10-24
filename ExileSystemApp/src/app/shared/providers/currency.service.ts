@@ -1,3 +1,4 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { PlayerService } from './player.service';
 import { setTimeout } from 'timers';
 import { ElectronService } from './electron.service';
@@ -14,25 +15,40 @@ import { Player } from '../interfaces/player.interface';
 @Injectable()
 export class CurrencyService {
 
-  constructor(private http: HttpClient, private electronService: ElectronService, private channelService: ChannelService, private playerService: PlayerService) {
+  constructor(private http: HttpClient, private electronService: ElectronService, private channelService: ChannelService,
+    private playerService: PlayerService) {
 
-      console.log('Getting currency');
-      if (channelService.channel.players.length < 1) {
-        return;
-      }
-
-      const league = channelService.channel.players[0].character.league;
+    this.playerService.currentPlayer.subscribe(res => {
+      const league = res.character.league;
       this.getCurrencyRates(league);
-
-      this.playerService.currentPlayer.subscribe(res => {
-        console.log('got new current player: ', res);
-      });
+    });
   }
 
   getCurrencyRates(league: string) {
     const parameters = `?league=${league}`;
-    this.http.get('http://poe.ninja/api/Data/GetCurrencyOverview' + parameters).subscribe((response) => {
-      console.log(response);
+    this.http.get('http://poe.ninja/api/Data/GetCurrencyOverview' + parameters).subscribe((response: any) => {
+      console.log('Currency rates', response);
+
+      const currencyList = [];
+      response.lines.forEach(line => {
+        const currencyObj = {
+          name: line.currencyTypeName,
+          value: +line.chaosEquivalent
+        }
+      });
+
+
+      currencyList.sort((n1, n2) => {
+        if (n1.value > n2.value) {
+            return 1;
+        }
+        if (n1.value < n2.value) {
+            return -1;
+        }
+        return 0;
+    });
+
+      console.log(currencyList);
     });
   }
 
