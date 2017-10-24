@@ -1,0 +1,35 @@
+
+  <div class="item-popover-header">
+    <h4 class="rarity-{{item.frameType}}">
+      <div class="item-name" *ngIf="item.name">{{item.name.substring(28)}}
+        <br/>
+      </div>
+      <span>{{item.typeLine}}</span>
+    </h4>
+  </div>
+  <div class="item-popover-body">
+    <div class="mods">
+      <ng-container *ngFor="let mod of item.implicitMods">
+        <span>{{mod}}
+          <br/>
+        </span>
+      </ng-container>
+      <hr *ngIf="item.implicitMods != undefined && item.explicitMods != undefined">
+      <ng-container *ngFor="let mod of item.explicitMods">
+        <span class="{{getExplicitModClass(mod)}}">{{mod}}
+          <br/>
+        </span>
+      </ng-container>
+      <ng-container *ngFor="let mod of item.craftedMods">
+        <span class="crafted-mod">
+          <span class="crafted-mod-tag">
+            crafted
+          </span>
+          &nbsp;{{mod}}
+        </span>
+        <br/>
+      </ng-container>
+    </div>
+    <span *ngIf="item.corrupted" class="corrupted">Corrupted</span>
+  </div>
+

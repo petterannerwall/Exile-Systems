@@ -1,41 +1,9 @@
-<div class="item-wrapper" [ngStyle]="{'width.px': 50*columnsWide+10, 'min-height.px': 50*columnsHigh+10}" (mouseleave)="hideTooltip()">
+<div class="item-wrapper" [ngStyle]="{'width.px': 50*columnsWide+10, 'min-height.px': 50*columnsHigh+10}">
   <div class="item" *ngIf="item">
     <div class="icon-wrapper">
       <img [attr.src]="item.icon" />
     </div>
     <app-item-sockets [columns]="item.w" [sockets]="item.sockets"></app-item-sockets>
   </div>
-  <div class="item-popover" *ngIf="item">
-    <div class="item-popover-header">
-      <h4 class="rarity-{{item.frameType}}">
-        <div class="item-name" *ngIf="item.name">{{item.name.substring(28)}}<br/></div>
-        <span>{{item.typeLine}}</span>
-      </h4>
-    </div>
-    <div class="item-popover-body">
-      <div class="mods">
-        <ng-container *ngFor="let mod of item.implicitMods">
-          <span>{{mod}}
-            <br/>
-          </span>
-        </ng-container>
-        <hr *ngIf="item.implicitMods != undefined && item.explicitMods != undefined">
-        <ng-container *ngFor="let mod of item.explicitMods">
-          <span class="{{getExplicitModClass(mod)}}">{{mod}}
-            <br/>
-          </span>
-        </ng-container>
-        <ng-container *ngFor="let mod of item.craftedMods">
-          <span class="crafted-mod">
-            <span class="crafted-mod-tag">
-              crafted
-            </span>
-            &nbsp;{{mod}}
-          </span>
-          <br/>
-        </ng-container>
-      </div>
-      <span *ngIf="item.corrupted" class="corrupted">Corrupted</span>
-    </div>
-  </div>
+  <app-item-tooltip *ngIf="item" [item]="item" class="item-popover"></app-item-tooltip>
 </div>
