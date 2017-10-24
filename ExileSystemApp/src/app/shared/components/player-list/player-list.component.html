@@ -1,5 +1,3 @@
-<div class="player-list">
-  <div class="player" *ngFor="let player of channelService.channel.players, let i = index">
-    <app-player-badge [player]="player"></app-player-badge>
-  </div>
+<div class="player" *ngFor="let player of channelService.channel.players, let i = index">
+  <app-player-badge [player]="player"></app-player-badge>
 </div>
