@@ -7,10 +7,8 @@ import { Player } from '../interfaces/player.interface';
 
 @Injectable()
 export class PlayerService {
-  public subject: Player = { connectionID: '', channel: '', account: '', character: undefined, area: '', guild: '', inArea: [] };
-  public currentPlayer: BehaviorSubject<Player>
+  public currentPlayer: Subject<Player> = new Subject<Player>();
 
   constructor() {
-    this.currentPlayer = new BehaviorSubject(this.subject);
   }
 }

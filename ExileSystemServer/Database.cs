@@ -21,12 +21,18 @@ namespace ExileSystemServer
         }        
     }
 
+
+
     public static class Database
     {
         private static Context redis;
+        private static List<CurrencyObject> currencyRates;
+
+
         public static void Initialize()
         {
             redis = new Context("localhost:6379", new JsonSerializer());
+            currencyRates = External.GetCurrencyRates("Harbringer");
         }
         
         public static Channel UpdateOrAddPlayer(string channel, Player player)
