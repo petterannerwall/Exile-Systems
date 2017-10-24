@@ -1,3 +1,4 @@
+import { PlayerService } from './shared/providers/player.service';
 import 'polyfills';
 import 'reflect-metadata';
 import 'zone.js/dist/zone-mix';
@@ -49,7 +50,7 @@ import { CurrencyService } from './shared/providers/currency.service'
     ItemModule
   ],
   providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService,
-    RobotService, CurrencyService],
+    RobotService, CurrencyService, PlayerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
