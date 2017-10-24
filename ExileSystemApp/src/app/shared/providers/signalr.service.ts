@@ -26,7 +26,7 @@ export class SignalRService {
   public login(channel, player) {
     return this.connection.invoke('Login', channel, player).then((data) => {
       console.log(data);
-      this.playerService.player = player;
+      this.playerService.currentPlayer.next(player);
       return data;
     }).catch(error => console.log(error));
   }

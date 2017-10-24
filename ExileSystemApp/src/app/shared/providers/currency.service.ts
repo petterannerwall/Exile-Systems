@@ -1,3 +1,4 @@
+import { PlayerService } from './player.service';
 import { setTimeout } from 'timers';
 import { ElectronService } from './electron.service';
 import { ChannelService } from './channel.service';
@@ -13,7 +14,7 @@ import { Player } from '../interfaces/player.interface';
 @Injectable()
 export class CurrencyService {
 
-  constructor(private http: HttpClient, private electronService: ElectronService, private channelService: ChannelService) {
+  constructor(private http: HttpClient, private electronService: ElectronService, private channelService: ChannelService, private playerService: PlayerService) {
 
       console.log('Getting currency');
       if (channelService.channel.players.length < 1) {
@@ -23,8 +24,9 @@ export class CurrencyService {
       const league = channelService.channel.players[0].character.league;
       this.getCurrencyRates(league);
 
-
-
+      this.playerService.currentPlayer.subscribe(res => {
+        console.log('got new current player: ', res);
+      });
   }
 
   getCurrencyRates(league: string) {
