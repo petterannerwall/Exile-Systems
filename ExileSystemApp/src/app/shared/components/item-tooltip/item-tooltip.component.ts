@@ -34,4 +34,16 @@ export class ItemTooltipComponent implements OnInit {
 
     return modClass;
   }
+  formatFlaskProperties(prop, firstVal, secondVal) {
+    const ex = /(%0)/g;
+    let result = prop.replace(ex, firstVal);
+
+    if (prop.indexOf('Consumes') >= 0 && secondVal !== undefined) {
+      // use second value as well
+      const ex2 = /(%1)/g;
+      result = result.replace(ex2, secondVal[0]);
+    }
+
+    return result;
+  }
 }

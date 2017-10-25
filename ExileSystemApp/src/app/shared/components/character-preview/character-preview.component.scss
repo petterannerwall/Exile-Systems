@@ -1,5 +1,6 @@
 .character-preview-wrapper {
     width: 356px;
+    height: 600px;
     margin: 10px;
 }
 
@@ -51,6 +52,17 @@
     .ring-slot-2 {
         margin-left: 12px;
         margin-top: -100px;
+    }
+}
+
+
+.flasks {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    div {
+        margin-left: -2px;
     }
 }
 

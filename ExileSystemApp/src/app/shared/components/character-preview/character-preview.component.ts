@@ -22,6 +22,11 @@ export class CharacterPreviewComponent implements OnInit {
   ring: Item;
   belt: Item;
   ring2: Item;
+  flask: Item;
+  flask2: Item;
+  flask3: Item;
+  flask4: Item;
+  flask5: Item;
 
   constructor() {
   }
@@ -37,6 +42,11 @@ export class CharacterPreviewComponent implements OnInit {
     this.ring = this.character.items.find(x => x.inventoryId === 'Ring');
     this.belt = this.character.items.find(x => x.inventoryId === 'Belt');
     this.ring2 = this.character.items.find(x => x.inventoryId === 'Ring2');
+    this.flask = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 1);
+    this.flask2 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 2);
+    this.flask3 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 3);
+    this.flask4 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 4);
+    this.flask5 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 5);
   }
 
   getItemByType(type) {

@@ -24,7 +24,9 @@
 
 .item-popover {
   position: absolute;
+  max-width: 280px;
   min-width: 280px;
+  margin-left: -200px;
   min-height: 50px;
   background: rgba(29, 38, 43, 0.9);
   border-radius: 1px;
@@ -39,5 +41,6 @@
 
 .item-wrapper:hover .item-popover {
   display: block;
+  
 }
 

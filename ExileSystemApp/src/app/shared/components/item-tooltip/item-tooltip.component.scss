@@ -52,7 +52,10 @@ hr {
 .item-popover-body {
   padding: 10px;
   .properties {
-    .property {}
+    .property {
+      .flask-property {
+      }
+    }
     .property-tag {
       color: rgb(192, 192, 192);
     }

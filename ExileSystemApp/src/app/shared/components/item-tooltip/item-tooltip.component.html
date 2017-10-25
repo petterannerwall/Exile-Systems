@@ -1,23 +1,46 @@
 <div class="item-popover-header">
   <h4 class="rarity-{{item.frameType}}">
-    <div class="item-name" *ngIf="item.name">{{item.name.substring(28)}}
-      <br/>
-    </div>
-    <span>{{item.typeLine}}</span>
+    <ng-container *ngIf="item.inventoryId != 'Flask'">
+      <div class="item-name" *ngIf="item.name">{{item.name.substring(28)}}
+        <br/>
+      </div>
+      <span>{{item.typeLine}}</span>
+    </ng-container>
+    <ng-container *ngIf="item.inventoryId == 'Flask'">
+      <span *ngIf="item.frameType == 3">{{item.name.substring(28)}}</span>
+      <span *ngIf="item.frameType != 3">{{item.typeLine.substring(28)}}</span>
+    </ng-container>
   </h4>
 </div>
 <div class="item-popover-body">
   <div class="properties">
     <!-- properties -->
     <ng-container *ngFor="let prop of item.properties">
-      <span class="property">
-        <span class="property-tag">
-          {{prop.name}}
+      <ng-container *ngIf="item.inventoryId != 'Flask'">
+        <span class="property">
+          <span class="property-tag">
+            {{prop.name}}
+          </span>
+          <ng-container *ngIf="prop.values[0] != undefined">
+            :&nbsp;{{prop.values[0][0]}}</ng-container>
         </span>
-        <ng-container *ngIf="prop.values[0] != undefined">
-        :&nbsp;{{prop.values[0][0]}}</ng-container>
-      </span>
-      <br/>
+        <br/>
+      </ng-container>
+      <ng-container *ngIf="item.inventoryId == 'Flask' && prop.values[0] != undefined">
+        <span class="property">
+          <span class="property-tag flask-property" *ngIf="prop.name != 'Quality'">
+            {{formatFlaskProperties(prop.name, prop.values[0][0], prop.values[1])}}
+          </span>
+          <ng-container *ngIf="prop.name == 'Quality'">
+            <span class="property-tag">
+              {{prop.name}}
+            </span>
+            <ng-container *ngIf="prop.values[0] != undefined">
+              :&nbsp;{{prop.values[0][0]}}</ng-container>
+          </ng-container>
+        </span>
+        <br/>
+      </ng-container>
     </ng-container>
     <hr *ngIf="item.properties != undefined">
   </div>
