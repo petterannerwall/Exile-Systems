@@ -7,12 +7,24 @@
       <span>{{item.typeLine}}</span>
     </ng-container>
     <ng-container *ngIf="item.inventoryId == 'Flask'">
-      <span *ngIf="item.frameType == 3">{{item.name.substring(28)}}</span>
-      <span *ngIf="item.frameType != 3">{{item.typeLine.substring(28)}}</span>
+      <ng-container [ngSwitch]="item.frameType">
+        <ng-container *ngSwitchCase="3">
+          <!-- unique item -->
+          <div>{{item.name.substring(28)}}
+            <br/>
+          </div>
+          <span>{{item.typeLine}}</span>
+        </ng-container>
+        <span *ngSwitchCase="1">{{item.typeLine.substring(28)}}</span>
+        <!-- magic item -->
+        <span *ngSwitchCase="0">{{item.typeLine}}</span>
+        <!-- normal item -->
+      </ng-container>
     </ng-container>
   </h4>
 </div>
 <div class="item-popover-body">
+
   <div class="properties">
     <!-- properties -->
     <ng-container *ngFor="let prop of item.properties">
@@ -41,6 +53,11 @@
         </span>
         <br/>
       </ng-container>
+    </ng-container>
+    <ng-container *ngFor="let mod of item.utilityMods">
+      <span class="enchant-mod">{{mod}}
+        <br/>
+      </span>
     </ng-container>
     <hr *ngIf="item.properties != undefined">
   </div>

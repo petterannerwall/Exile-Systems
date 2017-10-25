@@ -48,7 +48,9 @@ hr {
   color: #e80000;
   font-weight: bold;
 }
-
+.enchant-mod {
+  color: rgb(212, 224, 255);
+}
 .item-popover-body {
   padding: 10px;
   .properties {
@@ -64,9 +66,7 @@ hr {
     .crafted-mod {
       color: rgb(207, 218, 247);
     }
-    .enchant-mod {
-      color: rgb(212, 224, 255);
-    }
+
     .crafted-mod-tag, .enchant-mod-tag{
       background: #e5e5f5;
       color: black;

@@ -38,7 +38,7 @@ export class ItemTooltipComponent implements OnInit {
     const ex = /(%0)/g;
     let result = prop.replace(ex, firstVal);
 
-    if (prop.indexOf('Consumes') >= 0 && secondVal !== undefined) {
+    if (secondVal !== undefined && secondVal[0] !== undefined) {
       // use second value as well
       const ex2 = /(%1)/g;
       result = result.replace(ex2, secondVal[0]);
