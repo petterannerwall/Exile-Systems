@@ -21,7 +21,7 @@ export class CurrencyService {
 
     this.playerService.currentPlayer.subscribe(res => {
       const league = res.character.league;
-      this.signalRService.getLeagueData(league).subscribe((data) => {
+      this.signalRService.getLeagueData(league).then((data) => {
         playerService.leagueData = data;
       })
     });
