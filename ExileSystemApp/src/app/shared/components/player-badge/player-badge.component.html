@@ -1,4 +1,25 @@
-<button [attr.data-target]="player.character.name+'-'+guid" class="waves-effect waves-light btn modal-trigger">{{player.character.name}}</button>
+<!-- <div class="row">
+  <div class="badge-wrapper modal-trigger" (click)="openModal()">
+    <div class="icon {{player.character.class}}"></div>
+    <div class="badge-content">
+      <div class="badge-player-name">{{player.character.name}}</div>
+      <div class="badge-char-info">Level {{player.character.level}} {{player.character.class}}</div>
+      <div class="badge-league">{{player.character.league}}</div>
+
+    </div>
+  </div>
+</div> -->
+      <!-- <button [attr.data-target]="player.character.name+'-'+guid" class="waves-effect waves-light btn modal-trigger">{{player.character.name}}</button> -->
+<div class="card blue-grey darken-1">
+  <div class="card-content badge-wrapper modal-trigger" (click)="openModal()">
+    <div class="icon {{player.character.class}}"></div>
+    <div class="badge-content">
+      <div class="badge-player-name">{{player.character.name}}</div>
+      <div class="badge-char-info">Level {{player.character.level}} {{player.character.class}}</div>
+      <div class="badge-league">{{player.character.league}}</div>
+    </div>
+  </div>
+</div>
 <div id="{{player.character.name}}-{{guid}}" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions"
   class="modal blue-grey darken-2">
   <div class="modal-content">
