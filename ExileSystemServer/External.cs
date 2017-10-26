@@ -54,33 +54,30 @@ namespace ExileSystemServer
 
         public static List<League> GetLeagues()
         {
-            var leagueData = Database.GetLeagueData();
+            var leagueData = new List<League>();
 
-            if (leagueData == null)
+            var html = String.Empty;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://api.pathofexile.com/leagues?type=main&compact=1");
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
             {
-                var html = String.Empty;
+                html = reader.ReadToEnd();
+            }
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://api.pathofexile.com/leagues?type=main&compact=1");
-                request.AutomaticDecompression = DecompressionMethods.GZip;
+            leagueData = JsonConvert.DeserializeObject<List<League>>(html);
 
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    html = reader.ReadToEnd();
-                }
+            foreach (League league in leagueData)
+            {
+                league.CurrencyRates = GetCurrencyRates(league.Name);
+            }
 
-                leagueData = JsonConvert.DeserializeObject<List<League>>(html);
-
-                foreach (League league in leagueData)
-                {
-                    league.CurrencyRates = GetCurrencyRates(league.Name);
-                }
-
-                Database.SetLeagueData(leagueData);
-            }            
+            Database.SetLeagueData(leagueData);                   
 
             return leagueData;
         }
-    }
+}
 }
