@@ -1,3 +1,5 @@
+import { TradeManagementComponent } from './trade/trade-management/trade-management.component';
+import { TradeBrowseComponent } from './trade/trade-browse/trade-browse.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -31,11 +33,19 @@ const routes: Routes = [
     {
         path: 'map',
         component: MapComponent
+    },
+    {
+        path: 'trade/browse',
+        component: TradeBrowseComponent
+    },
+    {
+        path: 'trade/management',
+        component: TradeManagementComponent
     }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {useHash: true})],
+    imports: [RouterModule.forRoot(routes, { useHash: true })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }
