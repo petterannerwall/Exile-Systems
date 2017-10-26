@@ -5,7 +5,7 @@
         <h4>{{act.Name}}</h4>
         <hr>
         <div class="act-zones">
-            <span class="zone" *ngFor="let zone of act.zones" [ngClass]="{'active': false}" [attr.title]="zone.Name">{{zone.Short}}
+            <span class="zone" *ngFor="let zone of act.zones" [ngClass]="{'active': false}" [attr.title]="zone.Name">{{zone.Name}}
                 <span class="zone-players">
                     <span *ngFor="let player of channelService.channel.players" [ngClass]="{'player-hidden': player.area != zone.Name}">{{player.character.name}}</span>
                 </span>

@@ -43,6 +43,12 @@ namespace ExileSystemServer
         public static List<League> GetLeagueData()
         {
             List<League> leagueData = redis.Cache.GetObject<List<League>>("leagueData");
+
+            if (leagueData == null)
+            {
+                External.GetLeagues();
+            }
+
             return leagueData;
         }
 

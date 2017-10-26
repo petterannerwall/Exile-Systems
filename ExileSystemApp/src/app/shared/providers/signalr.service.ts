@@ -26,7 +26,6 @@ export class SignalRService {
 
   public login(channel, player) {
     return this.connection.invoke('Login', channel, player).then((data) => {
-      console.log('LeagueData', data);
       this.playerService.currentPlayer.next(player);
       return data;
     }).catch(error => console.log(error));
@@ -35,6 +34,7 @@ export class SignalRService {
 
   public getLeagueData(league) {
     return this.connection.invoke('GetLeague', league).then((data) => {
+      console.log('LeagueData', data);
       return data;
     }).catch(error => console.log(error));
   }
