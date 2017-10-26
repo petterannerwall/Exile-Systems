@@ -1,5 +1,6 @@
 import { TradeManagementComponent } from './trade/trade-management/trade-management.component';
 import { TradeBrowseComponent } from './trade/trade-browse/trade-browse.component';
+import { AcceptSendComponent } from './shared/components/accept-send/accept-send.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -41,6 +42,10 @@ const routes: Routes = [
     {
         path: 'trade/management',
         component: TradeManagementComponent
+    },
+    {
+        path: 'trade/accept-send',
+        component: AcceptSendComponent
     }
 ];
 
