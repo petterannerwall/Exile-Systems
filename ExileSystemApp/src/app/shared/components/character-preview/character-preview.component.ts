@@ -42,11 +42,11 @@ export class CharacterPreviewComponent implements OnInit {
     this.ring = this.character.items.find(x => x.inventoryId === 'Ring');
     this.belt = this.character.items.find(x => x.inventoryId === 'Belt');
     this.ring2 = this.character.items.find(x => x.inventoryId === 'Ring2');
-    this.flask = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 1);
-    this.flask2 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 2);
-    this.flask3 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 3);
-    this.flask4 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 4);
-    this.flask5 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 5);
+    this.flask = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 0);
+    this.flask2 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 1);
+    this.flask3 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 2);
+    this.flask4 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 3);
+    this.flask5 = this.character.items.find(x => x.inventoryId === 'Flask' && x.x === 4);
   }
 
   getItemByType(type) {
