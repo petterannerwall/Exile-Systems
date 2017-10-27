@@ -64,7 +64,7 @@ export class LogParserService {
     parseMessage(message) {
         const msg = { id: '', player: '', time: undefined, type: undefined, text: '', channel: undefined } as Message;
         // tslint:disable-next-line:max-line-length
-        const groups = message.match(/(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2})\s[\d]*\s[\d]*\s\[.*\]\s([$@%#]?From?)\s?(<.*>\s?)?(\w*):\s(.*)/);
+        const groups = message.match(/(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2})\s[\d]*\s[\d]*\s\[.*\]\s([$@%#]?)(?:From)?\s?(<.*>\s?)?(\w*):\s(.*)/);
         if (groups === null) {
             msg.type = MessageTypeEnum.Other;
             return;

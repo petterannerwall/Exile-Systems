@@ -53,7 +53,7 @@ export class RobotService {
     const windowList = this.robot.Window.getList();
     windowList.forEach(window => {
       const title = window.getTitle();
-      if (title === 'Path of Exile') {
+      if (title === '.*Path of Exile.*') {
         this.pathWindow = window;
       }
     });
