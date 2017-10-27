@@ -21,6 +21,7 @@ export class RobotService {
 
   isIdle = false;
 
+  private pathWindow;
   private activetWindowPID;
   private pressedKeys;
   private lastPressedKeys;
@@ -33,7 +34,9 @@ export class RobotService {
   }
 
   constructor(private electronSerivce: ElectronService) {
-    console.log('Robot.service loaded');
+
+    this.findPathWinow();
+
     const timeHandle = setInterval(() => {
       this.robotHeartbeat(this.robot)
     }, 100);
@@ -43,6 +46,29 @@ export class RobotService {
 
     this.idleTimer = this.robot.Timer();
     this.idleTimer.start();
+  }
+
+
+  private findPathWinow() {
+    const windowList = this.robot.Window.getList();
+    windowList.forEach(window => {
+      const title = window.getTitle();
+      if (title === 'Path of Exile') {
+        this.pathWindow = window;
+      }
+    });
+  }
+
+  public sendCommandToPathofExile(command) {
+
+    const keyboard = this.robot.Keyboard();
+    keyboard.autoDelay.min = 50;
+    keyboard.autoDelay.max = 100;
+
+    this.robot.Window.setActive(this.pathWindow);
+    keyboard.click('{ENTER}' + command + '{ENTER}');
+
+
   }
 
   private robotHeartbeat(robot) {

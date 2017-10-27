@@ -5,6 +5,7 @@ import { SignalRService } from './shared/providers/signalr.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ElectronService } from './shared/providers/electron.service';
 import { CurrencyService } from './shared/providers/currency.service';
+import { RobotService } from './shared/providers/robot.service';
 
 
 @Component({
@@ -15,7 +16,8 @@ import { CurrencyService } from './shared/providers/currency.service';
 
 export class AppComponent implements OnInit {
   constructor(public electronService: ElectronService, public settingService: SettingService, public signalRService: SignalRService,
-    private externalService: ExternalService, private currencyService: CurrencyService, private tradeService: TradeService) {
+    private externalService: ExternalService, private currencyService: CurrencyService,
+    private tradeService: TradeService, private robotService: RobotService) {
     if (electronService.isElectron()) {
       console.log('Mode electron');
       // Check if electron is correctly injected (see externals in webpack.config.js)
