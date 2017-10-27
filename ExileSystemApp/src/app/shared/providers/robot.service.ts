@@ -17,7 +17,7 @@ export class RobotService {
   KeyboardEvent: EventEmitter<any> = new EventEmitter();
   WindowEvent: EventEmitter<any> = new EventEmitter();
   MouseEvent: EventEmitter<any> = new EventEmitter();
-  ClipboardEvent: EventEmitter<any> = new EventEmitter();
+  ClipboardEvent: EventEmitter<string> = new EventEmitter();
 
   isIdle = false;
 

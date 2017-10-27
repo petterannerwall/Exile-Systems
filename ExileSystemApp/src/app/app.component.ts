@@ -1,3 +1,4 @@
+import { TradeService } from './shared/providers/trade.service';
 import { ExternalService } from './shared/providers/external.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
@@ -14,7 +15,7 @@ import { CurrencyService } from './shared/providers/currency.service';
 
 export class AppComponent implements OnInit {
   constructor(public electronService: ElectronService, public settingService: SettingService, public signalRService: SignalRService,
-    private externalService: ExternalService, private currencyService: CurrencyService) {
+    private externalService: ExternalService, private currencyService: CurrencyService, private tradeService: TradeService) {
     if (electronService.isElectron()) {
       console.log('Mode electron');
       // Check if electron is correctly injected (see externals in webpack.config.js)

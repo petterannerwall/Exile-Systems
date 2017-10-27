@@ -14,7 +14,7 @@ import { EventEmitter } from '@angular/core';
 export class LogParserService {
     recentLines: Array<string> = [];
 
-    NewMessageEvent: EventEmitter<any> = new EventEmitter();
+    NewMessageEvent: EventEmitter<Message> = new EventEmitter();
 
     logPerformanceTimer;
 
@@ -101,6 +101,7 @@ export class LogParserService {
         } else if (message.indexOf('has joined the area.') >= 0) {
             msg.type = MessageTypeEnum.OtherJoinArea;
         } else if (message.indexOf('would like to buy your') >= 0) {
+            console.log('Trade message detected');
             msg.type = MessageTypeEnum.TradeMessage;
         } else {
             msg.type = MessageTypeEnum.Other;
