@@ -27,6 +27,7 @@ import { ExternalService } from './shared/providers/external.service';
 import { LogParserService } from './shared/providers/log-parser.service';
 import { PlayerService } from './shared/providers/player.service';
 import { RobotService } from './shared/providers/robot.service';
+import { TradeService } from './shared/providers/trade.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
 import { TradeBrowseComponent } from './trade/trade-browse/trade-browse.component';
@@ -56,7 +57,7 @@ import { TradeManagementComponent } from './trade/trade-management/trade-managem
     AcceptSendModule
   ],
   providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService,
-    RobotService, CurrencyService, PlayerService],
+    RobotService, CurrencyService, PlayerService, TradeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
