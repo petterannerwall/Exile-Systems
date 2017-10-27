@@ -19,7 +19,7 @@ export class TradeManagementComponent implements OnInit {
 
   invite(trade) {
     console.log('Inviting', trade);
-    this.robotService.sendCommandToPathofExile('/invite ' + trade.player);
+    this.robotService.sendCommandToPathofExile('+7invite ' + 'CojL_____');
   }
 
   sold(trade) {

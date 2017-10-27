@@ -4,6 +4,7 @@ import { EventEmitter } from '@angular/core';
 import { } from '@angular/core'
 import { Observable } from 'rxjs/Rx';
 import { ElectronService } from './electron.service';
+import { FFIService } from './ffi.service';
 import { KeycodeArray } from './../enums/keycode.enum';
 
 
@@ -14,6 +15,7 @@ import { KeycodeArray } from './../enums/keycode.enum';
 export class RobotService {
 
   robot = this.electronSerivce.robot;
+  keyboard = this.electronSerivce.robot.Keyboard();
   KeyboardEvent: EventEmitter<any> = new EventEmitter();
   WindowEvent: EventEmitter<any> = new EventEmitter();
   MouseEvent: EventEmitter<any> = new EventEmitter();
@@ -21,6 +23,7 @@ export class RobotService {
 
   isIdle = false;
 
+  public foundPathWindow;
   private pathWindow;
   private activetWindowPID;
   private pressedKeys;
@@ -33,9 +36,23 @@ export class RobotService {
     y: 0
   }
 
-  constructor(private electronSerivce: ElectronService) {
+  constructor(private electronSerivce: ElectronService, private ffiService: FFIService) {
 
-    this.findPathWinow();
+    this.keyboard.autoDelay.min = 0;
+    this.keyboard.autoDelay.max = 0;
+
+    this.foundPathWindow = false;
+    const windowList = this.robot.Window.getList();
+    windowList.forEach(window => {
+      const title = window.getTitle();
+      if (title === 'Path of Exile') {
+        this.pathWindow = window;
+        this.foundPathWindow = true;
+      }
+      if (!this.foundPathWindow) {
+        console.log('[DEBUG robot.service.ts] Could not find Path of Exile window.');
+      }
+    });
 
     const timeHandle = setInterval(() => {
       this.robotHeartbeat(this.robot)
@@ -48,27 +65,37 @@ export class RobotService {
     this.idleTimer.start();
   }
 
-
-  private findPathWinow() {
-    const windowList = this.robot.Window.getList();
-    windowList.forEach(window => {
-      const title = window.getTitle();
-      if (title === '.*Path of Exile.*') {
-        this.pathWindow = window;
-      }
-    });
+  private prepareStringForRobot(string) {
+    return string.split('_').join('+-');
   }
 
   public sendCommandToPathofExile(command) {
+    command = this.prepareStringForRobot(command);
+    const active = this.ffiSetPathWindowToActive();
+    if (active) {
+      this.keyboard.click('{ENTER}');
+      this.keyboard.click(command);
+      this.keyboard.click('{ENTER}');
+    }
+  }
 
-    const keyboard = this.robot.Keyboard();
-    keyboard.autoDelay.min = 50;
-    keyboard.autoDelay.max = 100;
+  private ffiSetPathWindowToActive() {
+    this.ffiService.switchToPathWindow();
+  }
 
-    this.robot.Window.setActive(this.pathWindow);
-    keyboard.click('{ENTER}' + command + '{ENTER}');
-
-
+  private setPathWindowToActive() {
+    if (this.pathWindow.isValid()) {
+      this.robot.Window.setActive(this.pathWindow);
+      const activeWindow = this.robot.Window.getActive();
+      const activeWindowTitle = activeWindow.getTitle();
+      if (activeWindowTitle === 'Path of Exile') {
+        return true;
+      }
+      console.log('[DEBUG robot.service.ts] Could not set path window to active.');
+    } else {
+      console.log('[DEBUG robot.service.ts] Path of Exile winow is not valid.');
+    }
+    return false;
   }
 
   private robotHeartbeat(robot) {
@@ -138,7 +165,7 @@ export class RobotService {
     // Idletimer
     if (this.idleTimer.hasStarted && this.idleTimer.hasExpired(10000)) {
       if (this.isIdle === false) {
-        console.log('We are now considered idle as we haven\'t detected any movement in 10 secounds.');
+        console.log('[DEBUG robot.service.ts] We are now considered idle as we haven\'t detected any movement in 10 seconds.');
       }
       this.isIdle = true;
     } else {

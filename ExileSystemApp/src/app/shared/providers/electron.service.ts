@@ -19,6 +19,7 @@ export class ElectronService {
   cmd: any;
   fs: any;
   http: any;
+  ffi: any;
   constructor(private router: Router) {
     console.log('electronService');
     // Conditional imports
@@ -33,6 +34,7 @@ export class ElectronService {
       this.cmd = window.require('node-windows');
       this.fs = window.require('fs');
       this.http = window.require('http');
+      this.ffi = window.require('ffi');
 
       // init menu
       const template = [
