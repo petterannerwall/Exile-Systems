@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TradeService {
-
+  public browsing = false;
   tradeList = [];
 
   constructor(private logParser: LogParserService, private robotService: RobotService) {
