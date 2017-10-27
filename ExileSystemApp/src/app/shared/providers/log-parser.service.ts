@@ -8,10 +8,13 @@ import { Message } from '../interfaces/message.interface';
 import { getGuid } from '../helpers/object.helper';
 import { ElectronService } from './electron.service';
 import { Injectable } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Injectable()
 export class LogParserService {
     recentLines: Array<string> = [];
+
+    NewMessageEvent: EventEmitter<any> = new EventEmitter();
 
     logPerformanceTimer;
 
@@ -115,5 +118,7 @@ export class LogParserService {
         if (msg.type !== MessageTypeEnum.Other) {
             this.signalRService.updatePlayer(this.externalService.player.channel, this.externalService.player);
         }
+
+        this.NewMessageEvent.emit(msg);
     }
 }

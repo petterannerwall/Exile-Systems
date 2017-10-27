@@ -33,6 +33,7 @@ export class RobotService {
   }
 
   constructor(private electronSerivce: ElectronService) {
+    console.log('Robot.service loaded');
     const timeHandle = setInterval(() => {
       this.robotHeartbeat(this.robot)
     }, 100);
@@ -44,11 +45,13 @@ export class RobotService {
     this.idleTimer.start();
   }
 
-
-
   private robotHeartbeat(robot) {
 
-    if (!this.keyTimer.hasStarted() && this.keyTimer.hasExpired(500)) {
+
+    const started = this.keyTimer.hasStarted();
+    const expired = this.keyTimer.hasExpired(5000);
+
+    if (!this.keyTimer.hasStarted() && this.keyTimer.hasExpired(5000)) {
       this.keyTimer.reset();
       this.lastPressedKeys = [];
     }
@@ -56,6 +59,7 @@ export class RobotService {
     const keyState = robot.Keyboard.getState();
     this.pressedKeys = [];
 
+    // tslint:disable-next-line:forin
     for (const key in keyState) {
       const pressedKey = KeycodeArray[key];
       if (keyState[key] === true && pressedKey !== undefined) {
@@ -71,7 +75,6 @@ export class RobotService {
     } else if (this.lastPressedKeys.length > 0 && this.pressedKeys.length === 0) {
       this.KeyboardEvent.emit(this.pressedKeys);
     }
-
 
     // Check active Window
     if (this.activetWindowPID == null) {
