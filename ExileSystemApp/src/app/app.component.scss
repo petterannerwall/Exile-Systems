@@ -6,5 +6,9 @@ iframe {
     resize: none;
     overflow: hidden;
     border: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
     margin-bottom: -4px;
+    padding-left: 300px;
   }

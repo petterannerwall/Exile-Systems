@@ -1,5 +1,5 @@
 <app-sidebar-nav></app-sidebar-nav>
+<iframe [hidden]="!tradeService.browsing" src="https://www.poeapp.com"></iframe>
 <div class="content-wrapper">
-  <iframe [hidden]="!tradeService.browsing" src="https://www.poeapp.com"></iframe>
   <router-outlet></router-outlet>
 </div>
