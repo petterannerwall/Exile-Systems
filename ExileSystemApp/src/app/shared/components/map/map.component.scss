@@ -14,19 +14,20 @@
                     width: 45%;
                 }
                 span.zone{     
-                    span.zone-players{
-                        position: absolute;
-                        top:100%;
-                        left:0;
-                        width:100%;
-                        span{
-                            display: block;
-                            float: left;
-                        }
-                        
-                        span.player-hidden {
-                            display: none !important;
-                        }
+                   
+                }
+                span.zone-players{
+                    // position: absolute;
+                    // top:100%;
+                    // left:0;
+                    // width:100%;
+                    span{
+                        display: block;
+                        float: left;
+                    }
+                    
+                    span.player-hidden {
+                        display: none !important;
                     }
                 }
             }
