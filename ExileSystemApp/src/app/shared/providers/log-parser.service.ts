@@ -117,7 +117,7 @@ export class LogParserService {
             msg.player = message.split(' has left the area.')[1];
         }
 
-        if (msg.type !== MessageTypeEnum.Other) {
+        if (msg.type !== MessageTypeEnum.Other && msg.type !== MessageTypeEnum.SelfEnteringArea) {
             this.signalRService.updatePlayer(this.externalService.player.channel, this.externalService.player);
         }
 
