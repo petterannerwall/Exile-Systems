@@ -1,44 +1,32 @@
-.map-container{
-    h2{
-        padding:0 15px;
-    }
-    .act-divider{
-        display: block;
-        border-bottom:1px solid #333;
-        padding: 15px;
+.map-block-wrapper {
+    .map-block {
+        hr{
+            border-color: #969696;
+        }
         .act-zones{
-            span.zone{
-                display: inline-block;
-                border-radius: 2px;
-                background: #257d29;
-                width: 250px;
-                height: 50px;
-                position: relative;
-                font-size: 18px;
-                font-weight: 700;
-                padding: 12px 0;
-                margin: 0 5px 75px 5px;
-                text-align: center;
-                opacity: 1;
-                transition-duration: 0.3s;
-                &.active{
-                    background-color: rgb(17, 150, 0);
+            margin-top: 20px;
+            .zone-row{
+                margin-bottom: 5px;
+                a{
+                    height: 27px;
+                    line-height: 27px;
+                    font-size: 0.8rem;
+                    width: 45%;
                 }
-                &:hover{
-                    opacity: .75;
-                    cursor: pointer;
-                }
-                span.zone-players{
-                    position: absolute;
-                    top:100%;
-                    left:0;
-                    width:100%;
-                    span{
-                        display: block;
+                span.zone{     
+                    span.zone-players{
+                        position: absolute;
+                        top:100%;
+                        left:0;
+                        width:100%;
+                        span{
+                            display: block;
+                            float: left;
+                        }
                         
-                    }
-                    span.player-hidden {
-                        display: none !important;
+                        span.player-hidden {
+                            display: none !important;
+                        }
                     }
                 }
             }
