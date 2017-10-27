@@ -10,15 +10,7 @@ import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 })
 export class PlayerBadgeComponent implements OnInit {
   @Input() player: Player;
-  guid = getGuid();
-  modalActions = new EventEmitter<string | MaterializeAction>();
   constructor() { }
   ngOnInit() {
-  }
-  openModal() {
-    this.modalActions.emit({ action: 'modal', params: ['open'] });
-  }
-  closeModal() {
-    this.modalActions.emit({ action: 'modal', params: ['close'] });
   }
 }

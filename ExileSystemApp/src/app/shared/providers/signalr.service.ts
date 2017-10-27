@@ -1,3 +1,6 @@
+import { MessageTypeEnum } from '../enums/message-type.enum';
+import { ExternalService } from './external.service';
+import { LogParserService } from './log-parser.service';
 import { PlayerService } from './player.service';
 import { ChannelService } from './channel.service';
 import { Channel } from '../interfaces/channel.interface';
@@ -18,10 +21,13 @@ export class SignalRService {
       this.onChannelUpdated$.subscribe((channel: Channel) => {
         // update channel when event is triggered
         this.channelService.channel = channel;
+        if (this.playerService.openPlayer !== undefined) {
+          // if user has a modal open, update this object
+          this.playerService.openPlayer = channel.players.find(x => x.account === this.playerService.openPlayer.account);
+          console.log(this.playerService.openPlayer.character.items.length);
+        }
       });
     });
-
-
   }
 
   public login(channel, player) {

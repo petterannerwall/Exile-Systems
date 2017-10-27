@@ -7,8 +7,7 @@ import { PlayerListComponent } from './../../components/player-list/player-list.
 
 @NgModule({
   imports: [
-    SharedModule,
-    CharacterPreviewModule
+    SharedModule
   ],
   exports: [PlayerListComponent, PlayerBadgeComponent],
   declarations: [PlayerListComponent, PlayerBadgeComponent]

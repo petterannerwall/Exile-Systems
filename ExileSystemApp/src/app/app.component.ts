@@ -1,8 +1,13 @@
+import { LogParserService } from './shared/providers/log-parser.service';
+import { MessageTypeEnum } from './shared/enums/message-type.enum';
+import { PlayerService } from './shared/providers/player.service';
+import { MaterializeAction } from 'angular2-materialize/dist';
+import { getGuid } from './shared/helpers/object.helper';
 import { TradeService } from './shared/providers/trade.service';
 import { ExternalService } from './shared/providers/external.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { ElectronService } from './shared/providers/electron.service';
 import { CurrencyService } from './shared/providers/currency.service';
 
@@ -14,8 +19,13 @@ import { CurrencyService } from './shared/providers/currency.service';
 })
 
 export class AppComponent implements OnInit {
+  modalOpen = false;
+  guid = getGuid();
+  @ViewChild('playerModal') playerModal: ElementRef;
+  modalActions = new EventEmitter<string | MaterializeAction>();
   constructor(public electronService: ElectronService, public settingService: SettingService, public signalRService: SignalRService,
-    private externalService: ExternalService, private currencyService: CurrencyService, private tradeService: TradeService) {
+    private externalService: ExternalService, private currencyService: CurrencyService, private tradeService: TradeService,
+    private logParserService: LogParserService, private playerService: PlayerService) {
     if (electronService.isElectron()) {
       console.log('Mode electron');
       // Check if electron is correctly injected (see externals in webpack.config.js)
@@ -43,6 +53,29 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.externalService.getCharacter('CojL', 'CojL');
+    this.playerService.OpenedPlayer.subscribe(res => {
+      if (!this.playerModal.nativeElement.classList.contains('open')) {
+        this.openModal(res);
+      }
+    })
+
+    this.logParserService.NewMessageEvent.subscribe(msg => {
+      if (msg.type === MessageTypeEnum.SelfEnteringArea && this.playerService.currentPlayerObj !== undefined) {
+        this.externalService.getCharacter(this.playerService.currentPlayerObj.account,
+          this.playerService.currentPlayerObj.character.name).subscribe(res => {
+            this.playerService.currentPlayerObj.character = res.character;
+            this.playerService.currentPlayerObj.character.items = res.items;
+            this.playerService.currentPlayer.next(this.playerService.currentPlayerObj);
+            this.signalRService.updatePlayer(this.playerService.currentPlayerObj.channel, this.playerService.currentPlayerObj);
+          });
+      }
+    });
+  }
+  openModal(player) {
+    this.playerService.openPlayer = player;
+    this.modalActions.emit({ action: 'modal', params: ['open'] });
+  }
+  closeModal() {
+    this.modalActions.emit({ action: 'modal', params: ['close'] });
   }
 }

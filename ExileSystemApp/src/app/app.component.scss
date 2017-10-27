@@ -12,3 +12,16 @@ iframe {
     margin-bottom: -4px;
     padding-left: 300px;
   }
+
+  .modal {
+    top:20% !important;
+    overflow: visible;
+    .modal-header {
+      margin-bottom: 20px;
+    }
+    .modal-footer {
+      padding: 16px 24px;
+      height: auto;
+    }
+  }
+  

@@ -19,12 +19,12 @@ export class CurrencyService {
   constructor(private http: HttpClient, private electronService: ElectronService, private channelService: ChannelService,
     private playerService: PlayerService, private signalRService: SignalRService) {
 
-    this.playerService.currentPlayer.subscribe(res => {
-      const league = res.character.league;
-      this.signalRService.getLeagueData(league).then((data) => {
-        playerService.leagueData = data;
-      })
-    });
+    // this.playerService.currentPlayer.subscribe(res => {
+    //   const league = res.character.league;
+    //   this.signalRService.getLeagueData(league).then((data) => {
+    //     playerService.leagueData = data;
+    //   })
+    // });
   }
 
 }
