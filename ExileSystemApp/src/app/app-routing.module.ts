@@ -7,7 +7,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
 import { CommandsComponent } from './commands/commands.component';
-import { MapComponent } from './map/map.component';
 import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
@@ -30,10 +29,6 @@ const routes: Routes = [
     {
         path: 'commands',
         component: CommandsComponent
-    },
-    {
-        path: 'map',
-        component: MapComponent
     },
     {
         path: 'trade/browse',

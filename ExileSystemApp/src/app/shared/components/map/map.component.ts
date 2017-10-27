@@ -1,4 +1,4 @@
-import { ChannelService } from '../shared/providers/channel.service';
+import { ChannelService } from '../../providers/channel.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

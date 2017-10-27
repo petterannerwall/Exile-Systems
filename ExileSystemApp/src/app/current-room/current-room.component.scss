@@ -7,12 +7,14 @@
 }
 
 app-player-list {
-  width: 325px !important;
+  float: left;
+  width: 325px;
+  min-height: 1px;
 }
 
-app-character-preview {
-  max-width: 356px;
-  display: block;
+app-map {
+  float: left;
+  width: calc(100% - 325px)
 }
 
 .character-info {

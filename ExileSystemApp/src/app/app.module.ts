@@ -14,10 +14,10 @@ import { AppComponent } from './app.component';
 import { CommandsComponent } from './commands/commands.component';
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
-import { MapComponent } from './map/map.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AcceptSendModule } from './shared/modules/accept-send/accept-send.module';
 import { ItemModule } from './shared/modules/item/item.module';
+import { MapModule } from './shared/modules/map/map.module';
 import { PlayerListModule } from './shared/modules/player-list/player-list.module';
 import { SidebarNavModule } from './shared/modules/sidebar-nav/sidebar-nav.module';
 import { ChannelService } from './shared/providers/channel.service';
@@ -27,9 +27,9 @@ import { ExternalService } from './shared/providers/external.service';
 import { LogParserService } from './shared/providers/log-parser.service';
 import { PlayerService } from './shared/providers/player.service';
 import { RobotService } from './shared/providers/robot.service';
-import { TradeService } from './shared/providers/trade.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
+import { TradeService } from './shared/providers/trade.service';
 import { TradeBrowseComponent } from './trade/trade-browse/trade-browse.component';
 import { TradeManagementComponent } from './trade/trade-management/trade-management.component';
 
@@ -39,7 +39,6 @@ import { TradeManagementComponent } from './trade/trade-management/trade-managem
     EnterRoomComponent,
     CurrentRoomComponent,
     SettingsComponent,
-    MapComponent,
     CommandsComponent,
     TradeBrowseComponent,
     TradeManagementComponent
@@ -54,7 +53,8 @@ import { TradeManagementComponent } from './trade/trade-management/trade-managem
     MaterializeModule,
     PlayerListModule,
     ItemModule,
-    AcceptSendModule
+    AcceptSendModule,
+    MapModule
   ],
   providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService,
     RobotService, CurrencyService, PlayerService, TradeService],
