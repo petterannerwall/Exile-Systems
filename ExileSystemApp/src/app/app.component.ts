@@ -10,6 +10,7 @@ import { SignalRService } from './shared/providers/signalr.service';
 import { Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { ElectronService } from './shared/providers/electron.service';
 import { CurrencyService } from './shared/providers/currency.service';
+import { RobotService } from './shared/providers/robot.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
   modalActions = new EventEmitter<string | MaterializeAction>();
   constructor(public electronService: ElectronService, public settingService: SettingService, public signalRService: SignalRService,
     private externalService: ExternalService, private currencyService: CurrencyService, private tradeService: TradeService,
-    private logParserService: LogParserService, private playerService: PlayerService) {
+    private logParserService: LogParserService, private playerService: PlayerService, private robotService: RobotService) {
     if (electronService.isElectron()) {
       console.log('Mode electron');
       // Check if electron is correctly injected (see externals in webpack.config.js)

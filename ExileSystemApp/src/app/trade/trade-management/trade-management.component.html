@@ -7,33 +7,53 @@
     <div class="row">
         <div class="col s12">
             <ul class="collection with-header">
-                <li class="collection-header grey darken-3">
-                    <h4>Incomming</h4>
-                </li>
-                <li class="collection-item grey darken-3">
-                    <div>Alvin
-                        <a class="waves-effect waves-light btn right">button</a>
+                <li class="collection-header blue-grey">
+                    <div class="row">
+                        <div class="col s12">
+                            <h4>Incomming</h4>
+                        </div>
                     </div>
                 </li>
-                <li class="collection-item grey darken-3">
-                    <div>Alvin
-                        <a href="#!" class="secondary-content">
-                            <i class="material-icons">send</i>
-                        </a>
+                <li class="collection-item blue-grey">
+                    <div class="row trade-row">
+                        <div class="col s9">
+                            <b> Item:</b>
+                            <span>The Screaming Eagle Jade Hatchet</span>
+                            <b> Player:</b>
+                            <span>BigP_RaceShadow</span>
+                            <b> Price:</b>
+                            <span>152 Exalted Orbs</span>
+                        </div>
+                        <div class="col s3">
+                            <a (click)="invite()" class="waves-effect waves-light btn">
+                                Invite</a>
+                            <a (click)="sold()" class="waves-effect waves-light btn">
+                                Sold</a>
+                            <a (click)="invite()" class="waves-effect waves-light btn">
+                                Remove</a>
+                        </div>
                     </div>
                 </li>
-                <li class="collection-item grey darken-3">
-                    <div>Alvin
-                        <a href="#!" class="secondary-content">
-                            <i class="material-icons">send</i>
-                        </a>
-                    </div>
-                </li>
-                <li class="collection-item grey darken-3">
-                    <div>Alvin
-                        <a href="#!" class="secondary-content">
-                            <i class="material-icons">send</i>
-                        </a>
+                <li *ngFor="let trade of tradeService.tradeList" class="collection-item blue-grey">
+                    <div class="row trade-row">
+                        <div class="col s9">
+                            <b> Item:</b>
+                            <span>{{trade.item}}</span>
+                            <b> Player:</b>
+                            <span>{{trade.player}}</span>
+                            <b> Price:</b>
+                            <span>{{trade.price}}</span>
+                            <b> Location:</b>
+                            <span>{{trade.location}}</span>
+                        </div>
+                        <div class="col s3">
+                            <a (click)="invite(trade)" class="waves-effect waves-light btn">
+                                Invite</a>
+                            <a (click)="sold(trade)" class="waves-effect waves-light btn">
+                                Sold</a>
+                            <a (click)="invite(trade)" class="waves-effect waves-light btn">
+                                Remove</a>
+                        </div>
                     </div>
                 </li>
             </ul>

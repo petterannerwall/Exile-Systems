@@ -6,4 +6,6 @@ export interface IncomingTrade {
     count: string;
     league: string;
     location: string;
+    player: string;
+    inArea: boolean
 }

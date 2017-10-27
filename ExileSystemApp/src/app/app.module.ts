@@ -25,6 +25,7 @@ import { ChannelService } from './shared/providers/channel.service';
 import { CurrencyService } from './shared/providers/currency.service';
 import { ElectronService } from './shared/providers/electron.service';
 import { ExternalService } from './shared/providers/external.service';
+import { FFIService } from './shared/providers/ffi.service';
 import { LogParserService } from './shared/providers/log-parser.service';
 import { PlayerService } from './shared/providers/player.service';
 import { RobotService } from './shared/providers/robot.service';
@@ -59,7 +60,7 @@ import { TradeManagementComponent } from './trade/trade-management/trade-managem
     CharacterPreviewModule
   ],
   providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService,
-    RobotService, CurrencyService, PlayerService, TradeService],
+    RobotService, CurrencyService, PlayerService, TradeService, FFIService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

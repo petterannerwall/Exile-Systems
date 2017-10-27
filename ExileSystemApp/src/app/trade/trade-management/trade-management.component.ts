@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RobotService } from 'app/shared/providers/robot.service';
+import { TradeService } from 'app/shared/providers/trade.service';
 
 @Component({
   selector: 'app-trade-management',
@@ -7,12 +8,26 @@ import { RobotService } from 'app/shared/providers/robot.service';
   styleUrls: ['./trade-management.component.scss']
 })
 export class TradeManagementComponent implements OnInit {
-  constructor(private robotService: RobotService) {
 
+  keyboard = this.robotService.robot.Keyboard();
 
-
+  constructor(private robotService: RobotService, private tradeService: TradeService) {
   }
 
   ngOnInit() {
   }
+
+  invite(trade) {
+    console.log('Inviting', trade);
+    this.robotService.sendCommandToPathofExile('+7invite ' + 'CojL_____');
+  }
+
+  sold(trade) {
+    console.log('sold', trade);
+  }
+  remove(trade) {
+    console.log('removing', trade);
+  }
+
+
 }
