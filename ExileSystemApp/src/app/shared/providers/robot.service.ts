@@ -4,7 +4,6 @@ import { EventEmitter } from '@angular/core';
 import { } from '@angular/core'
 import { Observable } from 'rxjs/Rx';
 import { ElectronService } from './electron.service';
-import { FFIService } from './ffi.service';
 import { KeycodeArray } from './../enums/keycode.enum';
 
 
@@ -36,7 +35,7 @@ export class RobotService {
     y: 0
   }
 
-  constructor(private electronSerivce: ElectronService, private ffiService: FFIService) {
+  constructor(private electronSerivce: ElectronService) {
 
     this.keyboard.autoDelay.min = 0;
     this.keyboard.autoDelay.max = 0;
@@ -71,7 +70,7 @@ export class RobotService {
 
   public sendCommandToPathofExile(command) {
     command = this.prepareStringForRobot(command);
-    const active = this.ffiSetPathWindowToActive();
+    const active = this.setPathWindowToActive();
     if (active) {
       this.keyboard.click('{ENTER}');
       this.keyboard.click(command);
@@ -79,17 +78,16 @@ export class RobotService {
     }
   }
 
-  private ffiSetPathWindowToActive() {
-    this.ffiService.switchToPathWindow();
-  }
-
   private setPathWindowToActive() {
     if (this.pathWindow.isValid()) {
-      this.robot.Window.setActive(this.pathWindow);
-      const activeWindow = this.robot.Window.getActive();
-      const activeWindowTitle = activeWindow.getTitle();
-      if (activeWindowTitle === 'Path of Exile') {
-        return true;
+      for (let index = 0; index < 10; index++) {
+        this.pathWindow.setMinimized(false);
+        this.robot.Window.setActive(this.pathWindow);
+        const activeWindow = this.robot.Window.getActive();
+        const activeWindowTitle = activeWindow.getTitle();
+        if (activeWindowTitle === 'Path of Exile') {
+          return true;
+        }
       }
       console.log('[DEBUG robot.service.ts] Could not set path window to active.');
     } else {
