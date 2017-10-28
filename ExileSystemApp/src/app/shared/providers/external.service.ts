@@ -1,3 +1,4 @@
+import { PlayerService } from './player.service';
 import { ElectronService } from './electron.service';
 import 'rxjs/add/operator/map';
 
@@ -11,17 +12,8 @@ import { Player } from '../interfaces/player.interface';
 @Injectable()
 export class ExternalService {
   public url: 'https://www.pathofexile.com/character-window/get-items';
-  public player: Player = {
-    connectionID: '',
-    channel: '',
-    account: '',
-    character: undefined,
-    area: '',
-    guild: '',
-    inArea: []
-  }
   public cookie: any;
-  constructor(private http: HttpClient, private electronService: ElectronService) {
+  constructor(private http: HttpClient, private electronService: ElectronService, private playerService: PlayerService) {
   }
 
   getCharacter(account: string, character: string, sessionId?: string): Observable<any> {
@@ -39,7 +31,7 @@ export class ExternalService {
       if (error) { console.error(error); }
     })
 
-    this.player.account = account;
+    this.playerService.currentPlayerObj.account = account;
 
     const parameters = `?accountName=${account}&character=${character}`;
     const test = { accountName: account, character: character };

@@ -11,7 +11,15 @@ import { Player } from '../interfaces/player.interface';
 
 @Injectable()
 export class PlayerService {
-  public currentPlayerObj: Player;
+  public currentPlayerObj: Player = {
+    connectionID: '',
+    channel: '',
+    account: '',
+    character: undefined,
+    area: '',
+    guild: '',
+    inArea: []
+  }
   public currentPlayer: Subject<Player> = new Subject<Player>();
   public leagueData: any;
   public openPlayer: Player;
