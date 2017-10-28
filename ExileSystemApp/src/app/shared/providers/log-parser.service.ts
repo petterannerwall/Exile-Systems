@@ -1,4 +1,4 @@
-import { ExternalService } from './external.service';
+import { PlayerService } from './player.service';
 import { SignalRService } from './signalr.service';
 import { MessageTypeEnum } from '../enums/message-type.enum';
 import { MessageChannelEnum } from '../enums/message-channel.enum';
@@ -18,7 +18,7 @@ export class LogParserService {
 
     logPerformanceTimer;
 
-    constructor(private electron: ElectronService, private signalRService: SignalRService, private externalService: ExternalService) {
+    constructor(private electron: ElectronService, private signalRService: SignalRService, private playerService: PlayerService) {
 
         this.logPerformanceTimer = electron.robot.Timer();
 
@@ -110,15 +110,21 @@ export class LogParserService {
 
         if (msg.type === MessageTypeEnum.SelfEnteringArea) {
             msg.text = message.split('You have entered ')[1].split('.')[0];
-            this.externalService.player.area = msg.text;
+            this.playerService.currentPlayerObj.area = msg.text;
+            this.playerService.currentPlayerObj.inArea = [];
         } else if (MessageTypeEnum.OtherJoinArea === msg.type) {
-            msg.player = message.split(' has joined the area.')[1];
+            msg.player = msg.text.substr(0, msg.text.indexOf(' has joined the area.'));
+            this.playerService.currentPlayerObj.inArea.push(msg.player);
         } else if (msg.type === MessageTypeEnum.OtherLeaveArea) {
-            msg.player = message.split(' has left the area.')[1];
+            msg.player = msg.player = msg.text.substr(0, msg.text.indexOf(' has left the area.'));
+            const index = this.playerService.currentPlayerObj.inArea.indexOf(msg.player);
+            if (index > -1) {
+                this.playerService.currentPlayerObj.inArea.splice(index, 1);
+            }
         }
 
         if (msg.type !== MessageTypeEnum.Other && msg.type !== MessageTypeEnum.SelfEnteringArea) {
-            this.signalRService.updatePlayer(this.externalService.player.channel, this.externalService.player);
+            this.signalRService.updatePlayer(this.playerService.currentPlayerObj.channel, this.playerService.currentPlayerObj);
         }
 
         this.NewMessageEvent.emit(msg);

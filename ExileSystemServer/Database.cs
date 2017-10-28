@@ -71,7 +71,7 @@ namespace ExileSystemServer
             }
             else
             {
-                var existingPlayer = existingChannel.Players.FirstOrDefault(c => c.Account == player.Account);
+                var existingPlayer = existingChannel.Players.FirstOrDefault(c => c.Account.ToLower() == player.Account.ToLower());
                 if (existingPlayer != null)
                 {
                     existingChannel.Players.Remove(existingPlayer);
