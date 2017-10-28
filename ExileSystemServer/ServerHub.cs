@@ -49,7 +49,7 @@ namespace ExileSystemServer
             {
                 var channelObject = Database.UpdateOrAddPlayer(channel, player);
                 Console.WriteLine(DateTime.Now + " Updated Account: " + player.Account + " and Character: " + player.Character.Name);
-                Clients.All.ChannelUpdate(channelObject);
+                Clients.Group(channel).ChannelUpdate(channelObject);
             }
         }        
     }
