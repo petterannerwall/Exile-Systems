@@ -1,3 +1,4 @@
+import { ChannelService } from './shared/providers/channel.service';
 import { LogParserService } from './shared/providers/log-parser.service';
 import { MessageTypeEnum } from './shared/enums/message-type.enum';
 import { PlayerService } from './shared/providers/player.service';
@@ -26,7 +27,8 @@ export class AppComponent implements OnInit {
   modalActions = new EventEmitter<string | MaterializeAction>();
   constructor(public electronService: ElectronService, public settingService: SettingService, public signalRService: SignalRService,
     private externalService: ExternalService, private currencyService: CurrencyService, private tradeService: TradeService,
-    private logParserService: LogParserService, private playerService: PlayerService, private robotService: RobotService) {
+    private logParserService: LogParserService, private playerService: PlayerService, private robotService: RobotService,
+    private channelService: ChannelService) {
     if (electronService.isElectron()) {
       console.log('Mode electron');
       // Check if electron is correctly injected (see externals in webpack.config.js)
@@ -67,7 +69,7 @@ export class AppComponent implements OnInit {
             this.playerService.currentPlayerObj.character = res.character;
             this.playerService.currentPlayerObj.character.items = res.items;
             this.playerService.currentPlayer.next(this.playerService.currentPlayerObj);
-            this.signalRService.updatePlayer(this.playerService.currentPlayerObj.channel, this.playerService.currentPlayerObj);
+            this.signalRService.updatePlayer(this.channelService.channel.id, this.playerService.currentPlayerObj);
           });
       }
     });

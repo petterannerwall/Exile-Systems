@@ -1,3 +1,4 @@
+import { ChannelService } from './channel.service';
 import { PlayerService } from './player.service';
 import { SignalRService } from './signalr.service';
 import { MessageTypeEnum } from '../enums/message-type.enum';
@@ -18,7 +19,8 @@ export class LogParserService {
 
     logPerformanceTimer;
 
-    constructor(private electron: ElectronService, private signalRService: SignalRService, private playerService: PlayerService) {
+    constructor(private electron: ElectronService, private signalRService: SignalRService, private playerService: PlayerService,
+    private channelService: ChannelService) {
 
         this.logPerformanceTimer = electron.robot.Timer();
 
@@ -124,7 +126,7 @@ export class LogParserService {
         }
 
         if (msg.type !== MessageTypeEnum.Other && msg.type !== MessageTypeEnum.SelfEnteringArea) {
-            this.signalRService.updatePlayer(this.playerService.currentPlayerObj.channel, this.playerService.currentPlayerObj);
+            this.signalRService.updatePlayer(this.channelService.channel.id, this.playerService.currentPlayerObj);
         }
 
         this.NewMessageEvent.emit(msg);
