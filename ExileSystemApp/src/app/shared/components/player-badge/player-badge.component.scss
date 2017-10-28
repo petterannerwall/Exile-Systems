@@ -11,8 +11,8 @@
 }
 
 .card {
+  margin-right: 20px;
   cursor: pointer;
-  width: 255px;
   .badge-wrapper {
     position:relative;
     height: 80px;
@@ -30,20 +30,20 @@
       top: 0;
       left: 75px;
       float: left;
-      width: 180px;
+      width: 230px;
       .badge-player-name {
-        padding: 4px 4px 0 8px;
+        padding: 4px 4px 0 12px;
         height: 30px;
         background: #334852;
         overflow: hidden;
       }
       .badge-char-info {
-        padding: 0 4px 0 8px;
+        padding: 0 4px 0 12px;
         height: 25px;
 
       }
       .badge-league {
-        padding: 0 4px 4px 8px;
+        padding: 0 4px 4px 12px;
         height: 25px;
         border-top: 1px solid #334852;
       }
