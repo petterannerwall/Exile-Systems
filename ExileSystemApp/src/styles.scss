@@ -25,7 +25,7 @@ html, body {
 }
 
 .content-wrapper{
-  height: 100%;
+  height: calc(100% - 70px);
   // padding-left: 300px;
   padding: 20px 20px 20px 320px;
 }
