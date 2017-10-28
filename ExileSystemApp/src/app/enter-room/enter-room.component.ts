@@ -1,3 +1,4 @@
+import { PlayerService } from '../shared/providers/player.service';
 import { SignalRService } from '../shared/providers/signalr.service';
 import { EquipmentResponse } from '../shared/interfaces/equipment-response.interface';
 import { ExternalService } from '../shared/providers/external.service';
@@ -15,7 +16,8 @@ import * as $ from 'jquery';
 export class EnterRoomComponent implements OnInit {
   model = { roomCode: '', accountName: '', characterName: '', sessionId: '' };
   characters: any = [];
-  constructor(private router: Router, private externalService: ExternalService, private signalrService: SignalRService) { }
+  constructor(private router: Router, private externalService: ExternalService,
+    private signalrService: SignalRService, private playerService: PlayerService) { }
 
   ngOnInit() {
   }
@@ -53,11 +55,11 @@ export class EnterRoomComponent implements OnInit {
   registerPlayer() {
     this.externalService.getCharacter(this.model.accountName, this.model.characterName, this.model.sessionId)
       .subscribe((data: EquipmentResponse) => {
-        this.externalService.player.character = data.character;
-        this.externalService.player.character.items = data.items;
-        this.externalService.player.channel = this.model.roomCode;
-        console.log('received player: ', this.externalService.player)
-        this.signalrService.login(this.model.roomCode, this.externalService.player);
+        this.playerService.currentPlayerObj.character = data.character;
+        this.playerService.currentPlayerObj.character.items = data.items;
+        this.playerService.currentPlayerObj.channel = this.model.roomCode;
+        console.log('received player: ', this.playerService.currentPlayerObj)
+        this.signalrService.login(this.model.roomCode, this.playerService.currentPlayerObj);
         this.router.navigate(['/current-room']);
       });
   }

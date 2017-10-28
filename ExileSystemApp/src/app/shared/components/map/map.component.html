@@ -6,7 +6,12 @@
             <div class="zone-row row" *ngFor="let zone of act.zones">
                 <a class="waves-effect waves-dark btn col s6 zone blue-grey white-text">{{zone.Name}}</a>
                 <span class="col s6 zone-players">
-                    <span *ngFor="let player of channelService.channel.players" [ngClass]="{'player-hidden': player.area != zone.Name}">{{player.character.name}}</span>
+                    <ng-container *ngFor="let player of channelService.channel.players">
+                        <div [ngClass]="{'player-hidden': player.area != zone.Name}">
+                            <span>{{player.character.name}}</span>
+                            <br/>
+                        </div>
+                    </ng-container>
                 </span>
             </div>
         </div>
