@@ -10,7 +10,7 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">account_circle</i>
-          <input [(ngModel)]="model.accountName" id="accountName" name="accountName" type="text" class="validate" (focusout)="loadCharacters()">
+          <input [(ngModel)]="model.accountName" id="accountName" name="accountName" type="text" class="validate" (focusout)="loadCharacters()" required>
           <label for="accountName">Account name</label>
         </div>
       </div>
@@ -24,7 +24,7 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">face</i>
-          <select materialize="material_select" [materializeSelectOptions]="characters" [(ngModel)]="model.characterName" id="characterName" name="characterName">
+          <select materialize="material_select" [materializeSelectOptions]="characters" [(ngModel)]="model.characterName" id="characterName" name="characterName" required>
             <option value="" disabled selected>Select a character</option>
             <option *ngFor="let char of characters" value="{{char.name}}">({{char.level}}) {{char.name}}, {{char.class}}, {{char.league}}</option>
           </select>
@@ -43,17 +43,17 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">text_format</i>
-          <input [(ngModel)]="model.roomCode" id="roomCode" name="roomCode" type="text" class="validate">
+          <input [(ngModel)]="model.roomCode" id="roomCode" name="roomCode" type="text" class="validate" required>
           <label for="roomCode">Room code</label>
         </div>
       </div>
     </form>
     <div class="row">
       <div class="col s12">
-        <a class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action">
+        <button class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid">
           <i class="material-icons right">send</i>
           Enter
-        </a>
+        </button>
       </div>
     </div>
     <div class="row">
@@ -65,10 +65,10 @@
     </div>
     <div class="row">
       <div class="col s12">
-        <a class="waves-effect waves-light btn right full-width" (click)="create()" type="submit" name="action">
+        <button class="waves-effect waves-light btn right full-width" (click)="create()" type="submit" name="action" [disabled]="!loginForm.valid">
           <i class="material-icons right">send</i>
           Create room
-        </a>
+        </button>
       </div>
     </div>
   </div>

@@ -48,18 +48,23 @@ export class EnterRoomComponent implements OnInit {
   }
 
   create() {
-    this.model.roomCode = this.generateChannel();
-    this.registerPlayer();
+    this.registerPlayer(this.generateChannel());
   }
 
-  registerPlayer() {
+  registerPlayer(roomCode?: string) {
+    let code;
+    if (roomCode !== undefined) {
+      code = roomCode;
+    } else {
+      code = this.model.roomCode;
+    }
     this.externalService.getCharacter(this.model.accountName, this.model.characterName, this.model.sessionId)
       .subscribe((data: EquipmentResponse) => {
         this.playerService.currentPlayerObj.character = data.character;
         this.playerService.currentPlayerObj.character.items = data.items;
-        this.playerService.currentPlayerObj.channel = this.model.roomCode;
+        this.playerService.currentPlayerObj.channel = code;
         console.log('received player: ', this.playerService.currentPlayerObj)
-        this.signalrService.login(this.model.roomCode, this.playerService.currentPlayerObj);
+        this.signalrService.login(code, this.playerService.currentPlayerObj);
         this.router.navigate(['/current-room']);
       });
   }
