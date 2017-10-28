@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Linq;
-
+using System.Diagnostics;
 
 namespace ConsoleApp1
 {
@@ -20,7 +20,15 @@ namespace ConsoleApp1
                     CommandHandler.KillTCPConnectionForProcess(uintProcessId);
                 }
             }
-
+            if (command == "/window" && processId != null)
+            {
+                var result = int.TryParse(processId, out int intProcessId);
+                if (result)
+                {
+                    var response = CommandHandler.SetFocusToPathOfExileWindow(intProcessId);
+                    Console.WriteLine(response);
+                }
+            }
         }
     }
 
@@ -64,6 +72,27 @@ namespace ConsoleApp1
 
         }
 
+        public static bool SetFocusToPathOfExileWindow(int ProcessId)
+        {            
+            
+            var process = Process.GetProcessById(ProcessId);
+            
+            if (process != null && process.MainWindowHandle != null)
+            {
+                IntPtr hwnd = process.MainWindowHandle;
+                if (hwnd == IntPtr.Zero)
+                {
+                    ShowWindow(process.Handle, ShowWindowEnum.Restore);
+                }
+                SetForegroundWindow(process.MainWindowHandle);
+                return true;
+
+            }
+
+            return false;
+        }
+
+
         [DllImport("iphlpapi.dll", SetLastError = true)]
         private static extern uint GetExtendedTcpTable(IntPtr pTcpTable, ref int dwOutBufLen, bool sort, int ipVersion, TcpTableClass tblClass, uint reserved = 0);
 
@@ -101,5 +130,39 @@ namespace ConsoleApp1
             TcpTableOwnerModuleConnections,
             TcpTableOwnerModuleAll
         }
+
+        private const int SW_SHOWNOACTIVATE = 4;
+        private const int HWND_TOPMOST = -1;
+        private const uint SWP_NOACTIVATE = 0x0010;
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool ShowWindow(IntPtr hWnd, ShowWindowEnum flags);
+
+        [DllImport("user32.dll")]
+        public static extern int SetForegroundWindow(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        static extern bool SetWindowPos(
+             int hWnd,             // Window handle
+             int hWndInsertAfter,  // Placement-order handle
+             int X,                // Horizontal position
+             int Y,                // Vertical position
+             int cx,               // Width
+             int cy,               // Height
+             uint uFlags);         // Window positioning flags
+
+
+        private enum ShowWindowEnum
+        {
+            Hide = 0,
+            ShowNormal = 1, ShowMinimized = 2, ShowMaximized = 3,
+            Maximize = 3, ShowNormalNoActivate = 4, Show = 5,
+            Minimize = 6, ShowMinNoActivate = 7, ShowNoActivate = 8,
+            Restore = 9, ShowDefault = 10, ForceMinimized = 11
+        };
     }
 }

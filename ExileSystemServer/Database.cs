@@ -79,6 +79,9 @@ namespace ExileSystemServer
                 existingChannel.Players.Add(player);
 
             }
+
+            existingChannel.Players = existingChannel.Players.OrderByDescending(t => t.Character.Level).ToList();
+
             redis.Cache.SetObject($"game:{channel}", existingChannel, TimeSpan.FromMinutes(10));
             return existingChannel;
 

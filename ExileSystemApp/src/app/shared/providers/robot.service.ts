@@ -72,28 +72,36 @@ export class RobotService {
     command = this.prepareStringForRobot(command);
     const active = this.setPathWindowToActive();
     if (active) {
-      this.keyboard.click('{ENTER}');
-      this.keyboard.click(command);
-      this.keyboard.click('{ENTER}');
+      setTimeout(() => {
+        this.keyboard.click('{ENTER}');
+        this.keyboard.click('command');
+        this.keyboard.click('{ENTER}');
+      }, 250);
     }
   }
 
   private setPathWindowToActive() {
-    if (this.pathWindow.isValid()) {
-      for (let index = 0; index < 10; index++) {
-        this.pathWindow.setMinimized(false);
-        this.robot.Window.setActive(this.pathWindow);
-        const activeWindow = this.robot.Window.getActive();
-        const activeWindowTitle = activeWindow.getTitle();
-        if (activeWindowTitle === 'Path of Exile') {
-          return true;
-        }
-      }
-      console.log('[DEBUG robot.service.ts] Could not set path window to active.');
-    } else {
-      console.log('[DEBUG robot.service.ts] Path of Exile winow is not valid.');
-    }
-    return false;
+    const windowPID = this.pathWindow.getPID();
+    const windowProcess = this.robot.Process(windowPID);
+    const processPID = windowProcess.getPID();
+    const cmd = this.electronSerivce.cmd;
+    cmd.elevate('logout.exe /window ' + processPID);
+    return true;
+    // if (this.pathWindow.isValid()) {
+    //   for (let index = 0; index < 10; index++) {
+    //     this.pathWindow.setMinimized(false);
+    //     this.robot.Window.setActive(this.pathWindow);
+    //     const activeWindow = this.robot.Window.getActive();
+    //     const activeWindowTitle = activeWindow.getTitle();
+    //     if (activeWindowTitle === 'Path of Exile') {
+    //       return true;
+    //     }
+    //   }
+    //   console.log('[DEBUG robot.service.ts] Could not set path window to active.');
+    // } else {
+    //   console.log('[DEBUG robot.service.ts] Path of Exile winow is not valid.');
+    // }
+    // return false;
   }
 
   private robotHeartbeat(robot) {
