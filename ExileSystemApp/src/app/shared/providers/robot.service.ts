@@ -125,9 +125,9 @@ export class RobotService {
 
 
     const started = this.keyTimer.hasStarted();
-    const expired = this.keyTimer.hasExpired(5000);
+    const expired = this.keyTimer.hasExpired(250);
 
-    if (!this.keyTimer.hasStarted() && this.keyTimer.hasExpired(5000)) {
+    if (started && expired) {
       this.keyTimer.reset();
       this.lastPressedKeys = [];
     }

@@ -11,10 +11,9 @@ import { ConnectionTransport, SignalRConfiguration, SignalRModule } from 'ng2-si
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CommandsComponent } from './commands/commands.component';
+import { SettingsComponent } from './settings/settings.component';
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
-import { SettingsComponent } from './settings/settings.component';
 import { AcceptSendModule } from './shared/modules/accept-send/accept-send.module';
 import { CharacterPreviewModule } from './shared/modules/character-preview/character-preview.module';
 import { ItemModule } from './shared/modules/item/item.module';
@@ -40,7 +39,6 @@ import { TradeManagementComponent } from './trade/trade-management/trade-managem
     EnterRoomComponent,
     CurrentRoomComponent,
     SettingsComponent,
-    CommandsComponent,
     TradeBrowseComponent,
     TradeManagementComponent
   ],

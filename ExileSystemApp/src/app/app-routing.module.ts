@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
-import { CommandsComponent } from './commands/commands.component';
 import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
@@ -25,10 +24,6 @@ const routes: Routes = [
     {
         path: 'settings',
         component: SettingsComponent
-    },
-    {
-        path: 'commands',
-        component: CommandsComponent
     },
     {
         path: 'trade/browse',

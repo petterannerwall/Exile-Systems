@@ -20,7 +20,7 @@ export class LogParserService {
     logPerformanceTimer;
 
     constructor(private electron: ElectronService, private signalRService: SignalRService, private playerService: PlayerService,
-    private channelService: ChannelService) {
+        private channelService: ChannelService) {
 
         this.logPerformanceTimer = electron.robot.Timer();
 
