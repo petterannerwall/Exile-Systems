@@ -38,6 +38,15 @@ html, body {
   }
 }
 
+.select-wrapper input.select-dropdown:disabled {
+  color: #9e9e9e !important;
+  border-bottom: 1px dotted #9e9e9e !important;
+}
+
+.select-wrapper.disabled span.caret, .select-wrapper.disabled+label {
+  color: #9e9e9e !important;
+}
+
 .hr-text {
   display: block;
   text-align: center;

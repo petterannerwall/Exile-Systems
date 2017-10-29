@@ -24,8 +24,9 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">face</i>
-          <select materialize="material_select" [materializeSelectOptions]="characters" [(ngModel)]="model.characterName" id="characterName" name="characterName" required>
-            <option value="" disabled selected>Select a character</option>
+          <select materialize="material_select" [materializeSelectOptions]="characters" [(ngModel)]="model.characterName" id="characterName" name="characterName" required [disabled]="characters.length == 0 ? true : null">
+            <option value="" disabled selected *ngIf="characters.length != 0">Select a character</option>
+            <option value="" disabled selected *ngIf="characters.length == 0">Requires a valid account</option>
             <option *ngFor="let char of characters" value="{{char.name}}">({{char.level}}) {{char.name}}, {{char.class}}, {{char.league}}</option>
           </select>
           <label for="characterName">Character name</label>
@@ -50,7 +51,7 @@
     </form>
     <div class="row">
       <div class="col s12">
-        <button class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid">
+        <button class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid || characters.length == 0">
           <i class="material-icons right">send</i>
           Enter
         </button>
@@ -65,7 +66,7 @@
     </div>
     <div class="row">
       <div class="col s12">
-        <button class="waves-effect waves-light btn right full-width" (click)="create()" type="submit" name="action" [disabled]="!loginForm.valid">
+        <button class="waves-effect waves-light btn right full-width" (click)="create()" type="submit" name="action" [disabled]="!loginForm.valid || characters.length == 0">
           <i class="material-icons right">send</i>
           Create room
         </button>
