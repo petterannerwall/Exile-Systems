@@ -18,7 +18,7 @@ export class TradeManagementComponent implements OnInit {
   }
 
   invite(trade) {
-    console.log('Inviting', trade);
+    console.log('[DEBUG trade-management.component.ts] Inviting', trade);
     this.robotService.sendCommandToPathofExile('+7invite ' + trade.player);
   }
 

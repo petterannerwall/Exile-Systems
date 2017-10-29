@@ -63,7 +63,7 @@ export class SettingsComponent implements OnInit {
       this.keyModel.binds.forEach((bind) => {
         keys.forEach(key => {
           if (bind.key === key) {
-            console.log('Executing keybind: ', bind.command);
+            console.log('[DEBUG settings.component.ts] Executing keybind: ', bind.command);
             this.keyboard.click(bind.command);
           }
         });
@@ -74,7 +74,7 @@ export class SettingsComponent implements OnInit {
       this.model.activeWindow = data;
     })
     robotService.ClipboardEvent.subscribe((data) => {
-      console.log('Clipboard data:', data);
+      console.log('[DEBUG settings.component.ts] Clipboard data:', data);
     })
   }
 
@@ -105,7 +105,7 @@ export class SettingsComponent implements OnInit {
       this.windowModel.topMostHandle = windowHandle;
       this.windowModel.topMostTitle = window.getTitle();
     } else {
-      console.log('Something went wrong when we tried to set a window to topMost');
+      console.log('[DEBUG settings.component.ts] Something went wrong when we tried to set a window to topMost');
     }
   }
   removeWindowTopMost() {
@@ -116,7 +116,7 @@ export class SettingsComponent implements OnInit {
       this.windowModel.topMostTitle = '';
       this.windowModel.topMostHandle = 0;
     } else {
-      console.log('Something went wrong when we tried to remove topMost from a window');
+      console.log('[DEBUG settings.component.ts] Something went wrong when we tried to remove topMost from a window');
     }
   }
 
@@ -159,8 +159,5 @@ export class SettingsComponent implements OnInit {
     this.keyModel.binds.splice(index, 1);
   }
 
-  keyChange(event) {
-    console.log(event);
-  }
 
 }

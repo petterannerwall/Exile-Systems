@@ -47,7 +47,7 @@ export class ExternalService {
   getCookiesByUrl(url: string) {
     return this.electronService.dialog.session.defaultSession.cookies.get({ url: url },
       (error, cookies) => {
-        console.log(error, cookies);
+        console.log('[DEBUG external.service.ts]', error, cookies);
       });
   }
 }
