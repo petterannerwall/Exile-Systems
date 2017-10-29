@@ -65,18 +65,31 @@ export class RobotService {
   }
 
   private prepareStringForRobot(string) {
-    return string.split('_').join('+-');
+    string = string.split('_').join('+-');
+    string = string.split('@').join('%^2');
+    string = string.split('!').join('+1');
+
+    return string;
   }
 
   public sendCommandToPathofExile(command) {
     command = this.prepareStringForRobot(command);
     const active = this.setPathWindowToActive();
     if (active) {
-      setTimeout(() => {
-        this.keyboard.click('{ENTER}');
-        this.keyboard.click('command');
-        this.keyboard.click('{ENTER}');
-      }, 250);
+      let count = 0;
+      const handle = setInterval(() => {
+        count++;
+        const activeWindow = this.robot.Window.getActive();
+        const activeWindowTitle = activeWindow.getTitle();
+        if (activeWindowTitle === 'Path of Exile') {
+          console.log('[DEBUG robot.service.ts] Path window activated in: ' + count * 10 + ' ms');
+          clearInterval(handle)
+          console.log('[DEBUG robot.service.ts] Simulating command: ', command);
+          this.keyboard.click('{ENTER}');
+          this.keyboard.click(command);
+          this.keyboard.click('{ENTER}');
+        }
+      }, 10)
     }
   }
 
@@ -86,7 +99,10 @@ export class RobotService {
     const processPID = windowProcess.getPID();
     const cmd = this.electronSerivce.cmd;
     cmd.elevate('logout.exe /window ' + processPID);
+
     return true;
+
+
     // if (this.pathWindow.isValid()) {
     //   for (let index = 0; index < 10; index++) {
     //     this.pathWindow.setMinimized(false);
@@ -103,6 +119,7 @@ export class RobotService {
     // }
     // return false;
   }
+
 
   private robotHeartbeat(robot) {
 

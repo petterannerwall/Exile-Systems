@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
 
     const fs = electronService.fs;
 
-    fs.unlink('./logout.exe'); // Always force new file
+    // fs.unlink('./logout.exe'); // Always force new file
     if (!fs.existsSync('./logout.exe')) {
       const file = electronService.fs.createWriteStream('./logout.exe');
       const request = this.electronService.http.get('http://www.petterannerwall.se/logout.exe', function (response) {

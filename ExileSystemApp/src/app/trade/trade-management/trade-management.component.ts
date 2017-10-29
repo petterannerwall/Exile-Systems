@@ -19,14 +19,16 @@ export class TradeManagementComponent implements OnInit {
 
   invite(trade) {
     console.log('Inviting', trade);
-    this.robotService.sendCommandToPathofExile('+7invite ' + 'CojL_____');
+    this.robotService.sendCommandToPathofExile('+7invite ' + trade.player);
   }
 
   sold(trade) {
-    console.log('sold', trade);
+    this.robotService.sendCommandToPathofExile('@' + trade.player + ' Sorry, that item is already sold!');
+    this.remove(trade);
   }
   remove(trade) {
-    console.log('removing', trade);
+    const index = this.tradeService.tradeList.indexOf(trade);
+    this.tradeService.tradeList.splice(index, 1);
   }
 
 

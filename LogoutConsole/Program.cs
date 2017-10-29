@@ -73,9 +73,16 @@ namespace ConsoleApp1
         }
 
         public static bool SetFocusToPathOfExileWindow(int ProcessId)
-        {            
-            
-            var process = Process.GetProcessById(ProcessId);
+        {
+            var process = new Process();
+            try
+            {
+                process = Process.GetProcessById(ProcessId);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             
             if (process != null && process.MainWindowHandle != null)
             {
