@@ -22,6 +22,7 @@ iframe {
   .modal {
     top:20% !important;
     overflow: visible;
+    width:65%;
     .modal-header {
       margin-bottom: 20px;
     }
@@ -29,5 +30,9 @@ iframe {
       padding: 16px 24px;
       height: auto;
     }
+  }
+  
+  app-character-preview, app-character-inventory {
+    display: inline-block;
   }
   

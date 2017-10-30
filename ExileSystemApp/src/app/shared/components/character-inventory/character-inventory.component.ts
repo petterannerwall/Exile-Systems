@@ -9,6 +9,8 @@ import { Component, Input, OnInit } from '@angular/core';
 
 export class CharacterInventoryComponent implements OnInit {
   @Input() character: Character;
+  columnsWide = 12;
+  columnsHigh = 5;
   constructor() {
   }
 

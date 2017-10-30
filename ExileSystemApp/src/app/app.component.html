@@ -8,6 +8,7 @@
   [materializeActions]="modalActions" class="modal blue-grey darken-2">
   <div class="modal-content" *ngIf="playerService.openPlayer">
     <app-character-preview *ngIf="playerService.openPlayer.character" [character]="playerService.openPlayer.character"></app-character-preview>
+    <app-character-inventory></app-character-inventory>
   </div>
   <div class="modal-footer blue-grey darken-3 white-text">
     <span class="character-info">
