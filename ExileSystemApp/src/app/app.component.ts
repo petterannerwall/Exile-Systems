@@ -1,17 +1,18 @@
-import { ChannelService } from './shared/providers/channel.service';
-import { LogParserService } from './shared/providers/log-parser.service';
-import { MessageTypeEnum } from './shared/enums/message-type.enum';
-import { PlayerService } from './shared/providers/player.service';
+import { Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize/dist';
+
+import { MessageTypeEnum } from './shared/enums/message-type.enum';
 import { getGuid } from './shared/helpers/object.helper';
-import { TradeService } from './shared/providers/trade.service';
+import { ChannelService } from './shared/providers/channel.service';
+import { CurrencyService } from './shared/providers/currency.service';
+import { ElectronService } from './shared/providers/electron.service';
 import { ExternalService } from './shared/providers/external.service';
+import { LogParserService } from './shared/providers/log-parser.service';
+import { PlayerService } from './shared/providers/player.service';
+import { RobotService } from './shared/providers/robot.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
-import { Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
-import { ElectronService } from './shared/providers/electron.service';
-import { CurrencyService } from './shared/providers/currency.service';
-import { RobotService } from './shared/providers/robot.service';
+import { TradeService } from './shared/providers/trade.service';
 
 
 @Component({

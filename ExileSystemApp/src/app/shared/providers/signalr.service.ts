@@ -1,11 +1,9 @@
-import { MessageTypeEnum } from '../enums/message-type.enum';
-import { ExternalService } from './external.service';
-import { LogParserService } from './log-parser.service';
-import { PlayerService } from './player.service';
-import { ChannelService } from './channel.service';
-import { Channel } from '../interfaces/channel.interface';
-import { BroadcastEventListener, SignalR } from 'ng2-signalr';
 import { Injectable } from '@angular/core';
+import { BroadcastEventListener, SignalR } from 'ng2-signalr';
+
+import { Channel } from '../interfaces/channel.interface';
+import { ChannelService } from './channel.service';
+import { PlayerService } from './player.service';
 
 @Injectable()
 export class SignalRService {
@@ -33,14 +31,18 @@ export class SignalRService {
   public login(channel, player) {
     return this.connection.invoke('Login', channel, player).then((data) => {
       this.playerService.currentPlayer.next(player);
+      if (this.playerService.leagueData === undefined) {
+        this.getLeagueData(player.character.league).then((res) => {
+          this.playerService.leagueData = res;
+        });
+      }
       return data;
     }).catch(error => console.log(error));
   }
 
-
   public getLeagueData(league) {
     return this.connection.invoke('GetLeague', league).then((data) => {
-      console.log('LeagueData', data);
+      console.log('[DEBUG signalr.service.ts] Got LeagueData: ', data);
       return data;
     }).catch(error => console.log(error));
   }

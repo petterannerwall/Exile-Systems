@@ -20,7 +20,6 @@ export class ElectronService {
   fs: any;
   http: any;
   constructor(private router: Router) {
-    console.log('electronService');
     // Conditional imports
     if (this.isElectron()) {
       this.ipcRenderer = window.require('electron').ipcRenderer;

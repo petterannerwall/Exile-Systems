@@ -48,10 +48,11 @@ export class RobotService {
         this.pathWindow = window;
         this.foundPathWindow = true;
       }
-      if (!this.foundPathWindow) {
-        console.log('[DEBUG robot.service.ts] Could not find Path of Exile window.');
-      }
     });
+
+    if (!this.foundPathWindow) {
+      console.log('[DEBUG robot.service.ts] Could not find Path of Exile window.');
+    }
 
     const timeHandle = setInterval(() => {
       this.robotHeartbeat(this.robot)

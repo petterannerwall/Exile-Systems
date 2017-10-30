@@ -1,11 +1,11 @@
-import { IncomingMessage } from 'http';
-import { IncomingTrade } from '../interfaces/incomming-trade.interface';
-import { RobotService } from './robot.service';
-import { MessageTypeEnum } from '../enums/message-type.enum';
-import { LogParserService } from './log-parser.service';
-
 import 'rxjs/add/operator/map';
+
 import { Injectable } from '@angular/core';
+
+import { MessageTypeEnum } from '../enums/message-type.enum';
+import { IncomingTrade } from '../interfaces/incomming-trade.interface';
+import { LogParserService } from './log-parser.service';
+import { RobotService } from './robot.service';
 
 
 @Injectable()

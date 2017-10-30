@@ -1,11 +1,7 @@
-import { ExternalService } from './external.service';
-import { SignalRService } from './signalr.service';
-import { MessageTypeEnum } from '../enums/message-type.enum';
-import { LogParserService } from './log-parser.service';
-import { BehaviorSubject, Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 import { EventEmitter, Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Rx';
 
 import { Player } from '../interfaces/player.interface';
 

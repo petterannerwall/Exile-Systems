@@ -1,3 +1,4 @@
+import { PlayerService } from '../../shared/providers/player.service';
 import { Component, OnInit } from '@angular/core';
 import { RobotService } from 'app/shared/providers/robot.service';
 import { TradeService } from 'app/shared/providers/trade.service';
@@ -10,8 +11,9 @@ import { TradeService } from 'app/shared/providers/trade.service';
 export class TradeManagementComponent implements OnInit {
 
   keyboard = this.robotService.robot.Keyboard();
+  chaosIcon = 'http://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&w=2&h=2';
 
-  constructor(private robotService: RobotService, private tradeService: TradeService) {
+  constructor(private robotService: RobotService, private tradeService: TradeService, private playerService: PlayerService) {
   }
 
   ngOnInit() {
