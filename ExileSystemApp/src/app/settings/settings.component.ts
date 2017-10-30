@@ -1,5 +1,6 @@
 import { ElectronService } from '../shared/providers/electron.service';
 import { RobotService } from '../shared/providers/robot.service';
+import { TradeService } from '../shared/providers/trade.service';
 import { KeycodeArray } from '../shared/enums/keycode.enum';
 import { Component, OnInit } from '@angular/core';
 
@@ -34,6 +35,12 @@ export class SettingsComponent implements OnInit {
     command: 'Type command...'
   }
 
+  specificKeybinds = {
+    logout: '',
+    invite: '',
+    sold: '',
+  };
+
   model = {
     activeWindow: 'Not found',
     activeKeys: [],
@@ -45,8 +52,14 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  constructor(private electronService: ElectronService, private robotService: RobotService) {
+  constructor(private electronService: ElectronService, private robotService: RobotService, private tradeService: TradeService) {
     // Before render
+
+    const savedBinds = this.electronService.config.get('specific-keybinds');
+
+    if (savedBinds !== undefined) {
+      this.specificKeybinds = savedBinds;
+    }
 
     this.initializeWindowlist();
 
@@ -59,6 +72,27 @@ export class SettingsComponent implements OnInit {
 
     robotService.KeyboardEvent.subscribe((keys) => {
       this.model.activeKeys = keys;
+
+      keys.forEach(key => {
+        if (this.specificKeybinds.logout === key) {
+          console.log('[DEBUG settings.component.ts] Executing logout!');
+          this.robotService.logout();
+        }
+        if (this.specificKeybinds.invite === key) {
+          console.log('[DEBUG settings.component.ts] Executing invite!');
+          if (this.tradeService.tradeList.length > 0) {
+            this.robotService.sendCommandToPathofExile('+7invite ' + tradeService.tradeList[0].player)
+          }
+        }
+        if (this.specificKeybinds.sold === key) {
+          console.log('[DEBUG settings.component.ts] Executing sold!');
+          if (this.tradeService.tradeList.length > 0) {
+            this.robotService.sendCommandToPathofExile('@' + this.tradeService.tradeList[0].player.player +
+              ' Sorry, that item is already sold!');
+            this.tradeService.tradeList.splice(0, 1);
+          }
+        }
+      });
 
       this.keyModel.binds.forEach((bind) => {
         keys.forEach(key => {
@@ -120,15 +154,9 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  killProcess() {
-    const window = this.robot.Window(+this.windowModel.killProcess);
-    const windowPID = window.getPID();
-    const windowProcess = this.robot.Process(windowPID);
-    const processPID = windowProcess.getPID();
-    console.log(processPID);
-    const cmd = this.electronService.cmd;
-    cmd.elevate('logout.exe /process ' + processPID);
-
+  save() {
+    console.log(this.specificKeybinds);
+    this.electronService.config.set('specific-keybinds', this.specificKeybinds);
   }
 
   createKeybind() {
@@ -140,6 +168,8 @@ export class SettingsComponent implements OnInit {
 
     this.keyModel.key = '';
     this.keyModel.command = 'Type command...'
+
+    console.log(this.keyModel.binds);
 
     // const electron = require('electron');
     // const BrowserWindow = electron.remote.BrowserWindow;
