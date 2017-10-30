@@ -1,15 +1,13 @@
-import { ChannelService } from './channel.service';
-import { PlayerService } from './player.service';
-import { SignalRService } from './signalr.service';
-import { MessageTypeEnum } from '../enums/message-type.enum';
-import { MessageChannelEnum } from '../enums/message-channel.enum';
-import { forEach } from '@angular/router/src/utils/collection';
-import { Observable } from 'rxjs/Rx';
-import { Message } from '../interfaces/message.interface';
-import { getGuid } from '../helpers/object.helper';
-import { ElectronService } from './electron.service';
 import { Injectable } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+
+import { MessageChannelEnum } from '../enums/message-channel.enum';
+import { MessageTypeEnum } from '../enums/message-type.enum';
+import { Message } from '../interfaces/message.interface';
+import { ChannelService } from './channel.service';
+import { ElectronService } from './electron.service';
+import { PlayerService } from './player.service';
+import { SignalRService } from './signalr.service';
 
 @Injectable()
 export class LogParserService {
@@ -18,6 +16,7 @@ export class LogParserService {
     NewMessageEvent: EventEmitter<Message> = new EventEmitter();
 
     logPerformanceTimer;
+    
 
     constructor(private electron: ElectronService, private signalRService: SignalRService, private playerService: PlayerService,
         private channelService: ChannelService) {
@@ -46,17 +45,24 @@ export class LogParserService {
             } else {
                 const newItems = currentLines.filter(item => this.recentLines.indexOf(item) < 0);
                 if (newItems.length > 0 || this.recentLines.length === 0) {
-                    newItems.forEach(element => {
-                        this.parseMessage(element);
-                    });
+                    for (let index = 0; index < newItems.length; index++) {
+                        const elapsed = this.logPerformanceTimer.getElapsed();
+                        if ( elapsed > 800) {
+                            index = rowCount + 1; // this exists the loop.
+                            console.log('[DEBUG log-parser.service.ts]: Broke loop parsing lines since we took more then 800 ms');
+                        } else {
+                            const element = newItems[index];
+                            this.parseMessage(element);
+                        }
+                    }
                     this.recentLines = currentLines;
                     const elapsed = this.logPerformanceTimer.restart();
-                    if (elapsed > 100) {
+                    if (elapsed > 500) {
                         console.log('DEBUG: Finished parsing lines after ' + elapsed + ' ms');
                     }
                 } else {
                     const elapsed = this.logPerformanceTimer.restart();
-                    if (elapsed > 100) {
+                    if (elapsed > 500) {
                         console.log('DEBUG: Finished parsing lines after ' + elapsed + ' ms');
                     }
                 }

@@ -29,6 +29,7 @@ namespace ExileSystemServer
 
         public League GetLeague(string name)
         {
+            Console.WriteLine("Getting data for league: " + name);
             return Database.GetSpecificLeague(name);
         }
 
