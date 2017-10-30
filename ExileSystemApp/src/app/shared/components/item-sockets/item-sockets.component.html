@@ -1,9 +1,15 @@
 <div class="socket-wrapper">
-    <div [ngClass]="'inner-wrapper-'+columns">
-        <ng-container *ngFor="let socket of sockets, index as i">
-            <!-- classes are formatted as "type-slot-columnwidth" -->
-            <div class="{{columns}}-col" [ngClass]="'link-'+i+'-'+columns" *ngIf="sockets[i+1] && socket.group == sockets[i+1].group"></div>
-            <div class="socket-{{socket.attr}} {{columns}}-col" [ngClass]="'socket-'+i+'-'+columns"></div>
-        </ng-container>
-    </div>
+  <div [ngClass]="'inner-wrapper-'+columns">
+    <ng-container *ngFor="let socket of item.sockets, index as i">
+      <!-- classes are formatted as "type-slot-columnwidth" -->
+      <div class="{{columns}}-col" [ngClass]="'link-'+i+'-'+columns" *ngIf="item.sockets[i+1] && socket.group == item.sockets[i+1].group"></div>
+      <div class="socket-{{socket.attr}} {{columns}}-col" [ngClass]="'socket-'+i+'-'+columns">
+        <div class="gem-wrapper" *ngIf="item.socketedItems">
+          <div *ngIf="getGemByIndex(i) != undefined" class="inner-gem {{socket.attr}}-gem {{getGemByIndex(i).colour}}">
+            <app-item-tooltip [item]="getGemByIndex(i)" class="gem-tooltip"></app-item-tooltip>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
 </div>
