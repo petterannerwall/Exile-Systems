@@ -1,11 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
-
   height: 100%;
-
   color: #eceff1;
 }
 
@@ -20,13 +19,48 @@ html, body {
   width: 100%;
 }
 
-.white-text > a {
+.white-text>a {
   color: #fff;
 }
 
-.content-wrapper{
-  height: calc(100% - 70px);
-  // padding-left: 300px;
+.item-popover {
+  position: absolute;
+  max-width: 280px;
+  min-width: 280px;
+  margin-left: -200px;
+  min-height: 50px;
+  background: rgba(29, 38, 43, 0.9);
+  border-radius: 1px;
+  display: none;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 3px;
+  font-size: 13px;
+  border: 2px solid #827f7f;
+}
+
+.gem-tooltip {
+  position: absolute;
+  max-width: 280px;
+  min-width: 280px;
+  min-height: 50px;
+  background: rgba(29, 38, 43, 0.9);
+  border-radius: 1px;
+  display: none;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 3px;
+  font-size: 13px;
+  border: 2px solid #827f7f;
+  margin-left: 60px;
+}
+
+.item-wrapper:hover .item-popover {
+  display: block;
+}
+
+.content-wrapper {
+  height: calc(100% - 70px); // padding-left: 300px;
   padding: 20px 20px 20px 320px;
 }
 
@@ -34,7 +68,7 @@ html, body {
   margin-left: 0 !important;
   text-align: left;
   .block-title {
-      text-align: right;
+    text-align: right;
   }
 }
 
@@ -43,7 +77,8 @@ html, body {
   border-bottom: 1px dotted #9e9e9e !important;
 }
 
-.select-wrapper.disabled span.caret, .select-wrapper.disabled+label {
+.select-wrapper.disabled span.caret,
+.select-wrapper.disabled+label {
   color: #9e9e9e !important;
 }
 
@@ -51,16 +86,16 @@ html, body {
   display: block;
   text-align: center;
   overflow: hidden;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
-.hr-text > span {
+.hr-text>span {
   position: relative;
   display: inline-block;
 }
 
-.hr-text > span:before,
-.hr-text > span:after {
+.hr-text>span:before,
+.hr-text>span:after {
   content: "";
   position: absolute;
   top: 50%;
@@ -69,16 +104,16 @@ html, body {
   background: #fff;
 }
 
-.hr-text > span:before {
+.hr-text>span:before {
   right: 100%;
   margin-right: 15px;
 }
 
-.hr-text > span:after {
+.hr-text>span:after {
   left: 100%;
   margin-left: 15px;
 }
 
-h4{
+h4 {
   font-size: 1.5rem;
 }

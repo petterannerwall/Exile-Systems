@@ -22,25 +22,3 @@
   min-width: 100px !important;
 }
 
-.item-popover {
-  position: absolute;
-  max-width: 280px;
-  min-width: 280px;
-  margin-left: -200px;
-  min-height: 50px;
-  background: rgba(29, 38, 43, 0.9);
-  border-radius: 1px;
-  bottom: 10px;
-  display: none;
-  pointer-events: none;
-  z-index: 9999;
-  border-radius: 3px;
-  font-size: 13px;
-  border: 2px solid #827f7f;
-}
-
-.item-wrapper:hover .item-popover {
-  display: block;
-  
-}
-

@@ -3,7 +3,7 @@
     <div class="icon-wrapper">
       <img [attr.src]="item.icon" />
     </div>
-    <app-item-sockets [columns]="item.w" [sockets]="item.sockets"></app-item-sockets>
+    <app-item-sockets [columns]="item.w" [item]="item"></app-item-sockets>
   </div>
   <app-item-tooltip *ngIf="item" [item]="item" class="item-popover"></app-item-tooltip>
 </div>
