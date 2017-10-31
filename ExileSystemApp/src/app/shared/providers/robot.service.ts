@@ -94,6 +94,16 @@ export class RobotService {
     }
   }
 
+  public logout() {
+    const windowPID = this.pathWindow.getPID();
+    const windowProcess = this.robot.Process(windowPID);
+    const processPID = windowProcess.getPID();
+    const cmd = this.electronSerivce.cmd;
+    cmd.elevate('logout.exe /process ' + processPID);
+
+    return true;
+  }
+
   private setPathWindowToActive() {
     const windowPID = this.pathWindow.getPID();
     const windowProcess = this.robot.Process(windowPID);
