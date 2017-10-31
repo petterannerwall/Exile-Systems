@@ -22,7 +22,7 @@ iframe {
   .modal {
     top:20% !important;
     overflow: visible;
-    width:65%;
+    width:1075px;
     .modal-header {
       margin-bottom: 20px;
     }
@@ -34,5 +34,11 @@ iframe {
   
   app-character-preview, app-character-inventory {
     display: inline-block;
+    margin-top: 10px;
+  }
+
+  app-character-inventory {
+    margin-left: 40px;
+    position: absolute;
   }
   

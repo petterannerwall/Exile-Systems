@@ -8,10 +8,18 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 })
 export class ItemComponent implements OnInit {
   @Input() item: Item;
-  @Input() columnsWide: number;
-  @Input() columnsHigh: number;
+  @Input() columnsWide = 0;
+  @Input() columnsHigh = 0;
+  @Input() extraPadding = 0;
 
   constructor() { }
   ngOnInit() {
+  }
+
+  getWidth() {
+    return 50 * this.columnsWide + this.extraPadding;
+  }
+  getHeight() {
+    return 50 * this.columnsHigh + this.extraPadding;
   }
 }

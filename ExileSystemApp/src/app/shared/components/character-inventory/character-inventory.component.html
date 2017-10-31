@@ -1,1 +1,7 @@
-<div class="character-main-inventory blue-grey darken-3" [ngStyle]="{'width.px': 50*columnsWide, 'min-height.px': 50*columnsHigh}"></div>
+<div class="character-main-inventory blue-grey darken-3" [ngStyle]="{'width.px': 50*columnsWide, 'height.px': 50*columnsHigh}">
+    <div *ngFor="let item of character.items">
+        <div class="inventory-item-slot" *ngIf="item.inventoryId == 'MainInventory'" [ngStyle]="{'width.px': 50*item.w, 'height.px': 50*item.h, 'left.px': 50*item.x, 'top.px': 50*item.y}">
+            <app-item [item]="item" [columnsWide]="item.w" [columnsHigh]="item.h"></app-item>
+        </div>
+    </div>
+</div>

@@ -38,12 +38,15 @@ hr {
     // gem
     color: #1ba29b !important;
   }
+  .rarity-5 {
+    // currency
+    color: #AD904B !important;
+  }
 }
-
-.currency {
-  color: #AD904B !important;
+.flavour-text {
+  font-style: italic;
+  color: #bb9031 !important;
 }
-
 .corrupted {
   color: #e80000;
   font-weight: bold;

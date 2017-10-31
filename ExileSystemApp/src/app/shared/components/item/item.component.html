@@ -1,4 +1,4 @@
-<div class="item-wrapper" [ngStyle]="{'width.px': 50*columnsWide+10, 'min-height.px': 50*columnsHigh+10}">
+<div class="item-wrapper" [ngStyle]="{'width.px': getWidth(), 'height.px': getHeight()}">
   <div class="item" *ngIf="item">
     <div class="icon-wrapper">
       <img [attr.src]="item.icon" />
