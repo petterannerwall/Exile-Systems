@@ -8,5 +8,6 @@ export interface IncomingTrade {
     location: string;
     player: string;
     inArea: boolean,
-    invited: boolean
+    invited: boolean,
+    thanked: boolean
 }

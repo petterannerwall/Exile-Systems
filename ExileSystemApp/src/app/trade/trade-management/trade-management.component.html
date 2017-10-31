@@ -51,12 +51,14 @@
                         <div class="col s3">
                             <a *ngIf="!trade.invited" (click)="invite(trade)" class="waves-effect waves-light btn">
                                 Invite</a>
-                            <a *ngIf="trade.invited" (click)="trade(trade)" class="waves-effect waves-light btn">
+                            <a *ngIf="trade.invited" (click)="startTrade(trade)" class="waves-effect waves-light btn">
                                 Trade</a>
                             <a *ngIf="!trade.invited" (click)="sold(trade)" class="waves-effect waves-light btn">
                                 Sold</a>
-                            <a *ngIf="trade.invited" (click)="thank(trade)" class="waves-effect waves-light btn">
+                            <a *ngIf="trade.invited && !trade.thanked" (click)="thank(trade)" class="waves-effect waves-light btn">
                                 Thank</a>
+                            <a *ngIf="trade.invited && trade.thanked" (click)="kick(trade)" class="waves-effect waves-light btn">
+                                kick</a>
                             <a (click)="remove(trade)" class="waves-effect waves-light btn">
                                 Remove</a>
                         </div>
