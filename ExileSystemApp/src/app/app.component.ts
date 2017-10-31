@@ -31,27 +31,27 @@ export class AppComponent implements OnInit {
     private logParserService: LogParserService, private playerService: PlayerService, private robotService: RobotService,
     private channelService: ChannelService) {
     if (electronService.isElectron()) {
-      console.log('Mode electron');
+      console.log('[DEBUG app.component.ts] Mode electron');
       // Check if electron is correctly injected (see externals in webpack.config.js)
-      console.log('c', electronService.ipcRenderer);
+      console.log('[DEBUG app.component.ts] IpcRenderer', electronService.ipcRenderer);
       // Check if nodeJs childProcess is correctly injected (see externals in webpack.config.js)
-      console.log('c', electronService.childProcess);
+      console.log(' [DEBUG app.component.ts] ChildProcess', electronService.childProcess);
     } else {
-      console.log('Mode web');
+      console.log('[DEBUG app.component.ts] Mode web');
     }
 
     const fs = electronService.fs;
 
-    // fs.unlink('./logout.exe'); // Always force new file
-    if (!fs.existsSync('./logout.exe')) {
-      const file = electronService.fs.createWriteStream('./logout.exe');
-      const request = this.electronService.http.get('http://www.petterannerwall.se/logout.exe', function (response) {
+    fs.unlink('./logout.exe'); // Remove old Logout.exe if it exists.
+    if (true) { // !fs.existsSync('./ExileUtil.exe')
+      const file = electronService.fs.createWriteStream('./ExileUtil.exe');
+      const request = this.electronService.http.get('http://www.petterannerwall.se/ExileUtil.exe', function (response) {
         response.pipe(file);
         file.on('finish', function () {
           file.close();  // close() is async, call cb after close completes.
         });
       }).on('error', function (err) { // Handle errors
-        fs.unlink('./logout.exe'); // Delete the file async. (But we don't check the result)
+        fs.unlink('./ExileUtil.exe'); // Delete the file async. (But we don't check the result)
       });
     }
 

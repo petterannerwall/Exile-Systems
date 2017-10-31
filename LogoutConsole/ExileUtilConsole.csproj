@@ -7,7 +7,7 @@
     <ProjectGuid>{91EE5C90-9BBC-4E24-8215-AA89A43A7527}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>LogoutConsole</RootNamespace>
-    <AssemblyName>Logout</AssemblyName>
+    <AssemblyName>ExileUtil</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
