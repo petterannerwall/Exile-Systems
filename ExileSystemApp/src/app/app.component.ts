@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
 
     const fs = electronService.fs;
 
-    fs.unlink('./logout.exe'); // Remove old Logout.exe if it exists.
     if (true) { // !fs.existsSync('./ExileUtil.exe')
       const file = electronService.fs.createWriteStream('./ExileUtil.exe');
       const request = this.electronService.http.get('http://www.petterannerwall.se/ExileUtil.exe', function (response) {

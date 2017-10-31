@@ -62,6 +62,7 @@ body {
 .content-wrapper {
   height: calc(100% - 70px); // padding-left: 300px;
   padding: 20px 20px 20px 320px;
+  transition-duration: .5s;
 }
 
 .block-wrapper {
@@ -116,4 +117,23 @@ body {
 
 h4 {
   font-size: 1.5rem;
+}
+
+
+
+
+@media only screen and (max-width: 992px){
+  .side-nav {
+      width:60px;
+      .subheader{
+        font-size: 0;
+        height: 5px;
+      }
+      li>a{
+        padding:0 18px;
+      }
+  }
+  .content-wrapper {
+      padding: 20px 20px 20px 80px;
+  }
 }

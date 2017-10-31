@@ -33,7 +33,7 @@ export class EnterRoomComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    Materialize.updateTextFields();
+    // Materialize.updateTextFields();
   }
 
   enter() {

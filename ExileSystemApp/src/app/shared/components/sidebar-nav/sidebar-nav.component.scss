@@ -1,5 +1,7 @@
 .side-nav {
     box-shadow:none;
+    transition-duration: .5s;
+    transform: none;
     .user-view{
         padding: 30px 30px 15px;
         margin-bottom: 0;
@@ -13,3 +15,4 @@
         background-color: #303f46;
     }
 }
+

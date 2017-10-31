@@ -6,6 +6,6 @@ import { Injectable } from '@angular/core';
 export class SettingService {
 
   constructor(private electron: ElectronService) {
-    this.electron.config.set('logpath', 'C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt');
+    this.electron.config.set('logpath', 'C:/eula.1028.txt');
   }
 }
