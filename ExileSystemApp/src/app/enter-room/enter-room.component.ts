@@ -1,3 +1,4 @@
+import { ElectronService } from '../shared/providers/electron.service';
 import { PlayerService } from '../shared/providers/player.service';
 import { SignalRService } from '../shared/providers/signalr.service';
 import { EquipmentResponse } from '../shared/interfaces/equipment-response.interface';
@@ -17,9 +18,19 @@ export class EnterRoomComponent implements OnInit {
   model = { roomCode: '', accountName: '', characterName: '', sessionId: '' };
   characters: any = [];
   constructor(private router: Router, private externalService: ExternalService,
-    private signalrService: SignalRService, private playerService: PlayerService) { }
+    private signalrService: SignalRService, private playerService: PlayerService, private electronService: ElectronService) {
+
+      const savedModel = this.electronService.config.get('enter-room-model');
+      if (savedModel !== undefined) {
+        this.model = savedModel;
+      }
+
+     }
 
   ngOnInit() {
+    $(document).ready(function() {
+      Materialize.updateTextFields();
+    });
   }
 
   enter() {
@@ -52,6 +63,9 @@ export class EnterRoomComponent implements OnInit {
   }
 
   registerPlayer(roomCode?: string) {
+
+    this.electronService.config.set('enter-room-model', this.model);
+
     let code;
     if (roomCode !== undefined) {
       code = roomCode;

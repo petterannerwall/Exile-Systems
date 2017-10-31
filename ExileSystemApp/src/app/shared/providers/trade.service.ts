@@ -20,7 +20,7 @@ export class TradeService {
       if (message.type === MessageTypeEnum.TradeMessage) {
 
         const tradeMessage = { item: '', price: '', currency: '', count: '', league: '', location: '', inArea: false,
-         invited: false } as IncomingTrade;
+         invited: false, thanked: false } as IncomingTrade;
 
         if (message.text.indexOf('I would like') > 0) {
           if (message.text.indexOf('listed for') > 0) {

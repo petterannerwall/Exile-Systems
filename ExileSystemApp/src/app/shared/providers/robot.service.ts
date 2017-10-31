@@ -102,7 +102,7 @@ export class RobotService {
     const windowProcess = this.robot.Process(windowPID);
     const processPID = windowProcess.getPID();
     const cmd = this.electronSerivce.cmd;
-    cmd.elevate('logout.exe /process ' + processPID);
+    cmd.elevate('ExileUtil.exe /process ' + processPID);
 
     return true;
   }
@@ -112,7 +112,7 @@ export class RobotService {
     const windowProcess = this.robot.Process(windowPID);
     const processPID = windowProcess.getPID();
     const cmd = this.electronSerivce.cmd;
-    cmd.elevate('logout.exe /window ' + processPID);
+    cmd.elevate('ExileUtil.exe /window ' + processPID);
 
     return true;
 
