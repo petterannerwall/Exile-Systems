@@ -6,5 +6,6 @@ export interface Player {
     character: Character;
     area: string;
     guild: string;
+    sessionId: string;
     inArea: Array<string>;
 }

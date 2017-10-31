@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
     this.logParserService.NewMessageEvent.subscribe(msg => {
       if (msg.type === MessageTypeEnum.SelfEnteringArea && this.playerService.currentPlayerObj !== undefined) {
         this.externalService.getCharacter(this.playerService.currentPlayerObj.account,
-          this.playerService.currentPlayerObj.character.name).subscribe(res => {
+          this.playerService.currentPlayerObj.character.name, this.playerService.currentPlayerObj.sessionId).subscribe(res => {
             this.playerService.currentPlayerObj.character = res.character;
             this.playerService.currentPlayerObj.character.items = res.items;
             this.playerService.currentPlayer.next(this.playerService.currentPlayerObj);

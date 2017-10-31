@@ -3,7 +3,7 @@
   text-align: center;
   position: relative;
   // padding: 10px 0 10px 0 !important;
-  background: #27282f;
+  background: #282930;
   border: 2px solid rgb(130, 127, 127);
   border-radius: 3px;
   display: flex;
@@ -14,8 +14,11 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-
   }
+}
+
+.unidentified {
+  background: #4d0f0f;
 }
 
 .item-wide {

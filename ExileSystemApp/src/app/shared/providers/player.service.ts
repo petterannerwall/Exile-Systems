@@ -14,6 +14,7 @@ export class PlayerService {
     character: undefined,
     area: '',
     guild: '',
+    sessionId: '',
     inArea: []
   }
   public currentPlayer: Subject<Player> = new Subject<Player>();

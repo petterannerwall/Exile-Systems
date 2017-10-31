@@ -10,7 +10,7 @@
       </ng-container>
       <ng-container *ngSwitchCase="2">
         <!-- rare item -->
-        <div>{{item.name.substring(28)}}
+        <div *ngIf="item.identified">{{item.name.substring(28)}}
           <br/>
         </div>
         <span>{{item.typeLine}}</span>
@@ -99,4 +99,5 @@
     <br/>
   </ng-container>
   <span *ngIf="item.corrupted" class="corrupted">Corrupted</span>
+  <span *ngIf="!item.identified" class="corrupted">Unidentified</span>
 </div>

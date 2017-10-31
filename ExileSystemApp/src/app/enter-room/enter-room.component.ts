@@ -63,6 +63,7 @@ export class EnterRoomComponent implements OnInit {
         this.playerService.currentPlayerObj.character = data.character;
         this.playerService.currentPlayerObj.character.items = data.items;
         this.playerService.currentPlayerObj.channel = code;
+        this.playerService.currentPlayerObj.sessionId = this.model.sessionId;
         console.log('received player: ', this.playerService.currentPlayerObj)
         this.signalrService.login(code, this.playerService.currentPlayerObj);
         this.router.navigate(['/current-room']);

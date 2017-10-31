@@ -1,4 +1,4 @@
-<div class="item-wrapper" [ngStyle]="{'width.px': getWidth(), 'height.px': getHeight()}">
+<div class="item-wrapper" [ngStyle]="{'width.px': getWidth(), 'height.px': getHeight()}" [ngClass]="{'unidentified': item != undefined && !item.identified}">
   <div class="item" *ngIf="item">
     <div class="icon-wrapper">
       <img [attr.src]="item.icon" />
