@@ -21,6 +21,7 @@
       <span *ngSwitchCase="0">{{item.typeLine}}</span>
       <span *ngSwitchCase="4">{{item.typeLine}}</span>
       <span *ngSwitchCase="5">{{item.typeLine}}</span>
+      <span *ngSwitchCase="7">{{item.typeLine}}</span>
     </ng-container>
   </h4>
 </div>
@@ -59,7 +60,16 @@
         <br/>
       </span>
     </ng-container>
-    <hr *ngIf="item.properties != undefined && (item.implicitMods != undefined || item.enchantMods != undefined || item.explicitMods != undefined || item.craftedMods != undefined)">
+    <hr *ngIf="item.properties != undefined">
+    <div class="requirements" *ngIf="item.requirements">
+      <span class="requirement">Requires </span>
+      <ng-container *ngFor="let req of item.requirements, let i = index">
+        <span class="requirement">{{req.name}}</span>
+        <span class="requiremnet-value" *ngIf="req.values[0] != undefined">{{req.values[0][0]}}</span>
+        <ng-container *ngIf="item.requirements[i+1] != undefined">, </ng-container>
+      </ng-container>
+    </div>
+    <hr *ngIf="item.requirements != undefined && (item.implicitMods != undefined || item.enchantMods != undefined || item.explicitMods != undefined || item.craftedMods != undefined || !item.identified)">
   </div>
   <div class="mods">
     <ng-container *ngFor="let mod of item.implicitMods">

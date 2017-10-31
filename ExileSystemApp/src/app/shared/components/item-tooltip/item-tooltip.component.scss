@@ -42,6 +42,10 @@ hr {
     // currency
     color: #AD904B !important;
   }
+  .rarity-7 {
+    // questitem
+    color: rgb(110, 185, 48) !important;
+  }
 }
 .flavour-text {
   font-style: italic;
@@ -63,6 +67,14 @@ hr {
     }
     .property-tag {
       color: rgb(192, 192, 192);
+    }
+  }
+  .requirements {
+    .requirement {
+      color: rgb(192, 192, 192);
+    }
+    .requirement-value {
+      color: #fff;
     }
   }
   .mods {
