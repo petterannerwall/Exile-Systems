@@ -4,33 +4,36 @@ import { SignalRService } from '../shared/providers/signalr.service';
 import { EquipmentResponse } from '../shared/interfaces/equipment-response.interface';
 import { ExternalService } from '../shared/providers/external.service';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { LowerCasePipe } from '@angular/common';
 import * as $ from 'jquery';
+declare var Materialize: any;
 
 @Component({
   selector: 'app-enter-room',
   templateUrl: './enter-room.component.html',
   styleUrls: ['./enter-room.component.scss']
 })
-export class EnterRoomComponent implements OnInit {
+export class EnterRoomComponent implements OnInit, AfterViewChecked {
+
   model = { roomCode: '', accountName: '', characterName: '', sessionId: '' };
   characters: any = [];
   constructor(private router: Router, private externalService: ExternalService,
     private signalrService: SignalRService, private playerService: PlayerService, private electronService: ElectronService) {
 
-      const savedModel = this.electronService.config.get('enter-room-model');
-      if (savedModel !== undefined) {
-        this.model = savedModel;
-      }
+    const savedModel = this.electronService.config.get('enter-room-model');
+    if (savedModel !== undefined) {
+      this.model = savedModel;
+    }
 
-     }
+  }
 
   ngOnInit() {
-    $(document).ready(function() {
-      Materialize.updateTextFields();
-    });
+  }
+
+  ngAfterViewChecked() {
+    Materialize.updateTextFields();
   }
 
   enter() {
