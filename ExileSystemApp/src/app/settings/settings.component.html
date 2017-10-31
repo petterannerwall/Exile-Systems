@@ -87,27 +87,27 @@
                         <b>Logout</b>
                     </h6>
                     <div>
-                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="specificKeybinds.logout" id="logoutKey"
+                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.logout" id="logoutKey"
                             name="logoutKey">
                             <option value="" disabled selected>Choose key</option>
                             <option *ngFor="let Keycode of keyModel.list" value="{{Keycode}}">{{Keycode}}</option>
                         </select>
                     </div>
                     <h6>
-                        <b>Invite first trade to party.</b>
+                        <b>Invite first not already invited trade to party.</b>
                     </h6>
                     <div>
-                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="specificKeybinds.invite" id="inviteKey"
+                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.invite" id="inviteKey"
                             name="inviteKey">
                             <option value="" disabled selected>Choose key</option>
                             <option *ngFor="let Keycode of keyModel.list" value="{{Keycode}}">{{Keycode}}</option>
                         </select>
                     </div>
                     <h6>
-                        <b>Whisper item sold to first trade.</b>
+                        <b>Whisper item sold to first not invited trade.</b>
                     </h6>
                     <div>
-                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="specificKeybinds.sold" id="soldKey"
+                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.sold" id="soldKey"
                             name="soldKey">
                             <option value="" disabled selected>Choose key</option>
                             <option *ngFor="let Keycode of keyModel.list" value="{{Keycode}}">{{Keycode}}</option>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="card-action">
                     <div class="row">
-                        <a class="waves-effect waves-light btn col s12" (click)="save()">Save</a>
+                        <a class="waves-effect waves-light btn col s12" (click)="saveSpecificBinds()">Save</a>
                     </div>
                 </div>
             </div>

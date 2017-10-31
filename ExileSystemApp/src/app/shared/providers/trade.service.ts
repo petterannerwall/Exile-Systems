@@ -1,3 +1,4 @@
+import { Message } from '../interfaces/message.interface';
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
@@ -11,14 +12,15 @@ import { RobotService } from './robot.service';
 @Injectable()
 export class TradeService {
   public browsing = false;
-  tradeList = [];
+  list = Array<IncomingTrade>();
 
   constructor(private logParser: LogParserService, private robotService: RobotService) {
 
-    this.logParser.NewMessageEvent.subscribe((message) => {
+    this.logParser.NewMessageEvent.subscribe((message: Message) => {
       if (message.type === MessageTypeEnum.TradeMessage) {
 
-        const tradeMessage = { item: '', price: '', currency: '', count: '', league: '', location: '', inArea: false } as IncomingTrade;
+        const tradeMessage = { item: '', price: '', currency: '', count: '', league: '', location: '', inArea: false,
+         invited: false } as IncomingTrade;
 
         if (message.text.indexOf('I would like') > 0) {
           if (message.text.indexOf('listed for') > 0) {
@@ -52,8 +54,22 @@ export class TradeService {
 
         tradeMessage.player = message.player;
 
-        this.tradeList.push(tradeMessage);
+        this.list.push(tradeMessage);
 
+      }
+      if (message.type === MessageTypeEnum.OtherJoinArea) {
+        this.list.forEach(trade => {
+          if (trade.player === message.player) {
+            trade.inArea = true;
+          }
+        });
+      }
+      if (message.type === MessageTypeEnum.OtherLeaveArea) {
+        this.list.forEach(trade => {
+          if (trade.player === message.player) {
+            trade.inArea = false;
+          }
+        });
       }
     });
 

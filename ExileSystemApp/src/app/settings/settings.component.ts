@@ -1,3 +1,4 @@
+import { IncomingTrade } from '../shared/interfaces/incomming-trade.interface';
 import { ElectronService } from '../shared/providers/electron.service';
 import { RobotService } from '../shared/providers/robot.service';
 import { TradeService } from '../shared/providers/trade.service';
@@ -31,15 +32,14 @@ export class SettingsComponent implements OnInit {
     list: [],
     active: [],
     binds: [],
+    specificBinds: {
+      logout: '',
+      invite: '',
+      sold: '',
+    },
     key: '',
     command: 'Type command...'
   }
-
-  specificKeybinds = {
-    logout: '',
-    invite: '',
-    sold: '',
-  };
 
   model = {
     activeWindow: 'Not found',
@@ -55,10 +55,14 @@ export class SettingsComponent implements OnInit {
   constructor(private electronService: ElectronService, private robotService: RobotService, private tradeService: TradeService) {
     // Before render
 
-    const savedBinds = this.electronService.config.get('specific-keybinds');
+    const savedSpecificBinds = this.electronService.config.get('specific-keybinds');
+    const savedBinds = this.electronService.config.get('keybinds');
 
+    if (savedSpecificBinds !== undefined) {
+      this.keyModel.specificBinds = savedSpecificBinds;
+    }
     if (savedBinds !== undefined) {
-      this.specificKeybinds = savedBinds;
+      this.keyModel.binds = savedBinds;
     }
 
     this.initializeWindowlist();
@@ -74,23 +78,29 @@ export class SettingsComponent implements OnInit {
       this.model.activeKeys = keys;
 
       keys.forEach(key => {
-        if (this.specificKeybinds.logout === key) {
+        if (this.keyModel.specificBinds.logout === key) {
           console.log('[DEBUG settings.component.ts] Executing logout!');
           this.robotService.logout();
         }
-        if (this.specificKeybinds.invite === key) {
+        if (this.keyModel.specificBinds.invite === key) {
           console.log('[DEBUG settings.component.ts] Executing invite!');
-          if (this.tradeService.tradeList.length > 0) {
-            this.robotService.sendCommandToPathofExile('+7invite ' + tradeService.tradeList[0].player)
-          }
+          this.tradeService.list.some((trade, index, list) => {
+            if (!trade.invited) {
+              this.robotService.sendCommandToPathofExile('+7invite ' + tradeService.list[0].player)
+              list[index].invited = true;
+              return true;
+            }
+          });
         }
-        if (this.specificKeybinds.sold === key) {
+        if (this.keyModel.specificBinds.sold === key) {
           console.log('[DEBUG settings.component.ts] Executing sold!');
-          if (this.tradeService.tradeList.length > 0) {
-            this.robotService.sendCommandToPathofExile('@' + this.tradeService.tradeList[0].player.player +
-              ' Sorry, that item is already sold!');
-            this.tradeService.tradeList.splice(0, 1);
-          }
+          this.tradeService.list.some((trade, index, list) => {
+            if (!trade.invited) {
+              this.robotService.sendCommandToPathofExile('@' + this.tradeService.list[0].player + ' Sorry, that item is already sold!');
+              list.splice(index, 1);
+            }
+            return true;
+          })
         }
       });
 
@@ -154,9 +164,8 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  save() {
-    console.log(this.specificKeybinds);
-    this.electronService.config.set('specific-keybinds', this.specificKeybinds);
+  saveSpecificBinds() {
+    this.electronService.config.set('specific-keybinds', this.keyModel.specificBinds);
   }
 
   createKeybind() {
@@ -169,25 +178,12 @@ export class SettingsComponent implements OnInit {
     this.keyModel.key = '';
     this.keyModel.command = 'Type command...'
 
-    console.log(this.keyModel.binds);
-
-    // const electron = require('electron');
-    // const BrowserWindow = electron.remote.BrowserWindow;
-
-    // const childWindow = new BrowserWindow({
-    //   width: 800,
-    //   height: 600,
-    //   frame: false,
-    //   transparent: true,
-    // });
-
-    // childWindow.setIgnoreMouseEvents(false);
+    this.electronService.config.set('keybinds', this.keyModel.binds);
   }
 
   removeKeybind(bind) {
     const index = this.keyModel.binds.indexOf(bind);
     this.keyModel.binds.splice(index, 1);
+    this.electronService.config.set('keybinds', this.keyModel.binds);
   }
-
-
 }

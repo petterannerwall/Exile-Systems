@@ -7,5 +7,6 @@ export interface IncomingTrade {
     league: string;
     location: string;
     player: string;
-    inArea: boolean
+    inArea: boolean,
+    invited: boolean
 }

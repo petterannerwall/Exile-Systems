@@ -1,3 +1,7 @@
+import { IncomingTrade } from '../../shared/interfaces/incomming-trade.interface';
+import { MessageTypeEnum } from '../../shared/enums/message-type.enum';
+import { Message } from '../../shared/interfaces/message.interface';
+import { LogParserService } from '../../shared/providers/log-parser.service';
 import { PlayerService } from '../../shared/providers/player.service';
 import { Component, OnInit } from '@angular/core';
 import { RobotService } from 'app/shared/providers/robot.service';
@@ -11,17 +15,20 @@ import { TradeService } from 'app/shared/providers/trade.service';
 export class TradeManagementComponent implements OnInit {
 
   keyboard = this.robotService.robot.Keyboard();
-  chaosIcon = 'http://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&w=2&h=2';
+  private invitedPlayers = [];
 
-  constructor(private robotService: RobotService, private tradeService: TradeService, private playerService: PlayerService) {
+  constructor(private robotService: RobotService, private tradeService: TradeService, private playerService: PlayerService,
+     private logParser: LogParserService) {
+
   }
 
   ngOnInit() {
   }
 
   invite(trade) {
-    console.log('[DEBUG trade-management.component.ts] Inviting', trade);
     this.robotService.sendCommandToPathofExile('+7invite ' + trade.player);
+    const index = this.tradeService.list.indexOf(trade);
+    this.tradeService.list[index].invited = true;
   }
 
   sold(trade) {
@@ -29,8 +36,14 @@ export class TradeManagementComponent implements OnInit {
     this.remove(trade);
   }
   remove(trade) {
-    const index = this.tradeService.tradeList.indexOf(trade);
-    this.tradeService.tradeList.splice(index, 1);
+    const index = this.tradeService.list.indexOf(trade);
+    this.tradeService.list.splice(index, 1);
+  }
+  trade(trade) {
+    this.robotService.sendCommandToPathofExile('+7trade ' + trade.player);
+  }
+  thank(trade) {
+    this.robotService.sendCommandToPathofExile('@' + trade.player + ' Thanks!');
   }
 
 

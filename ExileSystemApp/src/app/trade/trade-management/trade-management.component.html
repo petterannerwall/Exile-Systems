@@ -28,7 +28,7 @@
     </div>
     <div class="row">
         <div class="col s12">
-            <i *ngIf="tradeService.tradeList.length === 0" class="no-trades">
+            <i *ngIf="tradeService.list.length === 0" class="no-trades">
                 No trades to display.
             </i>
         </div>
@@ -36,7 +36,7 @@
     <div class="row">
         <div class="col s12">
             <ul class="collection">
-                <li *ngFor="let trade of tradeService.tradeList" class="collection-item blue-grey">
+                <li *ngFor="let trade of tradeService.list" class="collection-item blue-grey">
                     <div class="row trade-row">
                         <div class="col s9">
                             <b> Item:</b>
@@ -49,10 +49,14 @@
                             <span>{{trade.location}}</span>
                         </div>
                         <div class="col s3">
-                            <a (click)="invite(trade)" class="waves-effect waves-light btn">
+                            <a *ngIf="!trade.invited" (click)="invite(trade)" class="waves-effect waves-light btn">
                                 Invite</a>
-                            <a (click)="sold(trade)" class="waves-effect waves-light btn">
+                            <a *ngIf="trade.invited" (click)="trade(trade)" class="waves-effect waves-light btn">
+                                Trade</a>
+                            <a *ngIf="!trade.invited" (click)="sold(trade)" class="waves-effect waves-light btn">
                                 Sold</a>
+                            <a *ngIf="trade.invited" (click)="thank(trade)" class="waves-effect waves-light btn">
+                                Thank</a>
                             <a (click)="remove(trade)" class="waves-effect waves-light btn">
                                 Remove</a>
                         </div>
