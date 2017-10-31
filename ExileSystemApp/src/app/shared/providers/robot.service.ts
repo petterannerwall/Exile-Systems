@@ -41,14 +41,17 @@ export class RobotService {
     this.keyboard.autoDelay.max = 0;
 
     this.foundPathWindow = false;
-    const windowList = this.robot.Window.getList();
-    windowList.forEach(window => {
-      const title = window.getTitle();
-      if (title === 'Path of Exile') {
-        this.pathWindow = window;
-        this.foundPathWindow = true;
-      }
-    });
+    const checkPathWindowHandle = setInterval(() => {
+      const windowList = this.robot.Window.getList();
+      windowList.forEach(window => {
+        const title = window.getTitle();
+        if (title === 'Path of Exile') {
+          this.pathWindow = window;
+          this.foundPathWindow = true;
+          clearInterval(checkPathWindowHandle);
+        }
+      });
+    }, 10000)
 
     if (!this.foundPathWindow) {
       console.log('[DEBUG robot.service.ts] Could not find Path of Exile window.');
