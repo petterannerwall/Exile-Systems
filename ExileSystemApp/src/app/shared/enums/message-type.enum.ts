@@ -5,5 +5,6 @@ export enum MessageTypeEnum {
     OtherLeaveArea,
     GuildInformation,
     TradeMessage,
-    Other
+    Other,
+    Verify
 }

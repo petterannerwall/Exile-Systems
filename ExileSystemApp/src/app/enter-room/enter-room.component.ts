@@ -1,3 +1,7 @@
+import { RobotService } from '../shared/providers/robot.service';
+import { MessageTypeEnum } from '../shared/enums/message-type.enum';
+import { Message } from '../shared/interfaces/message.interface';
+import { LogParserService } from '../shared/providers/log-parser.service';
 import { ElectronService } from '../shared/providers/electron.service';
 import { PlayerService } from '../shared/providers/player.service';
 import { SignalRService } from '../shared/providers/signalr.service';
@@ -19,8 +23,13 @@ export class EnterRoomComponent implements OnInit, AfterViewChecked {
 
   model = { roomCode: '', accountName: '', characterName: '', sessionId: '' };
   characters: any = [];
+  verified: Boolean;
   constructor(private router: Router, private externalService: ExternalService,
-    private signalrService: SignalRService, private playerService: PlayerService, private electronService: ElectronService) {
+    private signalrService: SignalRService, private playerService: PlayerService,
+    private electronService: ElectronService, private logParser: LogParserService,
+    private robotService: RobotService) {
+
+    this.verified = false;
 
     const savedModel = this.electronService.config.get('enter-room-model');
     if (savedModel !== undefined) {
@@ -30,6 +39,7 @@ export class EnterRoomComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+
   }
 
   ngAfterViewChecked() {
@@ -63,6 +73,20 @@ export class EnterRoomComponent implements OnInit, AfterViewChecked {
 
   create() {
     this.registerPlayer(this.generateChannel());
+  }
+
+  verify() {
+    const code = '.verify ' + this.generateChannel();
+    const command = '@' + this.model.characterName + ' ' + code;
+    this.robotService.sendCommandToPathofExile(command);
+    this.logParser.NewMessageEvent.subscribe((message: Message) => {
+      if (message.type === MessageTypeEnum.Verify) {
+        if (message.player === this.model.characterName && message.text === code.toLowerCase()) {
+          this.verified = true;
+        }
+      }
+    });
+
   }
 
   registerPlayer(roomCode?: string) {

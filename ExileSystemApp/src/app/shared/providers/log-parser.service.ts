@@ -16,7 +16,6 @@ export class LogParserService {
     NewMessageEvent: EventEmitter<Message> = new EventEmitter();
 
     logPerformanceTimer;
-    
 
     constructor(private electron: ElectronService, private signalRService: SignalRService, private playerService: PlayerService,
         private channelService: ChannelService) {
@@ -112,6 +111,8 @@ export class LogParserService {
         } else if (message.indexOf('would like to buy your') >= 0) {
             console.log('Trade message detected');
             msg.type = MessageTypeEnum.TradeMessage;
+        } else if (message.indexOf('.verify ') >= 0) {
+            msg.type = MessageTypeEnum.Verify;
         } else {
             msg.type = MessageTypeEnum.Other;
         }

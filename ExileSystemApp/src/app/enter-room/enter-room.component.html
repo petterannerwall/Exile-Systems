@@ -51,12 +51,20 @@
     </form>
     <div class="row">
       <div class="col s12">
-        <button class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid || characters.length == 0">
+        <button class="waves-effect waves-light btn right full-width" (click)="verify()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid || characters.length == 0 || verified">
           <i class="material-icons right">send</i>
-          Enter
+          Verify
         </button>
       </div>
     </div>
+    <div class="row">
+        <div class="col s12">
+          <button class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid || characters.length == 0 || !verified">
+            <i class="material-icons right">send</i>
+            Enter
+          </button>
+        </div>
+      </div>
     <div class="row">
       <div class="col s12">
         <div class="hr-text">
@@ -66,7 +74,7 @@
     </div>
     <div class="row">
       <div class="col s12">
-        <button class="waves-effect waves-light btn right full-width" (click)="create()" type="submit" name="action" [disabled]="!loginForm.valid || characters.length == 0">
+        <button class="waves-effect waves-light btn right full-width" (click)="create()" type="submit" name="action" [disabled]="!loginForm.valid || characters.length == 0 || !verified">
           <i class="material-icons right">send</i>
           Create room
         </button>
