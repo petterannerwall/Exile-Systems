@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
 import { SettingsComponent } from './settings/settings.component';
+import { WebviewDirective } from './shared/directives/webview.directive';
 import { AcceptSendModule } from './shared/modules/accept-send/accept-send.module';
 import { CharacterInventoryModule } from './shared/modules/character-inventory/character-inventory.module';
 import { CharacterPreviewModule } from './shared/modules/character-preview/character-preview.module';
@@ -41,7 +42,8 @@ import { TradeManagementComponent } from './trade/trade-management/trade-managem
     CurrentRoomComponent,
     SettingsComponent,
     TradeBrowseComponent,
-    TradeManagementComponent
+    TradeManagementComponent,
+    WebviewDirective
   ],
   imports: [
     BrowserModule,

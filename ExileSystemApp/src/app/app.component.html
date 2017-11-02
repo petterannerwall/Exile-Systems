@@ -1,11 +1,14 @@
 <app-sidebar-nav></app-sidebar-nav>
 <div class="top-header"></div>
-<iframe [hidden]="!tradeService.browsing" src="https://www.poeapp.com"></iframe>
+<!-- <iframe [hidden]="!tradeService.browsing" src="https://www.poeapp.com"></iframe> -->
+<div id="poeapp-wrapper">
+  <webview [hidden]="!tradeService.browsing" src="https://www.poeapp.com"></webview>
+</div>
 <div class="content-wrapper">
   <router-outlet></router-outlet>
 </div>
-<div id="playerModal" materialize="modal" #playerModal [materializeParams]="[{dismissible: true}]"
-  [materializeActions]="modalActions" class="modal blue-grey darken-2">
+<div id="playerModal" materialize="modal" #playerModal [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions"
+  class="modal blue-grey darken-2">
   <div class="modal-content" *ngIf="playerService.openPlayer">
     <app-character-preview *ngIf="playerService.openPlayer.character" [character]="playerService.openPlayer.character"></app-character-preview>
     <app-character-inventory *ngIf="playerService.openPlayer.character" [character]="playerService.openPlayer.character"></app-character-inventory>
