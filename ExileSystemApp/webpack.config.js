@@ -116,7 +116,8 @@ if(scripts.length > 0){
 
   plugins.push(new ExtractTextPlugin({
     "filename": "[name].bundle.css",
-    "disable": true
+    "disable": true,
+    "allChunks": true
   }));
 
   plugins.push(new LoaderOptionsPlugin({
