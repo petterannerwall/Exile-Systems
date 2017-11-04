@@ -8,6 +8,7 @@ import { ChannelService } from './channel.service';
 import { ElectronService } from './electron.service';
 import { PlayerService } from './player.service';
 import { SignalRService } from './signalr.service';
+import { SettingService } from './setting.service';
 
 @Injectable()
 export class LogParserService {
@@ -18,7 +19,7 @@ export class LogParserService {
     logPerformanceTimer;
 
     constructor(private electron: ElectronService, private signalRService: SignalRService, private playerService: PlayerService,
-        private channelService: ChannelService) {
+        private channelService: ChannelService, private settingsService: SettingService) {
 
         this.logPerformanceTimer = electron.robot.Timer();
 
@@ -32,7 +33,7 @@ export class LogParserService {
 
         const currentLines = [];
         let rowCount = 20;
-        this.electron.lineReader.eachLine(this.electron.config.get('logpath'), (line) => {
+        this.electron.lineReader.eachLine(this.settingsService.settings.logpath, (line) => {
             currentLines.push(line);
             rowCount--;
             if (rowCount === 0) {

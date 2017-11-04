@@ -4,7 +4,7 @@ import { EventEmitter } from '@angular/core';
 import { } from '@angular/core'
 import { Observable } from 'rxjs/Rx';
 import { ElectronService } from './electron.service';
-import { TradeService } from './trade.service';
+import { SettingService } from './setting.service';
 import { KeycodeArray } from './../enums/keycode.enum';
 
 
@@ -38,7 +38,7 @@ export class RobotService {
     y: 0
   }
 
-  constructor(private electronSerivce: ElectronService, private tradeService: TradeService) {
+  constructor(private electronSerivce: ElectronService, private settingService: SettingService) {
 
     this.keyboard.autoDelay.min = 0;
     this.keyboard.autoDelay.max = 0;
@@ -217,7 +217,7 @@ export class RobotService {
       if (this.lastClipboard == null || this.lastClipboard !== clipboard) {
         this.ClipboardEvent.emit(clipboard);
         this.lastClipboard = clipboard;
-        if (this.tradeService.settings.autoSendTrade && clipboard.indexOf('Hi, I would like to buy') > -1) {
+        if (this.settingService.settings.trade.autoSendTrade && clipboard.indexOf('Hi, I would like to buy') > -1) {
           this.ClipboardTradeEvent.emit(clipboard);
           this.TradeToPathWindow(clipboard);
           console.log('[DEBUG robot.service.ts] Sending trade to path window.');

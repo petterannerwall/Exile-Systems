@@ -2,6 +2,7 @@ import { IncomingTrade } from '../shared/interfaces/incomming-trade.interface';
 import { ElectronService } from '../shared/providers/electron.service';
 import { RobotService } from '../shared/providers/robot.service';
 import { TradeService } from '../shared/providers/trade.service';
+import { SettingService } from '../shared/providers/setting.service';
 import { KeycodeArray } from '../shared/enums/keycode.enum';
 import { Component, OnInit } from '@angular/core';
 
@@ -31,12 +32,6 @@ export class SettingsComponent implements OnInit {
   keyModel = {
     list: [],
     active: [],
-    binds: [],
-    specificBinds: {
-      logout: '',
-      invite: '',
-      sold: '',
-    },
     key: '',
     command: 'Type command...'
   }
@@ -52,21 +47,13 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  constructor(private electronService: ElectronService, private robotService: RobotService, private tradeService: TradeService) {
+  constructor(private electronService: ElectronService, private robotService: RobotService, private tradeService: TradeService,
+    private settingService: SettingService) {
     // Before render
 
+    console.log(this.settingService.settings.keybinds);
+
     console.log(this.robotService.autoSendTrade);
-
-    const savedSpecificBinds = this.electronService.config.get('specific-keybinds');
-    const savedBinds = this.electronService.config.get('keybinds');
-
-    if (savedSpecificBinds !== undefined) {
-      this.keyModel.specificBinds = savedSpecificBinds;
-    }
-    if (savedBinds !== undefined) {
-      this.keyModel.binds = savedBinds;
-    }
-
     this.initializeWindowlist();
 
     this.keyModel.list = Object.keys(KeycodeArray).map((keyCode => {
@@ -80,11 +67,11 @@ export class SettingsComponent implements OnInit {
       this.model.activeKeys = keys;
 
       keys.forEach(key => {
-        if (this.keyModel.specificBinds.logout === key) {
+        if (this.settingService.settings.keybinds.specific.logout === key) {
           console.log('[DEBUG settings.component.ts] Executing logout!');
           this.robotService.logout();
         }
-        if (this.keyModel.specificBinds.invite === key) {
+        if (this.settingService.settings.keybinds.specific.invite === key) {
           console.log('[DEBUG settings.component.ts] Executing invite!');
           this.tradeService.list.some((trade, index, list) => {
             if (!trade.invited) {
@@ -94,11 +81,12 @@ export class SettingsComponent implements OnInit {
             }
           });
         }
-        if (this.keyModel.specificBinds.sold === key) {
+        if (this.settingService.settings.keybinds.specific.sold === key) {
           console.log('[DEBUG settings.component.ts] Executing sold!');
           this.tradeService.list.some((trade, index, list) => {
             if (!trade.invited) {
-              this.robotService.sendCommandToPathofExile('@' + this.tradeService.list[0].player + ' Sorry, that item is already sold!');
+              this.robotService.sendCommandToPathofExile('@' + this.tradeService.list[0].player + ' ' +
+                this.settingService.settings.trade.soldMessage);
               list.splice(index, 1);
             }
             return true;
@@ -106,7 +94,7 @@ export class SettingsComponent implements OnInit {
         }
       });
 
-      this.keyModel.binds.forEach((bind) => {
+      this.settingService.settings.keybinds.other.forEach((bind) => {
         keys.forEach(key => {
           if (bind.key === key) {
             console.log('[DEBUG settings.component.ts] Executing keybind: ', bind.command);
@@ -167,12 +155,12 @@ export class SettingsComponent implements OnInit {
   }
 
   saveSpecificBinds() {
-    this.electronService.config.set('specific-keybinds', this.keyModel.specificBinds);
+    this.settingService.save();
   }
 
   createKeybind() {
 
-    this.keyModel.binds.push({
+    this.settingService.settings.keybinds.other.push({
       key: this.keyModel.key,
       command: this.keyModel.command
     });
@@ -180,18 +168,18 @@ export class SettingsComponent implements OnInit {
     this.keyModel.key = '';
     this.keyModel.command = 'Type command...'
 
-    this.electronService.config.set('keybinds', this.keyModel.binds);
+    this.settingService.save();
   }
 
   removeKeybind(bind) {
-    const index = this.keyModel.binds.indexOf(bind);
-    this.keyModel.binds.splice(index, 1);
-    this.electronService.config.set('keybinds', this.keyModel.binds);
+    const index = this.settingService.settings.keybinds.other.indexOf(bind);
+    this.settingService.settings.keybinds.other.splice(index, 1);
+    this.electronService.config.set('keybinds', this.settingService.settings.keybinds.other);
   }
 
   SaveAutoSendTrade() {
-    this.tradeService.settings.autoSendTrade = !this.tradeService.settings.autoSendTrade
-    this.tradeService.saveSettings();
+    this.settingService.settings.trade.autoSendTrade = !this.settingService.settings.trade.autoSendTrade
+    this.settingService.save();
   }
 
 }

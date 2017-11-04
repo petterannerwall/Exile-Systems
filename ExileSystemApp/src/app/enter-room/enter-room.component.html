@@ -10,21 +10,23 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">account_circle</i>
-          <input [(ngModel)]="model.accountName" id="accountName" name="accountName" type="text" class="validate" (focusout)="loadCharacters()" required>
+          <input [(ngModel)]="this.settingService.settings.room.accountName" id="accountName" name="accountName" type="text" class="validate"
+            (focusout)="loadCharacters()" required>
           <label for="accountName">Account name</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">fingerprint</i>
-          <input [(ngModel)]="model.sessionId" id="sessionId" name="sessionId" type="text" class="validate">
+          <input [(ngModel)]="this.settingService.settings.room.sessionId" id="sessionId" name="sessionId" type="text" class="validate">
           <label for="sessionId">Session Id</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">face</i>
-          <select materialize="material_select" [materializeSelectOptions]="characters" [(ngModel)]="model.characterName" id="characterName" name="characterName" required [disabled]="characters.length == 0 ? true : null">
+          <select materialize="material_select" [materializeSelectOptions]="characters" [(ngModel)]="this.settingService.settings.room.characterName"
+            id="characterName" name="characterName" required [disabled]="characters.length == 0 ? true : null">
             <option value="" disabled selected *ngIf="characters.length != 0">Select a character</option>
             <option value="" disabled selected *ngIf="characters.length == 0">Requires a valid account</option>
             <option *ngFor="let char of characters" value="{{char.name}}">({{char.level}}) {{char.name}}, {{char.class}}, {{char.league}}</option>
@@ -44,7 +46,8 @@
       <div class="row">
         <div class="input-field col s12">
           <i class="material-icons prefix">text_format</i>
-          <input [(ngModel)]="model.roomCode" id="roomCode" name="roomCode" type="text" class="validate" required>
+          <input [(ngModel)]="this.settingService.settings.room.roomCode" id="roomCode" name="roomCode" type="text" class="validate"
+            required>
           <label for="roomCode">Room code</label>
         </div>
       </div>
@@ -58,13 +61,13 @@
       </div>
     </div>
     <div class="row">
-        <div class="col s12">
-          <button class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid || characters.length == 0 || !verified">
-            <i class="material-icons right">send</i>
-            Enter
-          </button>
-        </div>
+      <div class="col s12">
+        <button class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid || characters.length == 0 || !verified">
+          <i class="material-icons right">send</i>
+          Enter
+        </button>
       </div>
+    </div>
     <div class="row">
       <div class="col s12">
         <div class="hr-text">

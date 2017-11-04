@@ -24,8 +24,8 @@
                     <span class="card-title">General</span>
                     <form materialize action="#">
                         <p class="">
-                            <input [checked]="tradeService.settings.autoSendTrade" (change)="SaveAutoSendTrade()" type="checkbox" class="filled-in" id="auto-send-trade"
-                            />
+                            <input [checked]="settingService.settings.trade.autoSendTrade" (change)="SaveAutoSendTrade()" type="checkbox" class="filled-in"
+                                id="auto-send-trade" />
                             <label for="auto-send-trade">Automatically send whispers from poe.trade.</label>
                         </p>
                     </form>
@@ -126,7 +126,7 @@
                         <b>Logout</b>
                     </h6>
                     <div>
-                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.logout"
+                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="settingService.settings.keybinds.specific.logout"
                             id="logoutKey" name="logoutKey">
                             <option value="" disabled selected>Choose key</option>
                             <option *ngFor="let Keycode of keyModel.list" value="{{Keycode}}">{{Keycode}}</option>
@@ -136,7 +136,7 @@
                         <b>Invite first not already invited trade to party.</b>
                     </h6>
                     <div>
-                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.invite"
+                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="settingService.settings.keybinds.specific.invite"
                             id="inviteKey" name="inviteKey">
                             <option value="" disabled selected>Choose key</option>
                             <option *ngFor="let Keycode of keyModel.list" value="{{Keycode}}">{{Keycode}}</option>
@@ -146,8 +146,8 @@
                         <b>Whisper item sold to first not invited trade.</b>
                     </h6>
                     <div>
-                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.sold" id="soldKey"
-                            name="soldKey">
+                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="settingService.settings.keybinds.specific.sold"
+                            id="soldKey" name="soldKey">
                             <option value="" disabled selected>Choose key</option>
                             <option *ngFor="let Keycode of keyModel.list" value="{{Keycode}}">{{Keycode}}</option>
                         </select>
@@ -166,7 +166,7 @@
                     <div class="row">
                         <span class="card-title col s10">Registered keybinds</span>
                     </div>
-                    <div *ngIf="keyModel.binds.length > 0">
+                    <div *ngIf="settingService.settings.keybinds.other.length > 0">
                         <div class="row">
                             <div class="col s3">
                                 <b>Key</b>
@@ -175,7 +175,7 @@
                                 <b>Command</b>
                             </div>
                         </div>
-                        <div class="row" *ngFor="let bind of keyModel.binds">
+                        <div class="row" *ngFor="let bind of settingService.settings.keybinds.other">
                             <div class="col s3">
                                 {{bind.key}}
                             </div>
@@ -187,7 +187,7 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="keyModel.binds.length === 0">
+                    <div *ngIf="settingService.settings.keybinds.other.length === 0">
                         <div class="row">
                             <div class="col s12">
                                 <i class="byline">No registered keybinds.</i>

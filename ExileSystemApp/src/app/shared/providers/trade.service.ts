@@ -22,11 +22,6 @@ export class TradeService {
 
   constructor(private logParser: LogParserService) {
 
-    // const savedSettings = this.electronService.config.get('trade-settings');
-    // if (savedSettings !== undefined) {
-    //   this.settings = savedSettings;
-    // }
-
     this.logParser.NewMessageEvent.subscribe((message: Message) => {
       if (message.type === MessageTypeEnum.TradeMessage) {
 
@@ -85,11 +80,5 @@ export class TradeService {
         });
       }
     });
-
   }
-
-  saveSettings() {
-    // this.electronService.config.set('trade-settings', this.settings);
-  }
-
 }

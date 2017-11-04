@@ -7,6 +7,7 @@ import { PlayerService } from '../shared/providers/player.service';
 import { SignalRService } from '../shared/providers/signalr.service';
 import { EquipmentResponse } from '../shared/interfaces/equipment-response.interface';
 import { ExternalService } from '../shared/providers/external.service';
+import { SettingService } from '../shared/providers/setting.service';
 import { Router } from '@angular/router';
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
@@ -21,20 +22,15 @@ declare var Materialize: any;
 })
 export class EnterRoomComponent implements OnInit, AfterViewChecked {
 
-  model = { roomCode: '', accountName: '', characterName: '', sessionId: '' };
   characters: any = [];
   verified: Boolean;
   constructor(private router: Router, private externalService: ExternalService,
     private signalrService: SignalRService, private playerService: PlayerService,
     private electronService: ElectronService, private logParser: LogParserService,
-    private robotService: RobotService) {
+    private robotService: RobotService, private settingService: SettingService) {
 
     this.verified = false;
 
-    const savedModel = this.electronService.config.get('enter-room-model');
-    if (savedModel !== undefined) {
-      this.model = savedModel;
-    }
 
   }
 
@@ -51,7 +47,7 @@ export class EnterRoomComponent implements OnInit, AfterViewChecked {
   }
 
   loadCharacters() {
-    this.externalService.getCharacterList(this.model.accountName).subscribe(res => {
+    this.externalService.getCharacterList(this.settingService.settings.room.accountName).subscribe(res => {
       this.characters = res;
       this.characters = this.characters.sort((left, right): number => {
         if (left.name < right.name) { return -1; }
@@ -77,11 +73,11 @@ export class EnterRoomComponent implements OnInit, AfterViewChecked {
 
   verify() {
     const code = '.verify ' + this.generateChannel();
-    const command = '@' + this.model.characterName + ' ' + code;
+    const command = '@' + this.settingService.settings.room.characterName + ' ' + code;
     this.robotService.sendCommandToPathofExile(command);
     this.logParser.NewMessageEvent.subscribe((message: Message) => {
       if (message.type === MessageTypeEnum.Verify) {
-        if (message.player === this.model.characterName && message.text === code.toLowerCase()) {
+        if (message.player === this.settingService.settings.room.characterName && message.text === code.toLowerCase()) {
           this.verified = true;
         }
       }
@@ -91,20 +87,21 @@ export class EnterRoomComponent implements OnInit, AfterViewChecked {
 
   registerPlayer(roomCode?: string) {
 
-    this.electronService.config.set('enter-room-model', this.model);
+    this.settingService.save();
 
     let code;
     if (roomCode !== undefined) {
       code = roomCode;
     } else {
-      code = this.model.roomCode;
+      code = this.settingService.settings.room.roomCode;
     }
-    this.externalService.getCharacter(this.model.accountName, this.model.characterName, this.model.sessionId)
+    this.externalService.getCharacter(this.settingService.settings.room.accountName, this.settingService.settings.room.characterName,
+      this.settingService.settings.room.sessionId)
       .subscribe((data: EquipmentResponse) => {
         this.playerService.currentPlayerObj.character = data.character;
         this.playerService.currentPlayerObj.character.items = data.items;
         this.playerService.currentPlayerObj.channel = code;
-        this.playerService.currentPlayerObj.sessionId = this.model.sessionId;
+        this.playerService.currentPlayerObj.sessionId = this.settingService.settings.room.sessionId;
         console.log('received player: ', this.playerService.currentPlayerObj)
         this.signalrService.login(code, this.playerService.currentPlayerObj);
         this.router.navigate(['/current-room']);
