@@ -41,17 +41,7 @@ export class RobotService {
     this.keyboard.autoDelay.max = 0;
 
     this.foundPathWindow = false;
-    const checkPathWindowHandle = setInterval(() => {
-      const windowList = this.robot.Window.getList();
-      windowList.forEach(window => {
-        const title = window.getTitle();
-        if (title === 'Path of Exile') {
-          this.pathWindow = window;
-          this.foundPathWindow = true;
-          clearInterval(checkPathWindowHandle);
-        }
-      });
-    }, 10000)
+    this.findPathWindow();
 
     if (!this.foundPathWindow) {
       console.log('[DEBUG robot.service.ts] Could not find Path of Exile window.');
@@ -66,6 +56,20 @@ export class RobotService {
 
     this.idleTimer = this.robot.Timer();
     this.idleTimer.start();
+  }
+
+  private findPathWindow() {
+    const checkPathWindowHandle = setInterval(() => {
+      const windowList = this.robot.Window.getList();
+      windowList.forEach(window => {
+        const title = window.getTitle();
+        if (title === 'Path of Exile') {
+          this.pathWindow = window;
+          this.foundPathWindow = true;
+          clearInterval(checkPathWindowHandle);
+        }
+      });
+    }, 5000)
   }
 
   private prepareStringForRobot(string) {
@@ -177,6 +181,14 @@ export class RobotService {
         this.activetWindowPID = currentWindow.getPID();
         this.WindowEvent.emit(currentWindow.getTitle());
       }
+    }
+
+    // Make sure the path window is valid
+    if (this.pathWindow !== undefined && !this.pathWindow.isValid()) {
+      console.log('[DEBUG robot.service.ts] Path window is not valid, trying to find new one!');
+      this.pathWindow = undefined;
+      this.foundPathWindow = false;
+      this.findPathWindow();
     }
 
     // Check Mousedata
