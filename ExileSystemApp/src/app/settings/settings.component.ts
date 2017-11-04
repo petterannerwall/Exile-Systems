@@ -51,7 +51,6 @@ export class SettingsComponent implements OnInit {
     private settingService: SettingService) {
     // Before render
 
-    console.log(this.robotService.autoSendTrade);
     this.initializeWindowlist();
 
     this.keyModel.list = Object.keys(KeycodeArray).map((keyCode => {

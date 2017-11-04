@@ -18,7 +18,7 @@ export class TradeManagementComponent implements OnInit {
   private invitedPlayers = [];
 
   constructor(private robotService: RobotService, private tradeService: TradeService, private playerService: PlayerService,
-     private logParser: LogParserService) {
+    private logParser: LogParserService) {
 
   }
 
@@ -40,7 +40,7 @@ export class TradeManagementComponent implements OnInit {
     this.tradeService.list.splice(index, 1);
   }
   startTrade(trade) {
-    this.robotService.sendCommandToPathofExile('+7trade ' + trade.player);
+    this.robotService.sendCommandToPathofExile('/trade ' + trade.player);
   }
   thank(trade) {
     const index = this.tradeService.list.indexOf(trade);
@@ -48,8 +48,7 @@ export class TradeManagementComponent implements OnInit {
     this.tradeService.list[index].thanked = true;
   }
   kick(trade) {
-    this.robotService.sendCommandToPathofExile('+7kick ' + trade.player);
+    this.robotService.sendCommandToPathofExile('/kick ' + trade.player);
+    this.remove(trade);
   }
-
-
 }

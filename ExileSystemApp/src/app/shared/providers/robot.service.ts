@@ -85,6 +85,7 @@ export class RobotService {
     string = string.split(':').join('+{PERIOD}');
     string = string.split('.').join('{PERIOD}');
     string = string.split('~').join('-');
+    string = string.split('/').join('+7');
 
     return string;
   }
