@@ -8,8 +8,8 @@ export class SettingService {
   settings = {
     logpath: 'C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt',
     trade: {
-      soldMessage: '',
-      thankMessage: '',
+      soldMessage: 'Sorry that item is already sold!',
+      thankMessage: 'Thanks!',
       autoSendTrade: false
     },
     room: {

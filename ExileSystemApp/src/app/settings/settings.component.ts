@@ -51,8 +51,6 @@ export class SettingsComponent implements OnInit {
     private settingService: SettingService) {
     // Before render
 
-    console.log(this.settingService.settings.keybinds);
-
     console.log(this.robotService.autoSendTrade);
     this.initializeWindowlist();
 

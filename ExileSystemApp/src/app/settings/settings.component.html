@@ -41,20 +41,21 @@
             <div class="card blue-grey darken-1">
                 <div class="card-content white-text general-card">
                     <p class="card-title">Trade</p>
-                    <form materialize action="#">
+                    <div class="trade-settings" materialize action="#">
                         <p class="input-field">
-                            <input placeholder="Thanks!" id="first_name" type="text" class="validate">
-                            <label for="first_name">Sold Message</label>
+                            <input [(ngModel)]="settingService.settings.trade.soldMessage" placeholder="Sorry that item is already sold!" id="sold" type="text"
+                                class="validate">
+                            <label for="sold">Sold Message</label>
                         </p>
                         <p class="input-field">
-                            <input placeholder="Sorry that item is already sold!" id="first_name" type="text" class="validate">
-                            <label for="first_name">Thanks Message</label>
+                            <input [(ngModel)]="settingService.settings.trade.thankMessage" placeholder="Thanks!" id="thank" type="text" class="validate">
+                            <label for="thank">Thanks Message</label>
                         </p>
-                    </form>
+                    </div>
                 </div>
                 <div class="card-action">
                     <div class="row">
-
+                        <a class="waves-effect waves-light btn col s12" (click)="saveSpecificBinds()">Save</a>
                     </div>
                 </div>
             </div>
