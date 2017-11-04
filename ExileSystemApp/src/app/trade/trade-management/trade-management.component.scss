@@ -1,34 +1,4 @@
-ul {
-    border: none;
-}
-.collection.with-header .collection-header {
-    border-bottom: 5px solid #263238;
 
-}
-.collection .collection-item {
-    border-bottom: 5px solid #263238;
-        height: 52px;
-}
-.trade-row{
-    line-height: 25px;
-    font-size: 13px;
-    margin-left: -10px;
-    b{
-        font-size: 14px;
-        margin-right: 5px;
-    }
-    span{
-        font-style: italic;
-        margin-right: 5px;
-    }
-    .btn{
-        font-size: 14px;
-        height: 25px;
-        padding: 0 10px;
-        line-height: 27px;
-        padding: 0px 8px;
-    }
-}
 h4{
     margin: 0.14rem 0 -1.088rem 0;
 }
@@ -45,11 +15,25 @@ img{
 .card{
     margin: 5px 0;
 }
-.card .card-content {
+.card .currency-card-content {
     padding: 5px 8px;
     border-radius: 0 0 2px 2px;
 }
 .currecy-label{
     font-size: 12px;
     margin-left: 5px;
+}
+
+.currecy-row {
+    overflow-y: scroll;
+    height: 300px;
+}
+
+.trade-card {
+    p { 
+        text-transform:capitalize; 
+    }
+    .card-title { 
+        text-transform:capitalize;
+    }
 }

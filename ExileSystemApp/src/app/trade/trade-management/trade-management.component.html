@@ -1,5 +1,5 @@
 <div class="commands-container">
-    <div class="row">
+    <div class="row currency-row">
         <div class="col s12">
             <h2 class="title">Rates</h2>
             <i>from
@@ -11,7 +11,7 @@
     <div *ngIf="playerService.leagueData?.currencyRates != undefined" class="row">
         <div *ngFor="let rate of playerService.leagueData.currencyRates" class="col xl2 l3 m4 s6">
             <div class="card blue-grey darken-1">
-                <div class="card-content white-text valign-wrapper">
+                <div class="card-content currency-card-content white-text valign-wrapper">
                     <img src="{{rate.icon}}" title="{{rate.name}}">
                     <span class="currecy-label center-align"> x {{rate.value}} Chaos</span>
                 </div>
@@ -33,22 +33,22 @@
             </i>
         </div>
     </div>
-    <div class="row">
-        <div class="col s12">
-            <ul class="collection">
-                <li *ngFor="let trade of tradeService.list" class="collection-item blue-grey">
-                    <div class="row trade-row">
-                        <div class="col s9">
-                            <b> Item:</b>
-                            <span>{{trade.item}}</span>
-                            <b> Player:</b>
-                            <span>{{trade.player}}</span>
-                            <b> Price:</b>
-                            <span>{{trade.price}}</span>
-                            <b> Location:</b>
-                            <span>{{trade.location}}</span>
-                        </div>
-                        <div class="col s3">
+    <div class="row trade-row">
+        <div *ngFor="let trade of tradeService.list">
+            <div class="col s12 l6">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text trade-card">
+                        <span class="card-title">{{trade.item}}</span>
+                        <form materialize action="#">
+                            <p>
+                                <span>{{trade.player}}</span>
+                                <span class="right">{{trade.price}}</span>
+                            </p>
+                            <i>{{trade.location}}</i>
+                        </form>
+                    </div>
+                    <div class="card-action">
+                        <div class="row">
                             <a *ngIf="!trade.invited" (click)="invite(trade)" class="waves-effect waves-light btn">
                                 Invite</a>
                             <a *ngIf="trade.invited" (click)="startTrade(trade)" class="waves-effect waves-light btn">
@@ -63,9 +63,30 @@
                                 Remove</a>
                         </div>
                     </div>
-                </li>
-
-            </ul>
+                </div>
+                <!-- <b> Item:</b>
+                            <span>{{trade.item}}</span>
+                            <b> Player:</b>
+                            <span>{{trade.player}}</span>
+                            <b> Price:</b>
+                            <span>{{trade.price}}</span>
+                            <b> Location:</b>
+                            <span>{{trade.location}}</span> -->
+            </div>
+            <!-- <div class="col s3">
+                            <a *ngIf="!trade.invited" (click)="invite(trade)" class="waves-effect waves-light btn">
+                                Invite</a>
+                            <a *ngIf="trade.invited" (click)="startTrade(trade)" class="waves-effect waves-light btn">
+                                Trade</a>
+                            <a *ngIf="!trade.invited" (click)="sold(trade)" class="waves-effect waves-light btn">
+                                Sold</a>
+                            <a *ngIf="trade.invited && !trade.thanked" (click)="thank(trade)" class="waves-effect waves-light btn">
+                                Thank</a>
+                            <a *ngIf="trade.invited && trade.thanked" (click)="kick(trade)" class="waves-effect waves-light btn">
+                                kick</a>
+                            <a (click)="remove(trade)" class="waves-effect waves-light btn">
+                                Remove</a>
+                        </div> -->
         </div>
     </div>
 </div>

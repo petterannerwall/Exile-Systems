@@ -27,6 +27,7 @@ export class RobotService {
   public foundPathWindow;
   public autoSendTrade;
   private pathWindow;
+  public pathWindowBounds;
   private activetWindowPID;
   private pressedKeys;
   private lastPressedKeys;
@@ -131,23 +132,6 @@ export class RobotService {
     cmd.elevate('ExileUtil.exe /window ' + processPID);
 
     return true;
-
-
-    // if (this.pathWindow.isValid()) {
-    //   for (let index = 0; index < 10; index++) {
-    //     this.pathWindow.setMinimized(false);
-    //     this.robot.Window.setActive(this.pathWindow);
-    //     const activeWindow = this.robot.Window.getActive();
-    //     const activeWindowTitle = activeWindow.getTitle();
-    //     if (activeWindowTitle === 'Path of Exile') {
-    //       return true;
-    //     }
-    //   }
-    //   console.log('[DEBUG robot.service.ts] Could not set path window to active.');
-    // } else {
-    //   console.log('[DEBUG robot.service.ts] Path of Exile winow is not valid.');
-    // }
-    // return false;
   }
 
 
@@ -241,12 +225,31 @@ export class RobotService {
 
   }
 
+  public forcePathWindowBounds() {
+    if (this.pathWindow !== undefined && this.pathWindow.isValid()) {
+      if (this.pathWindowBounds === undefined) {
+        this.pathWindowBounds = this.pathWindow.getBounds();
+      } else {
+        this.pathWindow.setBounds(this.pathWindowBounds);
+      }
+    }
+  }
+
   private TradeToPathWindow(clipboard) {
     const message = this.prepareStringForRobot(clipboard);
     this.sendCommandToPathofExile(clipboard)
     this.robot.Clipboard.clear();
   }
 
+  setWindowTopMost(bool) {
+    this.pathWindow.setTopMost(bool);
+    if (this.pathWindow.isTopMost() === bool) {
+      return true;
+    } else {
+      console.log('[DEBUG settings.component.ts] Something went wrong when we tried to modify path of exile window topMost');
+      return false;
+    }
+  }
 
 
 

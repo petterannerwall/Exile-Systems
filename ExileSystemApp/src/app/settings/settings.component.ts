@@ -22,12 +22,9 @@ export class SettingsComponent implements OnInit {
   windowList = [];
   topMostWindow = {};
 
-  windowModel = {
-    list: [],
-    topMostHandle: 0,
-    topMostTitle: '',
-    killProcess: ''
-  }
+  private forcePathWindowTopMost = false;
+  private forcePathWindowBounds = false;
+  private forceWindowBoundsHandle: any;
 
   keyModel = {
     list: [],
@@ -51,7 +48,6 @@ export class SettingsComponent implements OnInit {
     private settingService: SettingService) {
     // Before render
 
-    this.initializeWindowlist();
 
     this.keyModel.list = Object.keys(KeycodeArray).map((keyCode => {
       return KeycodeArray[keyCode];
@@ -113,43 +109,6 @@ export class SettingsComponent implements OnInit {
     // After render
   }
 
-  initializeWindowlist() {
-    const tempWindowList = this.robot.Window.getList();
-    tempWindowList.forEach(window => {
-      const windowObj = {
-        Handle: window.getHandle(),
-        Title: window.getTitle()
-      }
-      if (windowObj.Title !== '') {
-        this.windowModel.list.push(windowObj);
-      }
-
-    });
-  }
-
-  setWindowTopMost() {
-    const windowHandle = +this.windowModel.topMostHandle; // convert to int
-    const window = this.robot.Window(windowHandle);
-    window.setTopMost(true);
-
-    if (window.isTopMost()) {
-      this.windowModel.topMostHandle = windowHandle;
-      this.windowModel.topMostTitle = window.getTitle();
-    } else {
-      console.log('[DEBUG settings.component.ts] Something went wrong when we tried to set a window to topMost');
-    }
-  }
-  removeWindowTopMost() {
-    const windowHandle = +this.windowModel.topMostHandle; // convert to int
-    const window = this.robot.Window(windowHandle);
-    window.setTopMost(false);
-    if (!window.isTopMost()) {
-      this.windowModel.topMostTitle = '';
-      this.windowModel.topMostHandle = 0;
-    } else {
-      console.log('[DEBUG settings.component.ts] Something went wrong when we tried to remove topMost from a window');
-    }
-  }
 
   saveSpecificBinds() {
     this.settingService.save();
@@ -171,12 +130,32 @@ export class SettingsComponent implements OnInit {
   removeKeybind(bind) {
     const index = this.settingService.settings.keybinds.other.indexOf(bind);
     this.settingService.settings.keybinds.other.splice(index, 1);
-    this.electronService.config.set('keybinds', this.settingService.settings.keybinds.other);
+    this.settingService.save();
   }
 
   SaveAutoSendTrade() {
     this.settingService.settings.trade.autoSendTrade = !this.settingService.settings.trade.autoSendTrade
     this.settingService.save();
+  }
+
+  forceBounds() {
+    this.robotService.pathWindowBounds = undefined;
+    this.forcePathWindowBounds = true;
+    this.forceWindowBoundsHandle = setInterval(() => {
+      this.robotService.forcePathWindowBounds();
+    }, 500);
+    console.log('[DEBUG settings.component.ts] We are now forcing the path of exile window bounds. ');
+  }
+
+  stopForceWindowBounds() {
+    this.forcePathWindowBounds = false;
+    clearInterval(this.forceWindowBoundsHandle);
+    console.log('[DEBUG settings.component.ts] We are not longer forcing the path of exile window bounds. ');
+  }
+
+  windowTopmost() {
+    this.forcePathWindowTopMost = !this.forcePathWindowTopMost;
+    this.robotService.setWindowTopMost(this.forcePathWindowTopMost)
   }
 
 }
