@@ -11,3 +11,14 @@
 .row{
     margin-bottom: 0px;
 }
+label{
+    color: white;
+}
+
+[type="checkbox"].filled-in:not(:checked)+label:after {
+    border: 2px solid #fff;
+}
+
+form{
+    padding-top: 10px;
+}

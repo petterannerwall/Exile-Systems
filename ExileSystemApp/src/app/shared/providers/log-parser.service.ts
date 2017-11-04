@@ -46,9 +46,9 @@ export class LogParserService {
                 if (newItems.length > 0 || this.recentLines.length === 0) {
                     for (let index = 0; index < newItems.length; index++) {
                         const elapsed = this.logPerformanceTimer.getElapsed();
-                        if ( elapsed > 800) {
+                        if (elapsed > 900) {
                             index = rowCount + 1; // this exists the loop.
-                            console.log('[DEBUG log-parser.service.ts]: Broke loop parsing lines since we took more then 800 ms');
+                            console.log('[DEBUG log-parser.service.ts]: Broke loop parsing lines since we took more then 900 ms');
                         } else {
                             const element = newItems[index];
                             this.parseMessage(element);

@@ -14,12 +14,51 @@
                 </div>
                 <div class="card-action">
                     <div class="row">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s6">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text general-card">
+                    <span class="card-title">General</span>
+                    <form materialize action="#">
+                        <p class="">
+                            <input [checked]="tradeService.settings.autoSendTrade" (change)="SaveAutoSendTrade()" type="checkbox" class="filled-in" id="auto-send-trade"
+                            />
+                            <label for="auto-send-trade">Automatically send whispers from poe.trade.</label>
+                        </p>
+                    </form>
+                </div>
+                <div class="card-action">
+                    <div class="row">
 
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col s6">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text general-card">
+                    <p class="card-title">Trade</p>
+                    <form materialize action="#">
+                        <p class="input-field">
+                            <input placeholder="Thanks!" id="first_name" type="text" class="validate">
+                            <label for="first_name">Sold Message</label>
+                        </p>
+                        <p class="input-field">
+                            <input placeholder="Sorry that item is already sold!" id="first_name" type="text" class="validate">
+                            <label for="first_name">Thanks Message</label>
+                        </p>
+                    </form>
+                </div>
+                <div class="card-action">
+                    <div class="row">
 
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col s4">
             <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
@@ -87,8 +126,8 @@
                         <b>Logout</b>
                     </h6>
                     <div>
-                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.logout" id="logoutKey"
-                            name="logoutKey">
+                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.logout"
+                            id="logoutKey" name="logoutKey">
                             <option value="" disabled selected>Choose key</option>
                             <option *ngFor="let Keycode of keyModel.list" value="{{Keycode}}">{{Keycode}}</option>
                         </select>
@@ -97,8 +136,8 @@
                         <b>Invite first not already invited trade to party.</b>
                     </h6>
                     <div>
-                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.invite" id="inviteKey"
-                            name="inviteKey">
+                        <select materialize="material_select" [materializeSelectOptions]="model.Keys" [(ngModel)]="keyModel.specificBinds.invite"
+                            id="inviteKey" name="inviteKey">
                             <option value="" disabled selected>Choose key</option>
                             <option *ngFor="let Keycode of keyModel.list" value="{{Keycode}}">{{Keycode}}</option>
                         </select>

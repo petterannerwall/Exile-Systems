@@ -4,6 +4,7 @@ import { EventEmitter } from '@angular/core';
 import { } from '@angular/core'
 import { Observable } from 'rxjs/Rx';
 import { ElectronService } from './electron.service';
+import { TradeService } from './trade.service';
 import { KeycodeArray } from './../enums/keycode.enum';
 
 
@@ -19,10 +20,12 @@ export class RobotService {
   WindowEvent: EventEmitter<any> = new EventEmitter();
   MouseEvent: EventEmitter<any> = new EventEmitter();
   ClipboardEvent: EventEmitter<string> = new EventEmitter();
+  ClipboardTradeEvent: EventEmitter<string> = new EventEmitter();
 
   isIdle = false;
 
   public foundPathWindow;
+  public autoSendTrade;
   private pathWindow;
   private activetWindowPID;
   private pressedKeys;
@@ -35,17 +38,13 @@ export class RobotService {
     y: 0
   }
 
-  constructor(private electronSerivce: ElectronService) {
+  constructor(private electronSerivce: ElectronService, private tradeService: TradeService) {
 
     this.keyboard.autoDelay.min = 0;
     this.keyboard.autoDelay.max = 0;
 
     this.foundPathWindow = false;
     this.findPathWindow();
-
-    if (!this.foundPathWindow) {
-      console.log('[DEBUG robot.service.ts] Could not find Path of Exile window.');
-    }
 
     const timeHandle = setInterval(() => {
       this.robotHeartbeat(this.robot)
@@ -73,31 +72,43 @@ export class RobotService {
   }
 
   private prepareStringForRobot(string) {
+    // tslint:disable-next-line:max-line-length
+    // @BigP_Mirrored Hi, I would like to buy your Humility listed for 2 chaos in Hardcore Harbinger (stash tab "Curd"; position: left 52, top 1)
     string = string.split('_').join('+-');
     string = string.split('@').join('%^2');
     string = string.split('!').join('+1');
+    string = string.split('(').join('+8');
+    string = string.split(')').join('+9');
+    string = string.split('"').join('+2');
+    string = string.split(';').join('+{COMMA}');
+    string = string.split(',').join('{COMMA}');
+    string = string.split(':').join('+{PERIOD}');
+    string = string.split('.').join('{PERIOD}');
+    string = string.split('~').join('-');
 
     return string;
   }
 
   public sendCommandToPathofExile(command) {
-    command = this.prepareStringForRobot(command);
-    const active = this.setPathWindowToActive();
-    if (active) {
-      let count = 0;
-      const handle = setInterval(() => {
-        count++;
-        const activeWindow = this.robot.Window.getActive();
-        const activeWindowTitle = activeWindow.getTitle();
-        if (activeWindowTitle === 'Path of Exile') {
-          console.log('[DEBUG robot.service.ts] Path window activated in: ' + count * 10 + ' ms');
-          clearInterval(handle)
-          console.log('[DEBUG robot.service.ts] Simulating command: ', command);
-          this.keyboard.click('{ENTER}');
-          this.keyboard.click(command);
-          this.keyboard.click('{ENTER}');
-        }
-      }, 10)
+    if (this.pathWindow !== undefined && this.pathWindow.isValid()) {
+      command = this.prepareStringForRobot(command);
+      const active = this.setPathWindowToActive();
+      if (active) {
+        let count = 0;
+        const handle = setInterval(() => {
+          count++;
+          const activeWindow = this.robot.Window.getActive();
+          const activeWindowTitle = activeWindow.getTitle();
+          if (activeWindowTitle === 'Path of Exile') {
+            // console.log('[DEBUG robot.service.ts] Path window activated in: ' + count * 10 + ' ms');
+            clearInterval(handle)
+            // console.log('[DEBUG robot.service.ts] Simulating command: ', command);
+            this.keyboard.click('{ENTER}');
+            this.keyboard.click(command);
+            this.keyboard.click('{ENTER}');
+          }
+        }, 10)
+      }
     }
   }
 
@@ -206,6 +217,12 @@ export class RobotService {
       if (this.lastClipboard == null || this.lastClipboard !== clipboard) {
         this.ClipboardEvent.emit(clipboard);
         this.lastClipboard = clipboard;
+        if (this.tradeService.settings.autoSendTrade && clipboard.indexOf('Hi, I would like to buy') > -1) {
+          this.ClipboardTradeEvent.emit(clipboard);
+          this.TradeToPathWindow(clipboard);
+          console.log('[DEBUG robot.service.ts] Sending trade to path window.');
+        }
+
       }
     } else if (robot.Clipboard.hasImage()) {
       // We do not handle this atm
@@ -221,6 +238,12 @@ export class RobotService {
       this.isIdle = false;
     }
 
+  }
+
+  private TradeToPathWindow(clipboard) {
+    const message = this.prepareStringForRobot(clipboard);
+    this.sendCommandToPathofExile(clipboard)
+    this.robot.Clipboard.clear();
   }
 
 

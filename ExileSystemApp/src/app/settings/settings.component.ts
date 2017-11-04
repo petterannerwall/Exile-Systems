@@ -55,6 +55,8 @@ export class SettingsComponent implements OnInit {
   constructor(private electronService: ElectronService, private robotService: RobotService, private tradeService: TradeService) {
     // Before render
 
+    console.log(this.robotService.autoSendTrade);
+
     const savedSpecificBinds = this.electronService.config.get('specific-keybinds');
     const savedBinds = this.electronService.config.get('keybinds');
 
@@ -186,4 +188,10 @@ export class SettingsComponent implements OnInit {
     this.keyModel.binds.splice(index, 1);
     this.electronService.config.set('keybinds', this.keyModel.binds);
   }
+
+  SaveAutoSendTrade() {
+    this.tradeService.settings.autoSendTrade = !this.tradeService.settings.autoSendTrade
+    this.tradeService.saveSettings();
+  }
+
 }

@@ -7,20 +7,33 @@ import { MessageTypeEnum } from '../enums/message-type.enum';
 import { IncomingTrade } from '../interfaces/incomming-trade.interface';
 import { LogParserService } from './log-parser.service';
 import { RobotService } from './robot.service';
+import { ElectronService } from './electron.service';
 
 
 @Injectable()
 export class TradeService {
   public browsing = false;
+  public settings = {
+    soldMessage: 'Sorry, that item has already been sold!',
+    thanksMessage: 'Thanks!',
+    autoSendTrade: false
+  }
   list = Array<IncomingTrade>();
 
-  constructor(private logParser: LogParserService, private robotService: RobotService) {
+  constructor(private logParser: LogParserService) {
+
+    // const savedSettings = this.electronService.config.get('trade-settings');
+    // if (savedSettings !== undefined) {
+    //   this.settings = savedSettings;
+    // }
 
     this.logParser.NewMessageEvent.subscribe((message: Message) => {
       if (message.type === MessageTypeEnum.TradeMessage) {
 
-        const tradeMessage = { item: '', price: '', currency: '', count: '', league: '', location: '', inArea: false,
-         invited: false, thanked: false } as IncomingTrade;
+        const tradeMessage = {
+          item: '', price: '', currency: '', count: '', league: '', location: '', inArea: false,
+          invited: false, thanked: false
+        } as IncomingTrade;
 
         if (message.text.indexOf('I would like') > 0) {
           if (message.text.indexOf('listed for') > 0) {
@@ -73,10 +86,10 @@ export class TradeService {
       }
     });
 
-    this.robotService.ClipboardEvent.subscribe((text => {
+  }
 
-    }))
-
+  saveSettings() {
+    // this.electronService.config.set('trade-settings', this.settings);
   }
 
 }
