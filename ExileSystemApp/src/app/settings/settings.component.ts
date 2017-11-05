@@ -91,7 +91,7 @@ export class SettingsComponent implements OnInit {
         keys.forEach(key => {
           if (bind.key === key) {
             console.log('[DEBUG settings.component.ts] Executing keybind: ', bind.command);
-            this.keyboard.click(bind.command);
+            this.robotService.sendCommandToPathofExile(bind.command);
           }
         });
       })

@@ -63,6 +63,15 @@ export class AppComponent implements OnInit {
       }
     })
 
+    // tslint:disable-next-line:max-line-length
+    const css = '.logo-small{ visibility: hidden; height: 0px; } #statusBar{ display:none; } .results .row{ display:flex; } .left{ width:20%; } .middle{ width:60%; } .right{ width:20%; } .itemPopupAdditional{ display:none; }';
+
+    const webview = <any>document.getElementById('webview');
+    webview.addEventListener('dom-ready', function () {
+      webview.insertCSS(css);
+      // webview.openDevTools();
+    });
+
     this.logParserService.NewMessageEvent.subscribe(msg => {
       if (msg.type === MessageTypeEnum.SelfEnteringArea && this.playerService.currentPlayerObj !== undefined) {
         this.externalService.getCharacter(this.playerService.currentPlayerObj.account,
