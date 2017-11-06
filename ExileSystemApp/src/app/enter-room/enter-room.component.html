@@ -2,7 +2,7 @@
   <div class="block-wrapper col s10">
     <div class="row">
       <div class="col s12">
-        <h4 class="block-title">Player info</h4>
+        <h5 class="block-title">Player information</h5>
         <hr>
       </div>
     </div>
@@ -37,8 +37,8 @@
     </form>
     <div class="row">
       <div class="col s12">
-        <h4 class="block-title">
-          Enter existing room</h4>
+        <h5 class="block-title">
+          Room information</h5>
         <hr>
       </div>
     </div>
@@ -48,7 +48,7 @@
           <i class="material-icons prefix">text_format</i>
           <input [(ngModel)]="this.settingService.settings.room.roomCode" id="roomCode" name="roomCode" type="text" class="validate"
             required>
-          <label for="roomCode">Room code</label>
+          <label for="roomCode">Code</label>
         </div>
       </div>
     </form>
@@ -56,22 +56,29 @@
       <div class="col s12">
         <button class="waves-effect waves-light btn right full-width" (click)="verify()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid || characters.length == 0 || verified">
           <i class="material-icons right">send</i>
-          Verify
+          Verify character
         </button>
       </div>
     </div>
     <div class="row">
+        <div class="col s12">
+          <div class="hr-text">
+            <span>then</span>
+          </div>
+        </div>
+      </div>
+    <div class="row">
       <div class="col s12">
         <button class="waves-effect waves-light btn right full-width" (click)="enter()" type="submit" name="action" [disabled]="!roomForm.valid || !loginForm.valid || characters.length == 0 || !verified">
           <i class="material-icons right">send</i>
-          Enter
+          Enter room
         </button>
       </div>
     </div>
     <div class="row">
       <div class="col s12">
         <div class="hr-text">
-          <span>or generate a new room</span>
+          <span>or</span>
         </div>
       </div>
     </div>
