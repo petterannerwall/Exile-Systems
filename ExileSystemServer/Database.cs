@@ -20,9 +20,7 @@ namespace ExileSystemServer
             Updated = DateTime.Now;
         }        
     }
-
-
-
+    
     public static class Database
     {
         private static Context redis;
@@ -47,6 +45,7 @@ namespace ExileSystemServer
             if (leagueData == null)
             {
                 External.GetLeagues();
+                leagueData = redis.Cache.GetObject<List<League>>("leagueData");
             }
 
             return leagueData;
@@ -54,12 +53,9 @@ namespace ExileSystemServer
 
         public static void SetLeagueData(List<League> leagueData)
         {
-            redis.Cache.SetObject<List<League>>("leagueData", leagueData, new TimeSpan(12,0,0));
+            redis.Cache.SetObject<List<League>>("leagueData", leagueData, new TimeSpan(6,0,0));
         }
-
         
-
-
         public static Channel UpdateOrAddPlayer(string channel, Player player)
         {
 
