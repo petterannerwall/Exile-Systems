@@ -65,12 +65,15 @@ export class AppComponent implements OnInit {
 
     // tslint:disable-next-line:max-line-length
     const css = '.logo-small{ visibility: hidden; height: 0px; } #statusBar{ display:none; } .results .row{ display:flex; } .left{ width:20%; } .middle{ width:60%; } .right{ width:20%; } .itemPopupAdditional{ display:none; }';
+    const poeTradeCss = 'iframe{ display:none !important; } #dynamic{ display: none; } #contentstart { display: none; } .mbReportBadAd {display:none;} .large-8 { width: 100% !important; }';
     // const allanPls = this.electronService.fs.readFileSync('./allanpls_style.css', 'utf8');
 
     const webview = <any>document.getElementById('webview');
     webview.addEventListener('dom-ready', () => {
-      webview.insertCSS(css);
+      // webview.insertCSS(css);
       // webview.insertCSS(allanPls);
+      webview.insertCSS(poeTradeCss);
+      // webview.openDevTools();
     });
 
     this.logParserService.NewMessageEvent.subscribe(msg => {

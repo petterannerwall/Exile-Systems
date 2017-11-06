@@ -21,8 +21,8 @@ function createWindow() {
     y: 0,
     width: size.width,
     height: size.height,
-    minWidth: 992,
-    minHeight: 600
+    minWidth: 1280,
+    minHeight: 800
   });
 
   // and load the index.html of the app.
