@@ -19,6 +19,11 @@
     padding-left: 300px;
     height: 64px;
     background:#1f292e;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    width: 100%;
   }
 
   .modal {
@@ -48,5 +53,23 @@
     height: 64px;
     margin: 0px;
     padding: 15px 0 0 15px;
+  }
+
+  .content-wrapper{
+    padding-top: 64px;
+  }
+
+  .message-row{
+    padding-left:0px;
+  }
+
+  .action-row{
+    i{
+      -webkit-app-region: no-drag;
+       margin-top: 15px;
+    }
+    i:hover{
+      background-color:rgba(76, 103, 114, 0.479);
+    }
   }
   

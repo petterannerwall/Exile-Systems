@@ -1,9 +1,17 @@
 <app-sidebar-nav></app-sidebar-nav>
-<div class="top-header">
-
-  <div *ngIf="!robotService.foundPathWindow" class="red window-warning">
-    <h5>Cannot find Path of Exile window.</h5>
+<div style="-webkit-app-region: drag" class="top-header">
+  <div class="row">
+    <div class="col s10 message-row">
+      <div *ngIf="!robotService.foundPathWindow" class="red window-warning">
+        <h5>Cannot find Path of Exile window.</h5>
+      </div>
+    </div>
+    <div class="col s2 action-row">
+      <i (click)="closeWindow()" class="hoverable material-icons small right">close</i>
+      <i (click)="minimizeWindow()" class="hoverable material-icons small right">remove</i>
+    </div>
   </div>
+
 </div>
 <!-- <iframe [hidden]="!tradeService.browsing" src="https://www.poeapp.com"></iframe> -->
 <div id="poeapp-wrapper">
