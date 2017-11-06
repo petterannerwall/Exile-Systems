@@ -7,4 +7,5 @@ export interface Message {
     type: MessageTypeEnum
     text: string;
     channel: MessageChannelEnum
+    data: any
 }

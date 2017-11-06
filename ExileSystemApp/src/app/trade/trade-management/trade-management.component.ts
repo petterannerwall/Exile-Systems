@@ -40,7 +40,7 @@ export class TradeManagementComponent implements OnInit {
     this.tradeService.list.splice(index, 1);
   }
   startTrade(trade) {
-    this.robotService.sendCommandToPathofExile('/trade ' + trade.player);
+    this.robotService.sendCommandToPathofExile('/tradewith ' + trade.player);
   }
   thank(trade) {
     const index = this.tradeService.list.indexOf(trade);

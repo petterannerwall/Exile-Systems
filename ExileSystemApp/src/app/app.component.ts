@@ -65,11 +65,12 @@ export class AppComponent implements OnInit {
 
     // tslint:disable-next-line:max-line-length
     const css = '.logo-small{ visibility: hidden; height: 0px; } #statusBar{ display:none; } .results .row{ display:flex; } .left{ width:20%; } .middle{ width:60%; } .right{ width:20%; } .itemPopupAdditional{ display:none; }';
+    // const allanPls = this.electronService.fs.readFileSync('./allanpls_style.css', 'utf8');
 
     const webview = <any>document.getElementById('webview');
-    webview.addEventListener('dom-ready', function () {
+    webview.addEventListener('dom-ready', () => {
       webview.insertCSS(css);
-      // webview.openDevTools();
+      // webview.insertCSS(allanPls);
     });
 
     this.logParserService.NewMessageEvent.subscribe(msg => {

@@ -6,5 +6,6 @@ export enum MessageTypeEnum {
     GuildInformation,
     TradeMessage,
     Other,
-    Verify
+    Verify,
+    Whois
 }

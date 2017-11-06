@@ -1,0 +1,154 @@
+/*
+	Style: AllanPls
+	Author: survfate (/u/survfate)
+	Version 0.1.3
+*/
+
+@-moz-document domain("pathofexile.com") {
+    /* page layout */
+    
+    #trade, #trade .resultset {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #trade .search-bar .search-advanced-pane {
+        width: 100%;
+    }
+    #trade .resultset .row {
+        display: grid;
+        grid-template-columns: 0% 30% 70%;
+        grid-template-rows: 50% 50%;
+        padding-right: 15px;
+    }
+    /* row layout */
+    
+    #trade div.left,
+    #trade div.middle,
+    #trade div.right {
+        width: 100%;
+    }
+    #trade div.right {
+        grid-column: 2;
+    }
+    #trade div.middle {
+        grid-column: 3;
+        grid-row-start: 1;
+        grid-row-end: span 2;
+    }
+    #trade div.right .details {
+        margin-top: 10px;
+    }
+    #trade div.right button.ignore-btn {
+        color: #a10000;
+    }
+    #trade .resultset span.pull-left,
+    #trade .resultset span.pull-right {
+        /* float: none !important; */
+    }
+    #trade div.right .btns {
+        line-height: 2.1;
+    }
+    #trade .status {
+        line-height: initial;
+    }
+    #trade div.right .status {
+        /* will be update later */
+    }
+    /* .middle item layout */
+    
+    #trade div.middle {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        border: 1px solid #886437;
+        background: rgba(0, 0, 0, 0.8);
+    }
+    #trade .resultset .row.exchange div.middle {
+        display: initial;
+    }
+    #trade .resultset .row.exchange .contact {
+        grid-column-start: 3;
+    }
+    #trade .itemPopupContainer {
+        border-right: 1px solid #886437;
+    }
+    /* .divinationCard */
+    
+    #trade .itemPopupContainer.divinationCard {
+        min-width: 100%;
+        height: auto;
+    }
+    #trade .itemPopupContainer.divinationCard .itemBoxContent {
+        background: none;
+    }
+    #trade .itemPopupContainer.divinationCard .cardFace {
+        display: none;
+    }
+    #trade .itemPopupContainer.divinationCard .itemHeader > .itemName {
+        font-family: 'FontinSmallCaps', Verdana, Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        font-size: 17.1px;
+        font-size: 100% !important;
+        color: #c8c8c8;
+    }
+    #trade .itemPopupContainer.divinationCard .itemBoxContent {
+        padding-bottom: 7.15px;
+    }
+    #trade .itemPopupContainer.divinationCard .itemBoxContent .stackSize,
+    #trade .itemPopupContainer.divinationCard .itemBoxContent .explicitModsWrapper {
+        position: unset;
+        width: 100%;
+        margin: 0;
+    }
+    #trade .itemPopupContainer.divinationCard .itemBoxContent .stackSize {
+        text-align: center;
+        color: white;
+    }
+    #trade .itemPopupContainer.divinationCard .itemBoxContent .stackSize::before {
+        content: 'Stack Size: ';
+        color: #7f7f7f;
+    }
+    #trade .itemPopupContainer.divinationCard .itemBoxContent .explicitModsWrapper {
+        font-size: 14.3px;
+        height: 0%;
+    }
+    #trade .itemPopupContainer.divinationCard .itemBoxContent .explicitModsContainer {
+        height: 100%;
+    }
+    #trade .itemPopupContainer.divinationCard .itemBoxContent .flavourTextWrapper {
+        display: none;
+    }
+    #trade .itemPopupAdditional {
+        margin-top: 0;
+        font-size: 110%;
+        height: 39px;
+        padding-top: 39px;
+        padding-left: 5px;
+        background: none;
+    }
+    #trade .itemPopupAdditional > span {
+        display: inline-grid;
+    }
+    #trade .itemName,
+    #trade .displayProperty,
+    #trade .requirements {
+        display: inline-block;
+    }
+    #trade .itemHeader,
+    #trade .itemHeader > span.l,
+    #trade .itemHeader > span.r {
+        background-image: none;
+    }
+    #trade .itemName > span {
+        padding-left: 0;
+        padding-right: 0;
+        font-size: 90%;
+    }
+    #trade .itemHeader {
+        height: 33px;
+        white-space: nowrap;
+        /* overflow-y: hidden; */
+        
+        padding-top: 5.18323px;
+    }
+}

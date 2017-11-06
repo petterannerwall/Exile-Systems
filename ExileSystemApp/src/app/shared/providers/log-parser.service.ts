@@ -114,6 +114,8 @@ export class LogParserService {
             msg.type = MessageTypeEnum.TradeMessage;
         } else if (message.indexOf('.verify ') >= 0) {
             msg.type = MessageTypeEnum.Verify;
+        } else if (message.indexOf('and is currently playing ') >= 0) {
+            msg.type = MessageTypeEnum.Whois;
         } else {
             msg.type = MessageTypeEnum.Other;
         }
@@ -126,11 +128,25 @@ export class LogParserService {
             msg.player = msg.text.substr(0, msg.text.indexOf(' has joined the area.'));
             this.playerService.currentPlayerObj.inArea.push(msg.player);
         } else if (msg.type === MessageTypeEnum.OtherLeaveArea) {
-            msg.player = msg.player = msg.text.substr(0, msg.text.indexOf(' has left the area.'));
+            msg.player = msg.text.substr(0, msg.text.indexOf(' has left the area.'));
             const index = this.playerService.currentPlayerObj.inArea.indexOf(msg.player);
             if (index > -1) {
                 this.playerService.currentPlayerObj.inArea.splice(index, 1);
             }
+        } else if (msg.type === MessageTypeEnum.Whois) {
+            msg.player = msg.text.substr(0, msg.text.indexOf(' is a'));
+            msg.text = message.split('currently playing in ')[1].split('.')[0];
+
+            const levelAndClass = message.split('level ')[1].split('in the')[0]
+            const msgLeague = message.split('in the ')[1].split(' league')[0]
+            const msgLevel = levelAndClass.split(' ')[0];
+            const msgAscendancy = levelAndClass.split(' ')[1];
+
+            msg.data = {
+                ascendancy: msgAscendancy,
+                level: msgLevel,
+                league: msgLeague
+            };
         }
 
         if (msg.type !== MessageTypeEnum.Other && msg.type !== MessageTypeEnum.SelfEnteringArea) {
