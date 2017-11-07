@@ -1,4 +1,5 @@
-<h4>Player list:</h4>
+<h3>Players</h3>
+<hr class="map-title-divider">
 <div class="player" *ngFor="let player of channelService.channel.players, let i = index">
   <app-player-badge (click)="playerService.OpenedPlayer.emit(player)" [player]="player"></app-player-badge>
 </div>

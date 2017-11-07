@@ -13,7 +13,12 @@
     left: 0;
     margin-bottom: -4px;
     margin-left: 300px;
+    @media only screen and (max-width: 1300px){
+      width: calc(100% - 80px);
+      margin-left: 60px;
+    }
   }
+
 }
   .top-header {
     padding-left: 300px;

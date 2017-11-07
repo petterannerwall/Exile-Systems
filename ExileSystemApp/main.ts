@@ -19,9 +19,9 @@ function createWindow() {
   win = new BrowserWindow({
     x: 10,
     y: 10,
-    width: 1280,
+    width: 1080,
     height: 850,
-    minWidth: 1280,
+    minWidth: 1080,
     minHeight: 850,
     titleBarStyle: 'customButtonsOnHover',
     frame: false
