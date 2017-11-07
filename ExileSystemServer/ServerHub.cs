@@ -48,7 +48,11 @@ namespace ExileSystemServer
         {
             if (reason == MessageType.OtherJoinArea)
             {
-
+                Database.PendingPlayersInArea(channel, player);
+            }
+            if (reason == MessageType.SelfEnteringArea)
+            {
+                Database.UpdatePlayerArea(channel, player);
             }
 
             if (player.Character != null)

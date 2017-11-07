@@ -18,9 +18,9 @@ namespace ExileSystemServer
         public PlayerConnection()
         {
             Updated = DateTime.Now;
-        }        
+        }
     }
-    
+
     public static class Database
     {
         private static Context redis;
@@ -32,7 +32,7 @@ namespace ExileSystemServer
             redis = new Context("localhost:6379", new JsonSerializer());
             leagueData = External.GetLeagues(); ;
         }
-        
+
         public static League GetSpecificLeague(string name)
         {
             return GetLeagueData().FirstOrDefault(t => t.Name == name);
@@ -53,28 +53,20 @@ namespace ExileSystemServer
 
         public static void SetLeagueData(List<League> leagueData)
         {
-            redis.Cache.SetObject<List<League>>("leagueData", leagueData, new TimeSpan(6,0,0));
+            redis.Cache.SetObject<List<League>>("leagueData", leagueData, new TimeSpan(6, 0, 0));
         }
-        
+
         public static Channel UpdateOrAddPlayer(string channel, Player player)
         {
 
-            Channel existingChannel = redis.Cache.GetObject<Channel>($"game:{channel}");
-            if (existingChannel == null)
-            {
-                existingChannel = new Channel(channel);
-                existingChannel.Players.Add(player);
-            }
-            else
-            {
-                var existingPlayer = existingChannel.Players.FirstOrDefault(c => c.Account.ToLower() == player.Account.ToLower());
-                if (existingPlayer != null)
-                {
-                    existingChannel.Players.Remove(existingPlayer);
-                }
-                existingChannel.Players.Add(player);
+            Channel existingChannel = redis.Cache.GetObject<Channel>($"game:{channel}") ?? new Channel(channel);
 
+            var existingPlayer = existingChannel.Players.FirstOrDefault(c => c.Account.ToLower() == player.Account.ToLower());
+            if (existingPlayer != null)
+            {
+                existingChannel.Players.Remove(existingPlayer);
             }
+            existingChannel.Players.Add(player);
 
             existingChannel.Players = existingChannel.Players.OrderByDescending(t => t.Character.Level).ToList();
 
@@ -83,15 +75,52 @@ namespace ExileSystemServer
 
         }
 
-        public static void AddPlayerToChannelAreas(string channel, Player player)
+
+        public static void UpdatePlayerArea(string channel, Player player)
         {
-            List<ChannelArea> channelAreas = redis.Cache.GetObject<List<ChannelArea>>($"ChannelAreas:{channel}");
-            if (channelAreas == null)
+            List<ChannelArea> channelAreas = redis.Cache.GetObject<List<ChannelArea>>($"ChannelAreas:{channel}") ?? new List<ChannelArea>();
+            channelAreas.ForEach(t => t.Players.RemoveAll(p => p == player.Character.Name));
+            channelAreas.RemoveAll(t => t.Players.Count == 0);
+            var channelArea = new ChannelArea()
             {
-                channelAreas = new List<ChannelArea>();
-            }
+                Id = Guid.NewGuid(),
+                Players = new List<string>() { player.Character.Name },
+                Name = player.Area
+            };
+            channelAreas.Add(channelArea);
+            redis.Cache.SetObject<List<ChannelArea>>($"ChannelAreas:{channel}", channelAreas, new TimeSpan(0, 10, 0));
 
         }
+
+        public static void PendingPlayersInArea(string channel, Player player)
+        {
+            Dictionary<string, string> pendingPlayers = redis.Cache.GetObject<Dictionary<string, string>>($"PendingPlayers:{channel}") ?? new Dictionary<string, string>();
+            pendingPlayers[player.Character.Name] = player.Area;
+            redis.Cache.SetObject<Dictionary<string, string>>($"PendingPlayers:{channel}", pendingPlayers, new TimeSpan(0, 10, 0));
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
