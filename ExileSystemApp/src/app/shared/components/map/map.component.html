@@ -4,13 +4,11 @@
         <hr class="map-title-divider">
         <div class="act-zones">
             <div class="zone-row row" *ngFor="let zone of act.zones">
-                <a class="waves-effect waves-dark btn col s6 zone blue-grey white-text">{{zone.Name}}</a>
-                <span class="col s6 zone-players">
-                    <ng-container *ngFor="let player of channelService.channel.players">
-                        <div [ngClass]="{'player-hidden': player.area != zone.Name}">
-                            <span>{{player.character.name}}</span>
-                            <br/>
-                        </div>
+                <a *ngIf="zone.Players.length > 0" class="waves-effect waves-dark btn col s12 zone blue-grey white-text">{{zone.Name}}</a>
+                <span class="col s12 zone-players">
+                    <ng-container *ngFor="let player of zone.Players">
+                                <span>{{player.character.name}}</span>
+                            <br/>                        
                     </ng-container>
                 </span>
             </div>

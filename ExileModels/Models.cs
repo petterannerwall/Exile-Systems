@@ -158,5 +158,12 @@ namespace ExileModels
         [JsonProperty("chaosEquivalent")]
         public double ChaosEquivalent { get; set; }
     }
+
+    public class ChannelArea
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public List<string> Players { get; set; }
+    }
     
 }

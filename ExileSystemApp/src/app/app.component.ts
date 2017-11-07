@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
             this.playerService.currentPlayerObj.character = res.character;
             this.playerService.currentPlayerObj.character.items = res.items;
             this.playerService.currentPlayer.next(this.playerService.currentPlayerObj);
-            this.signalRService.updatePlayer(this.channelService.channel.id, this.playerService.currentPlayerObj);
+            this.signalRService.updatePlayer(this.channelService.channel.id, this.playerService.currentPlayerObj, msg.type);
           });
       }
     });

@@ -150,7 +150,7 @@ export class LogParserService {
         }
 
         if (msg.type !== MessageTypeEnum.Other && msg.type !== MessageTypeEnum.SelfEnteringArea) {
-            this.signalRService.updatePlayer(this.channelService.channel.id, this.playerService.currentPlayerObj);
+            this.signalRService.updatePlayer(this.channelService.channel.id, this.playerService.currentPlayerObj, msg.type);
         }
 
         this.NewMessageEvent.emit(msg);

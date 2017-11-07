@@ -22,4 +22,5 @@ export class ItemComponent implements OnInit {
   getHeight() {
     return 50 * this.columnsHigh + this.extraPadding;
   }
+
 }

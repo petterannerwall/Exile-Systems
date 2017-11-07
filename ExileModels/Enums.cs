@@ -22,4 +22,19 @@ namespace ExileModels
         Boots,
         Flask            
     }
+
+    public enum MessageType
+    {
+        Message,
+        SelfEnteringArea,
+        OtherJoinArea,
+        OtherLeaveArea,
+        GuildInformation,
+        TradeMessage,
+        Other,
+        Verify,
+        Whois
+    }
 }
+
+

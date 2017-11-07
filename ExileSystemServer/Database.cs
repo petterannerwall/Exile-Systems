@@ -83,6 +83,18 @@ namespace ExileSystemServer
 
         }
 
+        public static void AddPlayerToChannelAreas(string channel, Player player)
+        {
+            List<ChannelArea> channelAreas = redis.Cache.GetObject<List<ChannelArea>>($"ChannelAreas:{channel}");
+            if (channelAreas == null)
+            {
+                channelAreas = new List<ChannelArea>();
+            }
+
+        }
+
+
+
         public static List<PlayerConnection> AddPlayerConnection(PlayerConnection connection)
         {
             List<PlayerConnection> connections = redis.Cache.GetObject<List<PlayerConnection>>("ExileSystemsConnections");

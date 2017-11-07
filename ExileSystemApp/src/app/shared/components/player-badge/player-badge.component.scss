@@ -12,6 +12,9 @@
 }
 
 .card {
+  .card-content{
+    overflow: hidden;
+  }
   margin-right: 20px;
   cursor: pointer;
   .badge-wrapper {
@@ -31,12 +34,11 @@
       top: 0;
       left: 75px;
       float: left;
-      width: 230px;
+      width: 100%;
       .badge-player-name {
         padding: 4px 4px 0 12px;
         height: 30px;
         background: #334852;
-        overflow: hidden;
       }
       .badge-char-info {
         padding: 0 4px 0 12px;

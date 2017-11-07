@@ -36,7 +36,7 @@ namespace ExileSystemServer
         public void Login(string channel, Player player)
         {
             Groups.Add(Context.ConnectionId, channel);
-            UpdatePlayer(channel, player);
+            UpdatePlayer(channel, player, MessageType.Other);
         }
 
         public void RegisterSpectator(string channel)
@@ -44,8 +44,13 @@ namespace ExileSystemServer
             Groups.Add(Context.ConnectionId, channel);
         }
 
-        public void UpdatePlayer(string channel, Player player)
+        public void UpdatePlayer(string channel, Player player, MessageType reason)
         {
+            if (reason == MessageType.OtherJoinArea)
+            {
+
+            }
+
             if (player.Character != null)
             {
                 var channelObject = Database.UpdateOrAddPlayer(channel, player);
