@@ -10,6 +10,7 @@ export class SettingService {
     trade: {
       soldMessage: 'Sorry that item is already sold!',
       thankMessage: 'Thanks!',
+      mapMessage: 'In a map at the moment, will invite you after!',
       autoSendTrade: false
     },
     room: {

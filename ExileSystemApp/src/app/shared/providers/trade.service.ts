@@ -30,7 +30,7 @@ export class TradeService {
           invited: false, thanked: false
         } as IncomingTrade;
 
-        if (message.text.indexOf('i would like') > 0) {
+        if (message.text.indexOf('would like') > 0) {
           if (message.text.indexOf('listed for') > 0) {
             tradeMessage.item = message.text.split('to buy your ')[1].split(' listed for')[0];
             tradeMessage.price = message.text.split('listed for ')[1].split(' in ')[0];
@@ -42,7 +42,7 @@ export class TradeService {
             tradeMessage.item = message.text.split('to buy your ')[1].split(' in ')[0];
             tradeMessage.price = 'Not specified';
           }
-        } else if (message.text.indexOf('i would like') > 0) {
+        } else if (message.text.indexOf('would like') > 0) {
           tradeMessage.item = message.text.split('to buy your ')[1].split(' for my')[0];
           if (tradeMessage.item !== '') {
             const priceText = message.text.split('for my ')[1].split(' in ')[0];
