@@ -110,7 +110,7 @@ export class SettingsComponent implements OnInit {
   }
 
 
-  saveSpecificBinds() {
+  saveSettings() {
     this.settingService.save();
   }
 
