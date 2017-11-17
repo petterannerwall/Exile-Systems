@@ -28,6 +28,7 @@ export class ItemComponent implements OnInit {
     const element = $(this.elRef.nativeElement)[0];
     const tooltip = element.children[0].children[1];
     const rect = tooltip.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
 
     const overflowTop = rect.top;
     const overflowRight = window.innerWidth - rect.right;
@@ -66,7 +67,9 @@ export class ItemComponent implements OnInit {
         marginLeft += 200;
       }
 
-      tooltip.setAttribute('style', 'margin:' + marginTop + 'px 0px 0px ' + marginLeft + 'px ' + '!important ;');
+      // tooltip.setAttribute('style', 'margin:' + marginTop + 'px 0px 0px ' + marginLeft + 'px ' + '!important ;');
+      tooltip.setAttribute('style', 'top:' + marginTop + 'px !important;');
+      tooltip.setAttribute('style', 'left:' + marginLeft + 'px !important;');
     }
 
     tooltip.classList.add('active');

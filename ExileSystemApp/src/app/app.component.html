@@ -22,7 +22,7 @@
 </div>
 <div id="playerModal" materialize="modal" #playerModal [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions"
   class="modal blue-grey darken-2">
-  <div class="modal-content" *ngIf="playerService.openPlayer">
+  <div class="modal-content blue-grey darken-2 " *ngIf="playerService.openPlayer">
     <app-character-preview *ngIf="playerService.openPlayer.character" [character]="playerService.openPlayer.character"></app-character-preview>
     <app-character-inventory *ngIf="playerService.openPlayer.character" [character]="playerService.openPlayer.character"></app-character-inventory>
   </div>
