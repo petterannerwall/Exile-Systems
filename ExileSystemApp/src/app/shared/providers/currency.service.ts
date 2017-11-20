@@ -27,4 +27,32 @@ export class CurrencyService {
     // });
   }
 
+
+  public toFullName(name) {
+    const translations = [
+      { short: 'alch', full: 'Orb of Alchemy' },
+      { short: 'chaos', full: 'Orb of Chaos' },
+      { short: 'exalted', full: 'Exalted Orb' }
+    ];
+
+    for (let i = 0; i < translations.length; i++) {
+      const trans = translations[i];
+      if (trans.short === name) {
+        return trans.full;
+      }
+    }
+    return name;
+  }
+
+  public convertToChaos(name, value) {
+    name = this.toFullName(name);
+
+    for (let i = 0; i < this.playerService.leagueData.currencyRates.length; i++) {
+      const currency = this.playerService.leagueData.currencyRates[i];
+      if (currency.name === name) {
+        return value * currency.value;
+      }
+    }
+    return 0;
+  }
 }

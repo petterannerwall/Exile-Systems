@@ -41,6 +41,8 @@ export class RobotService {
 
   constructor(private electronSerivce: ElectronService, private settingService: SettingService) {
 
+    this.robot.Clipboard.clear();
+
     this.keyboard.autoDelay.min = 0;
     this.keyboard.autoDelay.max = 0;
 

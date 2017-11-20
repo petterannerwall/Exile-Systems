@@ -50,4 +50,13 @@ export class ExternalService {
         console.log('[DEBUG external.service.ts]', error, cookies);
       });
   }
+
+  public pathofExileTrade(query) {
+    return this.http.post('https://www.pathofexile.com/api/trade/search/' + this.playerService.leagueData.id, query, );
+  }
+
+  public pathOfExileTradeFetch(string, query) {
+    return this.http.get('https://www.pathofexile.com/api/trade/fetch/' + string + '?query=' + query)
+  }
+
 }
