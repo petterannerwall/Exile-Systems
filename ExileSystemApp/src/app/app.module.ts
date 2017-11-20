@@ -1,3 +1,4 @@
+
 import 'polyfills';
 import 'reflect-metadata';
 import 'zone.js/dist/zone-mix';
@@ -32,6 +33,7 @@ import { RobotService } from './shared/providers/robot.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
 import { TradeService } from './shared/providers/trade.service';
+import { PricecheckService } from './shared/providers/pricecheck.service';
 import { TradeBrowseComponent } from './trade/trade-browse/trade-browse.component';
 import { TradeManagementComponent } from './trade/trade-management/trade-management.component';
 
@@ -61,7 +63,7 @@ import { TradeManagementComponent } from './trade/trade-management/trade-managem
     CharacterInventoryModule
   ],
   providers: [ElectronService, SettingService, SignalRService, LogParserService, ExternalService, ChannelService,
-    RobotService, CurrencyService, PlayerService, TradeService],
+    RobotService, CurrencyService, PlayerService, TradeService, PricecheckService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
