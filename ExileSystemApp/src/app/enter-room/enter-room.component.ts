@@ -74,16 +74,17 @@ export class EnterRoomComponent implements OnInit, AfterViewChecked {
   }
 
   verify() {
-    const code = '.verify ' + this.generateChannel();
-    const command = '@' + this.settingService.settings.room.characterName + ' ' + code;
-    this.robotService.sendCommandToPathofExile(command);
-    this.logParser.NewMessageEvent.subscribe((message: Message) => {
-      if (message.type === MessageTypeEnum.Verify) {
-        if (message.player === this.settingService.settings.room.characterName && message.text === code.toLowerCase()) {
-          this.verified = true;
-        }
-      }
-    });
+    this.verified = true;
+    // const code = '.verify ' + this.generateChannel();
+    // const command = '@' + this.settingService.settings.room.characterName + ' ' + code;
+    // this.robotService.sendCommandToPathofExile(command);
+    // this.logParser.NewMessageEvent.subscribe((message: Message) => {
+    //   if (message.type === MessageTypeEnum.Verify) {
+    //     if (message.player === this.settingService.settings.room.characterName && message.text === code.toLowerCase()) {
+    //       this.verified = true;
+    //     }
+    //   }
+    // });
 
   }
 

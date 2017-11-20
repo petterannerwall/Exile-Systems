@@ -67,9 +67,9 @@ export class ItemComponent implements OnInit {
         marginLeft += 200;
       }
 
-      // tooltip.setAttribute('style', 'margin:' + marginTop + 'px 0px 0px ' + marginLeft + 'px ' + '!important ;');
-      tooltip.setAttribute('style', 'top:' + marginTop + 'px !important;');
-      tooltip.setAttribute('style', 'left:' + marginLeft + 'px !important;');
+      tooltip.setAttribute('style', 'margin:' + marginTop + 'px 0px 0px ' + marginLeft + 'px ' + '!important ;');
+      // tooltip.setAttribute('style', 'top:' + marginTop + 'px !important;');
+      // tooltip.setAttribute('style', 'left:' + marginLeft + 'px !important;');
     }
 
     tooltip.classList.add('active');
