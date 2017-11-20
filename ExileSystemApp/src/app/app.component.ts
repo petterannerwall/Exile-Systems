@@ -1,3 +1,4 @@
+
 import { Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize/dist';
 
@@ -13,7 +14,7 @@ import { RobotService } from './shared/providers/robot.service';
 import { SettingService } from './shared/providers/setting.service';
 import { SignalRService } from './shared/providers/signalr.service';
 import { TradeService } from './shared/providers/trade.service';
-
+import { PricecheckService } from './shared/providers/pricecheck.service';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
   constructor(public electronService: ElectronService, public settingService: SettingService, public signalRService: SignalRService,
     private externalService: ExternalService, private currencyService: CurrencyService, private tradeService: TradeService,
     private logParserService: LogParserService, private playerService: PlayerService, private robotService: RobotService,
-    private channelService: ChannelService) {
+    private channelService: ChannelService, private pricecheckService: PricecheckService) {
     if (electronService.isElectron()) {
       console.log('[DEBUG app.component.ts] Mode electron');
       // Check if electron is correctly injected (see externals in webpack.config.js)
