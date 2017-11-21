@@ -13,62 +13,130 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class PricecheckService {
 
+  private pseudo;
+  private explicit;
+  private implicit;
+  private enchant;
+  private crafted;
 
-  constructor(private robotService: RobotService, private externalService: ExternalService, private currencyService: CurrencyService) {
+  constructor(private robotService: RobotService, private externalService: ExternalService, private currencyService: CurrencyService,
+    private electronService: ElectronService) {
+
+
+    this.externalService.pathOfExileTradeStats().subscribe((response: any) => {
+      this.pseudo = response.result[0].entries;
+      this.explicit = response.result[1].entries;
+      this.implicit = response.result[2].entries;
+      this.enchant = response.result[3].entries;
+      this.crafted = response.result[4].entries;
+    })
 
     this.robotService.ClipboardEvent.subscribe((clipboard: String) => {
       if (clipboard.indexOf('Rarity:') > -1) { // Should be item
 
 
         let rarity = null;
-        let type = null;
-        const properties = [];
+        let name = null;
+        let base = null;
+        const stats = [];
+        const armour = [];
+        const misc = [];
+
+        let part = 0;
+        let step = 0;
 
         const lines = clipboard.split('\n');
         for (let i = 0; i < lines.length; i++) {
           const line = lines[i].trim();
           if (line !== '--------') {
-            if (line.indexOf('Rarity:') > -1) {
-              rarity = line.split(': ')[1];
-              continue;
-            }
-            if (rarity !== null && type === null) {
-              type = line;
-              continue;
-            }
-            if (rarity === 'Gem') {
-              if (line.indexOf('Level:') > -1) {
-                properties['Level'] = line.split('Level: ')[1];
-                break;
+
+            if (part === 0) { // Rarity, name and type
+              if (line.indexOf('Rarity:') > -1) {
+                rarity = line.split(': ')[1];
+                continue;
               }
-            }
-            if (rarity === 'Divination Card') {
-              if (line.indexOf('Stack Size:') > -1) {
-                properties['Stacksize'] = line.split('Stack Size: ')[1];
+              if (rarity !== null && name === null && part === 0) {
+                name = line;
+                continue;
+              }
+              if (rarity !== null && base === null && part === 0) {
+                base = line;
                 continue;
               }
             }
-            // Currency, Divination Card
-            // Item
-            // Map
+            if (part === 1) { // armour
+              if (rarity === 'Gem') {
+                if (line.indexOf('Level:') > -1) {
+                  armour['Level'] = line.split('Level: ')[1];
+                  break;
+                }
+              }
+              if (rarity === 'Rare') {
+                if (line.indexOf('Evasion Rating') > -1) {
+                  armour['ev'] = line.split('Evasion Rating: ')[1];
+                  armour['ev'] = armour['ev'].replace(' (augmented)', '');
+                  continue;
+                }
+                if (line.indexOf('Armour') > -1) {
+                  armour['ar'] = line.split('Armour: ')[1];
+                  armour['ar'] = armour['ar'].replace(' (augmented)', '');
+                  continue;
+                }
+                if (line.indexOf('Energy Shield') > -1) {
+                  armour['es'] = line.split('Energy Shield: ')[1];
+                  armour['es'] = armour['es'].replace(' (augmented)', '');
+                  continue;
+                }
+              }
+            }
+            if (part === 2) { // Requirements
+            }
+            if (part === 3) { // Sockets
+            }
+            if (part === 4) { // Item level
+              if (rarity === 'Rare') {
+                if (line.indexOf('Item Level:') > -1) {
+                  misc['ilvl'] = line.split('Item Level: ')[1];
+                  continue;
+                }
+              }
+            }
+            if (part === 5) { // Prefixes and Suffixes
+              const value = line.replace(/[^\d]{1,4}/g, '');
+              let mod = line.replace(value, 'X');
+
+              mod = mod.substr(0, 1) === '+' ? mod.substr(1) : mod; // remove first + if exists.
+
+              stats.push({
+                'mod': mod,
+                // tslint:disable-next-line:radix
+                'value': parseInt(value),
+                'id': this.modToId(mod)
+              })
+              step++;
+              continue;
+            }
+            if (part === 6) { // Corrupted or notes
+            }
+          } else {
+            part++;
           }
         }
-
-        this.getPrices(rarity, type, properties)
+        this.getPrices(rarity, base, stats, [], [], [], [], [], [], [])
       }
     })
   }
 
-  private getPrices(rarity, type, properties) {
+  private getPrices(rarity, base, stats, weapon, armour, socket, req, misc, trade, type) {
 
     const prices = [];
 
     const query = {
       'query': {
-        'status': {
-          'option': 'online'
-        },
-        'type': type,
+        // 'status': {
+        //   'option': 'online'
+        // },
+        // 'type': base,
         'stats': [
           {
             'type': 'and',
@@ -76,13 +144,25 @@ export class PricecheckService {
           }
         ],
         'filters': {
+          'weapon_filters': {
+            'disabled': true,
+            'filters': []
+          },
+          'armour_filters': {
+            'disabled': true,
+            'filters': []
+          },
+          'socket_filters': {
+            'disabled': true,
+            'filters': []
+          },
+          'req_filters': {
+            'disabled': true,
+            'filters': []
+          },
           'misc_filters': {
-            'disabled': false,
-            'filters': {
-              'gem_level': {
-                'min': properties['Level']
-              }
-            }
+            'disabled': true,
+            'filters': []
           },
           'trade_filters': {
             'disabled': false,
@@ -91,7 +171,11 @@ export class PricecheckService {
                 'option': 'priced'
               }
             }
-          }
+          },
+          'type_filters': {
+            'disabled': true,
+            'filters': []
+          },
         }
       },
       'sort': {
@@ -99,8 +183,53 @@ export class PricecheckService {
       }
     };
 
-    this.externalService.pathofExileTrade(query).subscribe((response: PoeTrade) => {
 
+    for (const key in misc) {
+      if (misc.hasOwnProperty(key)) {
+        const value = misc[key];
+        const obj = {
+          'min': value,
+          'max': 100
+        }
+        query.query.filters.misc_filters.filters[key] = obj;
+        query.query.filters.misc_filters.disabled = false;
+      }
+    }
+
+    for (const key in armour) {
+      if (armour.hasOwnProperty(key)) {
+        const value = armour[key];
+        const obj = {
+          'min': value * 0.9,
+          'max': value * 1.1
+        }
+        query.query.filters.armour_filters.filters[key] = obj;
+        query.query.filters.armour_filters.disabled = false;
+      }
+    }
+    for (const key in stats) {
+      if (stats.hasOwnProperty(key)) {
+        const element = stats[key];
+
+        const obj = {
+          'id': element.id,
+          'value': {
+            'min': element.value * 0.1,
+            'max': element.value * 1.9
+          },
+          'disabled': false
+        }
+
+        query.query.stats[0].filters[key] = obj;
+      }
+    }
+
+    debugger;
+
+
+
+    this.externalService.pathofExileTrade(query).subscribe((response: PoeTrade) => {
+      debugger;
       if (response.total > 0) {
 
         response.result = response.result.slice(0, 40);
@@ -135,7 +264,7 @@ export class PricecheckService {
                     prices.push(value);
                   }
                 }
-                console.log('Pricing for: level', properties['Level'] + ' ' + type);
+                console.log('Pricing for: level', base);
                 console.log('Median in chaos: ', this.getMedian(prices));
                 console.log('Avarage in chaos: ', prices.reduce((p, c) => p + c, 0) / prices.length);
               }
@@ -152,5 +281,16 @@ export class PricecheckService {
     const middle = Math.floor(numbers.length / 2);
     const isEven = numbers.length % 2 === 0;
     return isEven ? (numbers[middle] + numbers[middle - 1]) / 2 : numbers[middle];
+  }
+
+  private modToId(mod: string) {
+
+    for (let i = 0; i < this.explicit.length; i++) {
+      const text = this.explicit[i].text.trim();
+      mod = mod.trim();
+      if (text === mod) {
+        return this.explicit[i].id;
+      }
+    }
   }
 }

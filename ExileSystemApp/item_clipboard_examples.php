@@ -108,6 +108,28 @@ Item Level: 78
 Note: ~b/o 3 chaos
 
  
+Rarity: Rare
+Rapture Mantle
+Loricated Ringmail
+--------
+Armour: 325
+Energy Shield: 86 (augmented)
+--------
+Requirements:
+Level: 58
+Str: 84
+Int: 84
+--------
+Sockets: B-R-B-B-B 
+--------
+Item Level: 78
+--------
++29 to maximum Life
++51 to maximum Mana
++23 to maximum Energy Shield
++31% to Cold Resistance
+--------
+Note: ~b/o 3 chaos
  
  
  

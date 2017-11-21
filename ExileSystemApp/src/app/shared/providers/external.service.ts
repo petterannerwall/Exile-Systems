@@ -52,11 +52,15 @@ export class ExternalService {
   }
 
   public pathofExileTrade(query) {
-    return this.http.post('https://www.pathofexile.com/api/trade/search/' + this.playerService.leagueData.id, query, );
+    return this.http.post('https://www.pathofexile.com/api/trade/search/' + 'standard', query, ); // this.playerService.leagueData.id
   }
 
   public pathOfExileTradeFetch(string, query) {
     return this.http.get('https://www.pathofexile.com/api/trade/fetch/' + string + '?query=' + query)
+  }
+
+  public pathOfExileTradeStats() {
+    return this.http.get('https://www.pathofexile.com/api/trade/data/stats');
   }
 
 }
