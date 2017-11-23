@@ -1,3 +1,4 @@
+import { SettingService } from '../../shared/providers/setting.service';
 import { IncomingTrade } from '../../shared/interfaces/incomming-trade.interface';
 import { MessageTypeEnum } from '../../shared/enums/message-type.enum';
 import { Message } from '../../shared/interfaces/message.interface';
@@ -18,7 +19,7 @@ export class TradeManagementComponent implements OnInit {
   private invitedPlayers = [];
 
   constructor(private robotService: RobotService, private tradeService: TradeService, private playerService: PlayerService,
-    private logParser: LogParserService) {
+    private logParser: LogParserService, private settingsService: SettingService) {
 
   }
 
@@ -32,7 +33,7 @@ export class TradeManagementComponent implements OnInit {
   }
 
   sold(trade) {
-    this.robotService.sendCommandToPathofExile('@' + trade.player + ' Sorry, that item is already sold!');
+    this.robotService.sendCommandToPathofExile('@' + trade.player + ' ' + this.settingsService.settings.trade.soldMessage);
     this.remove(trade);
   }
   remove(trade) {
@@ -44,11 +45,14 @@ export class TradeManagementComponent implements OnInit {
   }
   thank(trade) {
     const index = this.tradeService.list.indexOf(trade);
-    this.robotService.sendCommandToPathofExile('@' + trade.player + ' Thanks!');
+    this.robotService.sendCommandToPathofExile('@' + trade.player + ' ' + this.settingsService.settings.trade.thankMessage);
     this.tradeService.list[index].thanked = true;
   }
   kick(trade) {
     this.robotService.sendCommandToPathofExile('/kick ' + trade.player);
     this.remove(trade);
+  }
+  map(trade) {
+    this.robotService.sendCommandToPathofExile('@' + trade.player + ' ' + this.settingsService.settings.trade.mapMessage);
   }
 }

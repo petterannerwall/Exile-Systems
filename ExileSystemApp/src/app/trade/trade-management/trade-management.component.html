@@ -59,8 +59,11 @@
                                 Thank</a>
                             <a *ngIf="trade.invited && trade.thanked" (click)="kick(trade)" class="waves-effect waves-light btn">
                                 kick</a>
+                            <a (click)="map(trade)" class=" material-iconswaves-effect waves-light btn">
+                                In Map</a>
                             <a (click)="remove(trade)" class="waves-effect waves-light btn">
-                                Remove</a>
+                                    <i class="material-icons">delete</i>
+                                </a>
                         </div>
                     </div>
                 </div>
