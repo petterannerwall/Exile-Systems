@@ -63,4 +63,26 @@ export class ExternalService {
     return this.http.get('https://www.pathofexile.com/api/trade/data/stats');
   }
 
+  public poePricesRareSearch(item) {
+
+    let data = '&league=Standard&auto=auto&submit=Submit&myshops=&myaccounts='; // this.playerService.leagueData.id
+
+    data = 'itemtext=' + encodeURIComponent(item) + data;
+
+    const urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('itemtext', item);
+    urlSearchParams.append('league', 'Standard');
+    urlSearchParams.append('auto', 'auto');
+    urlSearchParams.append('submit', 'Submit');
+    urlSearchParams.append('myshops', '');
+    urlSearchParams.append('myaccounts', '');
+
+    return this.http.post('https://www.poeprices.info/query', urlSearchParams).map(
+      (res: any) => {
+        console.log(res);
+        res.json()
+      }
+    );
+  }
+
 }

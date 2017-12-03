@@ -106,13 +106,17 @@ export class PricecheckService {
               let mod = line.replace(value, 'X');
 
               mod = mod.substr(0, 1) === '+' ? mod.substr(1) : mod; // remove first + if exists.
+              const modId = this.modToId(mod);
 
-              stats.push({
-                'mod': mod,
-                // tslint:disable-next-line:radix
-                'value': parseInt(value),
-                'id': this.modToId(mod)
-              })
+              if (modId !== undefined) {
+                stats.push({
+                  'mod': mod,
+                  // tslint:disable-next-line:radix
+                  'value': parseInt(value),
+                  'id': modId
+                })
+              }
+
               step++;
               continue;
             }
@@ -122,21 +126,28 @@ export class PricecheckService {
             part++;
           }
         }
-        this.getPrices(rarity, base, stats, [], [], [], [], [], [], [])
+        if (rarity === 'Unique') {
+          this.getPrices(rarity, base, name, stats, [], [], [], [], [], [], []);
+        } else if (rarity === 'Rare') {
+          this.externalService.poePricesRareSearch(clipboard).subscribe(response => {
+            console.log(response);
+          })
+        }
       }
     })
   }
 
-  private getPrices(rarity, base, stats, weapon, armour, socket, req, misc, trade, type) {
+  private getPrices(rarity, base, name, stats, weapon, armour, socket, req, misc, trade, type) {
 
     const prices = [];
 
     const query = {
       'query': {
-        // 'status': {
-        //   'option': 'online'
-        // },
-        // 'type': base,
+        'status': {
+          'option': 'online'
+        },
+        'type': base,
+        'name': name,
         'stats': [
           {
             'type': 'and',
@@ -183,7 +194,6 @@ export class PricecheckService {
       }
     };
 
-
     for (const key in misc) {
       if (misc.hasOwnProperty(key)) {
         const value = misc[key];
@@ -210,26 +220,24 @@ export class PricecheckService {
     for (const key in stats) {
       if (stats.hasOwnProperty(key)) {
         const element = stats[key];
+        if (element.id !== undefined) {
 
-        const obj = {
-          'id': element.id,
-          'value': {
-            'min': element.value * 0.1,
-            'max': element.value * 1.9
-          },
-          'disabled': false
+          const obj = {
+            'id': element.id,
+            'value': {
+              'min': element.value * 0.1,
+              'max': element.value * 1.9
+            },
+            'disabled': false
+          }
+
+          query.query.stats[0].filters[key] = obj;
         }
-
-        query.query.stats[0].filters[key] = obj;
       }
     }
 
-    debugger;
-
-
-
     this.externalService.pathofExileTrade(query).subscribe((response: PoeTrade) => {
-      debugger;
+
       if (response.total > 0) {
 
         response.result = response.result.slice(0, 40);
