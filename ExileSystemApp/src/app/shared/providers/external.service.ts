@@ -3,6 +3,7 @@ import { ElectronService } from './electron.service';
 import 'rxjs/add/operator/map';
 
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
@@ -69,20 +70,8 @@ export class ExternalService {
 
     data = 'itemtext=' + encodeURIComponent(item) + data;
 
-    const urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('itemtext', item);
-    urlSearchParams.append('league', 'Standard');
-    urlSearchParams.append('auto', 'auto');
-    urlSearchParams.append('submit', 'Submit');
-    urlSearchParams.append('myshops', '');
-    urlSearchParams.append('myaccounts', '');
-
-    return this.http.post('https://www.poeprices.info/query', urlSearchParams).map(
-      (res: any) => {
-        console.log(res);
-        res.json()
-      }
-    );
+    return this.http.post('https://www.poeprices.info/query', data,
+      { responseType: 'text', headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'), observe: 'response' });
   }
 
 }

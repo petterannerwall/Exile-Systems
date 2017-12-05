@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CurrentRoomComponent } from './current-room/current-room.component';
 import { EnterRoomComponent } from './enter-room/enter-room.component';
 import { SettingsComponent } from './settings/settings.component';
+import { PricecheckListComponent } from './pricecheck-list/pricecheck-list.component';
 
 const routes: Routes = [
     {
@@ -36,6 +37,10 @@ const routes: Routes = [
     {
         path: 'trade/accept-send',
         component: AcceptSendComponent
+    },
+    {
+        path: 'pricecheck-list',
+        component: PricecheckListComponent
     }
 ];
 

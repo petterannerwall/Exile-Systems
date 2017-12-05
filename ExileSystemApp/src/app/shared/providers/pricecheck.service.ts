@@ -2,6 +2,7 @@
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { RobotService } from './robot.service';
 import { ElectronService } from './electron.service';
 import { ExternalService } from './external.service';
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class PricecheckService {
 
+  public list: Array<string>;
   private pseudo;
   private explicit;
   private implicit;
@@ -20,8 +22,10 @@ export class PricecheckService {
   private crafted;
 
   constructor(private robotService: RobotService, private externalService: ExternalService, private currencyService: CurrencyService,
-    private electronService: ElectronService) {
+    private electronService: ElectronService, private router: Router) {
 
+    this.list = ['This is an example of a pricecheck with a value of 12 chaos.',
+      'Some other pricecheck', 'a third pricecheck with a value between 2 and 7.6 chaos'];
 
     this.externalService.pathOfExileTradeStats().subscribe((response: any) => {
       this.pseudo = response.result[0].entries;
@@ -127,12 +131,17 @@ export class PricecheckService {
           }
         }
         if (rarity === 'Unique') {
-          this.getPrices(rarity, base, name, stats, [], [], [], [], [], [], []);
+          this.getPrices(rarity, base, name, [], [], [], [], [], [], [], []);
         } else if (rarity === 'Rare') {
           this.externalService.poePricesRareSearch(clipboard).subscribe(response => {
-            console.log(response);
+            const rp = response.body.split('<span class="price_highlight">')[1].split('</span>')[0];
+            const mcp = response.body.split('<td class="price_highlight">')[1].split('</td>')[0];
+
+            const message = name + ' Prediction: ' + mcp + 'chaos Recommended: ' + rp + 'chaos';
+            this.list.push(message);
           })
         }
+        this.router.navigate(['/pricecheck-list']);
       }
     })
   }
@@ -272,9 +281,11 @@ export class PricecheckService {
                     prices.push(value);
                   }
                 }
-                console.log('Pricing for: level', base);
-                console.log('Median in chaos: ', this.getMedian(prices));
-                console.log('Avarage in chaos: ', prices.reduce((p, c) => p + c, 0) / prices.length);
+
+                const message = name + ' Median: ' + this.getMedian(prices) +
+                  'chaos Avarage: ' + prices.reduce((p, c) => p + c, 0) / prices.length + 'chaos';
+                this.list.push(message);
+
               }
             });
             fetchString = '';
