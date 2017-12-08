@@ -66,7 +66,7 @@ export class ExternalService {
 
   public poePricesRareSearch(item) {
 
-    let data = '&league=Standard&auto=auto&submit=Submit&myshops=&myaccounts='; // this.playerService.leagueData.id
+    let data = '&league=' + this.playerService.leagueData.id + '&auto=auto&submit=Submit&myshops=&myaccounts=';
 
     data = 'itemtext=' + encodeURIComponent(item) + data;
 

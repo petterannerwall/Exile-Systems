@@ -2,3 +2,33 @@
     padding: 10px;
     margin: 5px;
 }
+  .rare {
+    // rare
+    color: #EBEB57;
+  }
+  .unique {
+    // unique
+    color: rgb(218, 122, 54);
+  }
+
+  span.name{
+    font-weight: 700 !important;
+  }
+
+  span.currency{
+    color: burlywood !important;
+  }
+
+  h4{
+    display: inline;
+    padding-right: 10px;
+  }
+
+  .preloader-wrapper.mini {
+    width: 25px;
+    height: 25px;
+}
+
+.loading-row{
+  margin-top: 10px;
+}

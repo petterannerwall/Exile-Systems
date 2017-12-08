@@ -8,13 +8,16 @@ import { ElectronService } from './electron.service';
 import { ExternalService } from './external.service';
 import { CurrencyService } from './currency.service';
 import { PoeTrade } from '../interfaces/poetrade.interface';
+import { PriceCheck } from '../interfaces/pricecheck.interface';
+
 import { Observable } from 'rxjs/Rx';
 
 
 @Injectable()
 export class PricecheckService {
 
-  public list: Array<string>;
+  public list: Array<PriceCheck>;
+  public loading: boolean;
   private pseudo;
   private explicit;
   private implicit;
@@ -24,8 +27,9 @@ export class PricecheckService {
   constructor(private robotService: RobotService, private externalService: ExternalService, private currencyService: CurrencyService,
     private electronService: ElectronService, private router: Router) {
 
-    this.list = ['This is an example of a pricecheck with a value of 12 chaos.',
-      'Some other pricecheck', 'a third pricecheck with a value between 2 and 7.6 chaos'];
+    this.loading = false;
+
+    this.list = [];
 
     this.externalService.pathOfExileTradeStats().subscribe((response: any) => {
       this.pseudo = response.result[0].entries;
@@ -36,8 +40,10 @@ export class PricecheckService {
     })
 
     this.robotService.ClipboardEvent.subscribe((clipboard: String) => {
+
       if (clipboard.indexOf('Rarity:') > -1) { // Should be item
 
+        this.loading = true;
 
         let rarity = null;
         let name = null;
@@ -53,7 +59,10 @@ export class PricecheckService {
         for (let i = 0; i < lines.length; i++) {
           const line = lines[i].trim();
           if (line !== '--------') {
-
+            if (line.indexOf('cannot') !== -1) {
+              part--;
+              continue;
+            }
             if (part === 0) { // Rarity, name and type
               if (line.indexOf('Rarity:') > -1) {
                 rarity = line.split(': ')[1];
@@ -130,16 +139,49 @@ export class PricecheckService {
             part++;
           }
         }
-        if (rarity === 'Unique') {
-          this.getPrices(rarity, base, name, [], [], [], [], [], [], [], []);
-        } else if (rarity === 'Rare') {
+        // if (rarity === 'Unique') {
+        //   this.getPrices(rarity, base, name, [], [], [], [], [], [], [], []);
+        // } else
+        if (rarity === 'Rare' || rarity === 'Unique') {
           this.externalService.poePricesRareSearch(clipboard).subscribe(response => {
-            const rp = response.body.split('<span class="price_highlight">')[1].split('</span>')[0];
-            const mcp = response.body.split('<td class="price_highlight">')[1].split('</td>')[0];
 
-            const message = name + ' Prediction: ' + mcp + 'chaos Recommended: ' + rp + 'chaos';
-            this.list.push(message);
+            let body = response.body.replace(/(\r\n|\n|\r)/gm, '');
+            body = body.replace(/\s/g, '');
+
+            console.log(body);
+
+            const rp = body.split('<span class="price_highlight">')[1].split('</span>')[0];
+            const mcp = body.split('<td class="price_highlight">')[1].split('</td>')[0];
+            const mean = body.split('<tr><td height="50%"><p><span class="bold">Mean Price</span></p></td><td><p> ')[1]
+              .split('</p></td></tr>')[0];
+            const median = body.split('<tr><td height="50%"><p><span class="bold">Median Price</span></p></td><td><p> ')[1]
+              .split('</p></td></tr>')[0];
+
+
+            const pricecheck = {
+              name: name,
+              rarity: 'rare',
+              properties: []
+            }
+
+            if (rp !== '') {
+              pricecheck.properties.push({
+                message: 'recommended',
+                currency: rp
+              });
+            }
+            if (mcp !== '') {
+              pricecheck.properties.push({
+                message: 'prediction',
+                currency: mcp + ' chaos'
+              });
+            }
+
+            this.list.push(pricecheck);
+            this.loading = false;
           })
+        } else {
+          this.loading = false;
         }
         this.router.navigate(['/pricecheck-list']);
       }
@@ -282,10 +324,29 @@ export class PricecheckService {
                   }
                 }
 
-                const message = name + ' Median: ' + this.getMedian(prices) +
-                  'chaos Avarage: ' + prices.reduce((p, c) => p + c, 0) / prices.length + 'chaos';
-                this.list.push(message);
+                const message = '<span class="name">' + name + '</span> Median: <span class="currency">' + this.getMedian(prices) +
+                  ' chaos </span> Avarage: <span class="currency">' + prices.reduce((p, c) => p + c, 0) / prices.length + ' chaos </span>';
 
+
+                const median = this.getMedian(prices) + ' chaos';
+                const avarage = prices.reduce((p, c) => p + c, 0) / prices.length + ' chaos';
+
+
+                const pricecheck = {
+                  name: name,
+                  rarity: 'unique',
+                  properties: [
+                    {
+                      message: 'median',
+                      currency: median
+                    },
+                    {
+                      message: 'avarage',
+                      currency: avarage
+                    }]
+                }
+                this.list.push(pricecheck);
+                this.loading = false;
               }
             });
             fetchString = '';

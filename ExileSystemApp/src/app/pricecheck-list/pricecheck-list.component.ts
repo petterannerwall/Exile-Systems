@@ -1,4 +1,5 @@
 import { PricecheckService } from '../shared/providers/pricecheck.service';
+import { PlayerService } from '../shared/providers/player.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./pricecheck-list.component.scss']
 })
 export class PricecheckListComponent implements OnInit, OnDestroy {
-  constructor(private pricecheckService: PricecheckService) { }
+  constructor(private pricecheckService: PricecheckService, private playerService: PlayerService) { }
 
   ngOnInit() {
   }
