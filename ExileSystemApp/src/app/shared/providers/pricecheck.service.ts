@@ -145,22 +145,32 @@ export class PricecheckService {
         if (rarity === 'Rare' || rarity === 'Unique') {
           this.externalService.poePricesRareSearch(clipboard).subscribe(response => {
 
-            let body = response.body.replace(/(\r\n|\n|\r)/gm, '');
-            body = body.replace(/\s/g, '');
+            const body = response.body.replace(/\s\s+/g, ' ');
 
             console.log(body);
 
-            const rp = body.split('<span class="price_highlight">')[1].split('</span>')[0];
-            const mcp = body.split('<td class="price_highlight">')[1].split('</td>')[0];
-            const mean = body.split('<tr><td height="50%"><p><span class="bold">Mean Price</span></p></td><td><p> ')[1]
-              .split('</p></td></tr>')[0];
-            const median = body.split('<tr><td height="50%"><p><span class="bold">Median Price</span></p></td><td><p> ')[1]
-              .split('</p></td></tr>')[0];
+            let rp = body.split('<span class="price_highlight">')[1];
+            if (rp) {
+              rp = rp.split('</span>')[0];
+            }
 
+            let mcp = body.split('<td class="price_highlight">')[1];
+            if (mcp) {
+              mcp = mcp.split('</td>')[0];
+            }
+
+            let mean = body.split('<tr> <td height="50%"><p><span class="bold">Median Price</span></p></td> <td><p> ')[1];
+            if (mean) {
+              mean = mean.split('</p></td></tr>')[0];
+            }
+            let median = body.split('<tr> <td height="50%"><p><span class="bold">Mean Price</span></p></td> <td><p> ')[1];
+            if (median) {
+              median = median.split('</p></td></tr>')[0];
+            }
 
             const pricecheck = {
               name: name,
-              rarity: 'rare',
+              rarity: rarity.toLowerCase(),
               properties: []
             }
 
@@ -176,8 +186,24 @@ export class PricecheckService {
                 currency: mcp + ' chaos'
               });
             }
+            if (mean !== '') {
+              pricecheck.properties.push({
+                message: 'mean',
+                currency: mean
+              });
+            }
+            if (median !== '') {
+              pricecheck.properties.push({
+                message: 'median',
+                currency: median
+              });
+            }
 
-            this.list.push(pricecheck);
+            if (this.list.length > 12) {
+              this.list.pop();
+            }
+
+            this.list.unshift(pricecheck);
             this.loading = false;
           })
         } else {
