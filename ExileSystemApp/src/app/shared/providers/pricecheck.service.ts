@@ -69,7 +69,7 @@ export class PricecheckService {
                 continue;
               }
               if (rarity !== null && name === null && part === 0) {
-                name = line;
+                name = line.replace('<<set:MS>><<set:M>><<set:S>>', '');
                 continue;
               }
               if (rarity !== null && base === null && part === 0) {

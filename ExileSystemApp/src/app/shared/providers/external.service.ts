@@ -66,12 +66,14 @@ export class ExternalService {
 
   public poePricesRareSearch(item) {
 
-    let data = '&league=' + this.playerService.leagueData.id + '&auto=auto&submit=Submit&myshops=&myaccounts=';
+    if (this.playerService.leagueData) {
+      let data = '&league=' + this.playerService.leagueData.id + '&auto=auto&submit=Submit&myshops=&myaccounts=';
 
-    data = 'itemtext=' + encodeURIComponent(item) + data;
+      data = 'itemtext=' + encodeURIComponent(item) + data;
 
-    return this.http.post('https://www.poeprices.info/query', data,
-      { responseType: 'text', headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'), observe: 'response' });
+      return this.http.post('https://www.poeprices.info/query', data,
+        { responseType: 'text', headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'), observe: 'response' });
+    }
   }
 
 }
