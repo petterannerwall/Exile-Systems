@@ -17,3 +17,6 @@ Backend API with SignalR that uses Redis to save data.
 
 ### LogoutConsole
 Handles the logout functionality since we can't access the Win32API using Node.js
+
+## Printscreens
+Printscreens can be seen here: https://imgur.com/a/hIFnV
