@@ -9,11 +9,11 @@ Shared models between the backend API and the depreciated ExileSystem WPF applic
 ### ExileSystem
 Depreciated WPF application, is now build with Electron & Angular 5 in ExileSystemApp instead.
 
-###ExileSystemApp
+### ExileSystemApp
 Angular 5 app
 
-###ExileSystemServer
+### ExileSystemServer
 Backend API with SignalR that uses Redis to save data.
 
-#LogoutConsole
+### LogoutConsole
 Handles the logout functionality since we can't access the Win32API using Node.js
